@@ -1,4 +1,4 @@
-Event_Name;Country;City;Start_Date;End_Date;Session_Types
+"Event Name";"Country";"City";"Start Date";"End Date";"Session Types"
 "Devoxx Greece";Greece;Athens;2023-05-04;2023-05-06;"[talks,workshops]"
 "GeeCon";Poland;Krakow;2023-04-19;2023-04-21;"[talks,workshops]"
 "DevNexus";USA;Atlanta;2023-04-04;2023-04-06;"[talks,workshops]"
