@@ -1,4 +1,4 @@
-import org.eclipse.collections.impl.utility.ArrayIterate;
+import java.util.stream.Stream;
 
 public enum Country
 {
@@ -15,7 +15,10 @@ public enum Country
 
     public static Country fromName(String name)
     {
-        return ArrayIterate.detect(Country.values(), country -> name.equalsIgnoreCase(country.getName()));
+        return Stream.of(Country.values())
+                .filter(country -> name.equalsIgnoreCase(country.getName()))
+                .findFirst()
+                .orElse(null);
     }
 
     Country(String name, String flag)

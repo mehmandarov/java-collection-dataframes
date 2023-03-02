@@ -10,7 +10,7 @@ public enum SessionType
     TALK("Talks"), WORKSHOP("Workshops");
 
     private static final ImmutableCharSet BRACKETS = CharSets.immutable.with('[', ']');
-    private String name;
+    private final String name;
 
     SessionType(String name)
     {
@@ -26,7 +26,9 @@ public enum SessionType
     {
         String csv = Strings.asChars(sessionTypes).reject(BRACKETS::contains).toString();
         String[] types = csv.split(",");
-        return ArrayIterate.collect(types, SessionType::fromString).reject(Predicates.isNull()).toImmutableSet();
+        return ArrayIterate.collect(types, SessionType::fromString)
+                .reject(Predicates.isNull())
+                .toImmutableSet();
     }
 
     public boolean isTalk()

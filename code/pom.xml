@@ -29,7 +29,7 @@
     <modules>
 <!--        <module>dataframe-ec</module>-->
         <module>eclipse_collections</module>
-<!--        <module>native_java</module>-->
+        <module>native_java</module>
     </modules>
 
     <properties>
