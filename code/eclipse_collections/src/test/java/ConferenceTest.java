@@ -1,3 +1,6 @@
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +14,10 @@ public class ConferenceTest
         Assertions.assertTrue(conference.hasWorkshops());
         Assertions.assertEquals(Country.GREECE, conference.country());
         Assertions.assertEquals(3, conference.durationInDays());
+        Assertions.assertEquals("🇬🇷", conference.countryFlag());
+        Assertions.assertEquals("Greece", conference.countryName());
+        long expectedDaysUntil = ChronoUnit.DAYS.between(LocalDate.now(), LocalDate.of(2023, 5, 4));
+        Assertions.assertEquals(expectedDaysUntil, conference.daysToEvent());
     }
 
     @Test
@@ -21,5 +28,9 @@ public class ConferenceTest
         Assertions.assertFalse(conference.hasWorkshops());
         Assertions.assertEquals(Country.WWW, conference.country());
         Assertions.assertEquals(6, conference.durationInDays());
+        Assertions.assertEquals("🕸", conference.countryFlag());
+        Assertions.assertEquals("WWW", conference.countryName());
+        long expectedDaysUntil = ChronoUnit.DAYS.between(LocalDate.now(), LocalDate.of(2023, 1, 19));
+        Assertions.assertEquals(expectedDaysUntil, conference.daysToEvent());
     }
 }

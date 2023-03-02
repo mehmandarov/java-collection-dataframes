@@ -40,4 +40,14 @@ public record Conference(
     {
         return this.sessionTypes.anySatisfy(SessionType::isTalk);
     }
+
+    public String countryFlag()
+    {
+        return this.country.getFlag();
+    }
+
+    public String countryName()
+    {
+        return this.country.getName();
+    }
 }
