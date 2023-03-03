@@ -43,4 +43,16 @@ public class ConferenceExplorerTest
         Conference furthestEvent = conferences.getLast();
         Assertions.assertEquals("Devoxx Greece", furthestEvent.eventName());
     }
+
+    @Test
+    public void groupBySessionTypes()
+    {
+        ConferenceExplorer explorer = new ConferenceExplorer();
+        Multimap<SessionType, Conference> bySessionType = explorer.groupBySessionType();
+        Assertions.assertEquals(7, bySessionType.get(SessionType.TALK).size());
+        Assertions.assertEquals(6, bySessionType.get(SessionType.WORKSHOP).size());
+        RichIterable<Conference> difference =
+                bySessionType.get(SessionType.TALK).reject(bySessionType.get(SessionType.WORKSHOP)::contains);
+        Assertions.assertEquals("jChampionsConf", difference.getFirst().eventName());
+    }
 }

@@ -82,4 +82,9 @@ public class ConferenceExplorer
     {
         return this.conferences.toImmutableSortedListBy(Conference::daysToEvent);
     }
+
+    public Multimap<SessionType, Conference> groupBySessionType()
+    {
+        return this.conferences.groupByEach(Conference::sessionTypes);
+    }
 }
