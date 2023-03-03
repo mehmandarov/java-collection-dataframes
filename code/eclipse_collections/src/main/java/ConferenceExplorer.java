@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import org.eclipse.collections.api.factory.Lists;
+import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.multimap.Multimap;
 import org.eclipse.collections.api.set.ImmutableSet;
@@ -75,5 +76,10 @@ public class ConferenceExplorer
     public <T> Multimap<String, Conference> groupByCity()
     {
         return this.conferences.groupBy(Conference::city);
+    }
+
+    public ImmutableList<Conference> sortByDaysToEvent()
+    {
+        return this.conferences.toImmutableSortedListBy(Conference::daysToEvent);
     }
 }
