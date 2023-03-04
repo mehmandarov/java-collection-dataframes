@@ -8,7 +8,7 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
-import org.eclipse.collections.api.multimap.Multimap;
+import org.eclipse.collections.api.multimap.set.ImmutableSetMultimap;
 import org.eclipse.collections.api.set.ImmutableSet;
 
 public class ConferenceExplorer
@@ -17,7 +17,7 @@ public class ConferenceExplorer
             Event Name,Country,City,Start Date,End Date,Session Types
             Devoxx Greece,Greece,Athens,2023-05-04,2023-05-06,"[talks,workshops]"
             GeeCon,Poland,Krakow,2023-04-19,2023-04-21,"[talks,workshops]"
-            DevNexus,USA,Atlanta,2023-04-04,2023-04-06,"[talks,workshops]"
+            DevNexus,United States,Atlanta,2023-04-04,2023-04-06,"[talks,workshops]"
             JavaLand,Germany,Brühl,2023-03-21,2023-03-23,"[talks,workshops]"
             Voxxed Days Bucharest,Romania,Bucharest,2023-03-22,2023-03-24,"[talks,workshops]"
             Jfokus,Sweden,Stockholm,2023-02-06,2023-02-08,"[talks,workshops]"
@@ -68,12 +68,12 @@ public class ConferenceExplorer
         return conferences;
     }
 
-    public <T> Multimap<Country, Conference> groupByCountry()
+    public ImmutableSetMultimap<Country, Conference> groupByCountry()
     {
         return this.conferences.groupBy(Conference::country);
     }
 
-    public <T> Multimap<String, Conference> groupByCity()
+    public ImmutableSetMultimap<String, Conference> groupByCity()
     {
         return this.conferences.groupBy(Conference::city);
     }
@@ -83,8 +83,13 @@ public class ConferenceExplorer
         return this.conferences.toImmutableSortedListBy(Conference::daysToEvent);
     }
 
-    public Multimap<SessionType, Conference> groupBySessionType()
+    public ImmutableSetMultimap<SessionType, Conference> groupBySessionType()
     {
         return this.conferences.groupByEach(Conference::sessionTypes);
+    }
+
+    public ImmutableSet<Country> getCountries()
+    {
+        return this.conferences.collect(Conference::country);
     }
 }

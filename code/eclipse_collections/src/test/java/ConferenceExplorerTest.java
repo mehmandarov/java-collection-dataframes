@@ -1,6 +1,9 @@
 import org.eclipse.collections.api.RichIterable;
+import org.eclipse.collections.api.factory.Sets;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.multimap.Multimap;
+import org.eclipse.collections.api.multimap.set.ImmutableSetMultimap;
+import org.eclipse.collections.api.set.ImmutableSet;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -48,11 +51,21 @@ public class ConferenceExplorerTest
     public void groupBySessionTypes()
     {
         ConferenceExplorer explorer = new ConferenceExplorer();
-        Multimap<SessionType, Conference> bySessionType = explorer.groupBySessionType();
+        ImmutableSetMultimap<SessionType, Conference> bySessionType = explorer.groupBySessionType();
         Assertions.assertEquals(7, bySessionType.get(SessionType.TALK).size());
         Assertions.assertEquals(6, bySessionType.get(SessionType.WORKSHOP).size());
         RichIterable<Conference> difference =
-                bySessionType.get(SessionType.TALK).reject(bySessionType.get(SessionType.WORKSHOP)::contains);
+                bySessionType.get(SessionType.TALK).difference(bySessionType.get(SessionType.WORKSHOP));
         Assertions.assertEquals("jChampionsConf", difference.getFirst().eventName());
     }
+
+    @Test
+    public void getCountries()
+    {
+        ConferenceExplorer explorer = new ConferenceExplorer();
+        ImmutableSet<String> flags = explorer.getCountries().collect(Country::getFlag);
+        ImmutableSet<String> expectedFlags = Sets.immutable.with("🇬🇷", "🇵🇱", "🇺🇸", "🇩🇪", "🇷🇴", "🇸🇪", "🕸");
+        Assertions.assertEquals(expectedFlags, flags);
+    }
+
 }

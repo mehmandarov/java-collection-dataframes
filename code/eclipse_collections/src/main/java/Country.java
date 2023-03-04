@@ -15,7 +15,12 @@ public enum Country
 
     public static Country fromName(String name)
     {
-        return ArrayIterate.detect(Country.values(), country -> name.equalsIgnoreCase(country.getName()));
+        Country country = ArrayIterate.detect(Country.values(), each -> name.equalsIgnoreCase(each.getName()));
+        if (country == null)
+        {
+            throw new NullPointerException("No country named: " + name);
+        }
+        return country;
     }
 
     Country(String name, String flag)
