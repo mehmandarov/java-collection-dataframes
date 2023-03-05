@@ -12,14 +12,14 @@ public class ConferenceExplorerTest
     @Test
     public void loadConferences()
     {
-        ConferenceExplorer explorer = new ConferenceExplorer();
+        ConferenceExplorer explorer = new ConferenceExplorer(2023);
         Assertions.assertEquals(7, explorer.getConferences().size());
     }
 
     @Test
     public void groupByCountry()
     {
-        ConferenceExplorer explorer = new ConferenceExplorer();
+        ConferenceExplorer explorer = new ConferenceExplorer(2023);
         Multimap<Country, Conference> byCountry = explorer.groupByCountry();
         RichIterable<Conference> conferences = byCountry.get(Country.GREECE);
         Assertions.assertEquals(1, conferences.size());
@@ -29,7 +29,7 @@ public class ConferenceExplorerTest
     @Test
     public void groupByCity()
     {
-        ConferenceExplorer explorer = new ConferenceExplorer();
+        ConferenceExplorer explorer = new ConferenceExplorer(2023);
         Multimap<String, Conference> byCountry = explorer.groupByCity();
         RichIterable<Conference> conferences = byCountry.get("Athens");
         Assertions.assertEquals(1, conferences.size());
@@ -39,7 +39,7 @@ public class ConferenceExplorerTest
     @Test
     public void sortByDaysToEvent()
     {
-        ConferenceExplorer explorer = new ConferenceExplorer();
+        ConferenceExplorer explorer = new ConferenceExplorer(2023);
         ImmutableList<Conference> conferences = explorer.sortByDaysToEvent();
         Conference closestEvent = conferences.getFirst();
         Assertions.assertEquals("jChampionsConf", closestEvent.eventName());
@@ -50,7 +50,7 @@ public class ConferenceExplorerTest
     @Test
     public void groupBySessionTypes()
     {
-        ConferenceExplorer explorer = new ConferenceExplorer();
+        ConferenceExplorer explorer = new ConferenceExplorer(2023);
         ImmutableSetMultimap<SessionType, Conference> bySessionType = explorer.groupBySessionType();
         Assertions.assertEquals(7, bySessionType.get(SessionType.TALK).size());
         Assertions.assertEquals(6, bySessionType.get(SessionType.WORKSHOP).size());
@@ -62,10 +62,9 @@ public class ConferenceExplorerTest
     @Test
     public void getCountries()
     {
-        ConferenceExplorer explorer = new ConferenceExplorer();
+        ConferenceExplorer explorer = new ConferenceExplorer(2023);
         ImmutableSet<String> flags = explorer.getCountries().collect(Country::getFlag);
         ImmutableSet<String> expectedFlags = Sets.immutable.with("🇬🇷", "🇵🇱", "🇺🇸", "🇩🇪", "🇷🇴", "🇸🇪", "🕸");
         Assertions.assertEquals(expectedFlags, flags);
     }
-
 }
