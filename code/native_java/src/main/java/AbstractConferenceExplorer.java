@@ -1,7 +1,6 @@
 import java.io.IOException;
 import java.net.URL;
 import java.util.AbstractMap;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +25,6 @@ public abstract class AbstractConferenceExplorer
 
     private void loadConferencesFromCsv()
     {
-        List<Conference> tempConferences = new ArrayList<>();
         CsvSchema headerSchema = CsvSchema.emptySchema().withHeader();
         URL url = AbstractConferenceExplorer.class.getClassLoader().getResource("data/conferences.csv");
         final CsvMapper mapper = new CsvMapper();

@@ -7,9 +7,7 @@ import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import org.eclipse.collections.api.block.predicate.Predicate;
-import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.multimap.set.ImmutableSetMultimap;
 import org.eclipse.collections.api.set.ImmutableSet;
 import org.eclipse.collections.impl.utility.LazyIterate;
@@ -27,7 +25,6 @@ public abstract class AbstractConferenceExplorer
 
     private void loadConferencesFromCsv()
     {
-        MutableList<Conference> tempConferences = Lists.mutable.empty();
         CsvSchema headerSchema = CsvSchema.emptySchema().withHeader();
         URL url = AbstractConferenceExplorer.class.getClassLoader().getResource("data/conferences.csv");
         final CsvMapper mapper = new CsvMapper();
