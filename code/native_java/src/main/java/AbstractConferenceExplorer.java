@@ -16,6 +16,12 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 public abstract class AbstractConferenceExplorer
 {
     private Set<Conference> conferences;
+    private Predicate<Conference> initialFilter;
+
+    public AbstractConferenceExplorer(Predicate<Conference> filterPredicate)
+    {
+        this.initialFilter = filterPredicate;
+    }
 
     protected void loadConferencesFromCsv()
     {
@@ -43,7 +49,7 @@ public abstract class AbstractConferenceExplorer
                 tempConferences.add(conference);
             }
             this.conferences = tempConferences.stream()
-                    .filter(this.filterPredicate())
+                    .filter(this.initialFilter())
                     .collect(Collectors.toUnmodifiableSet());
         }
         catch (IOException e)
@@ -52,7 +58,10 @@ public abstract class AbstractConferenceExplorer
         }
     }
 
-    public abstract Predicate<Conference> filterPredicate();
+    public Predicate<Conference> initialFilter()
+    {
+        return this.initialFilter;
+    }
 
     public Set<Conference> getConferences()
     {

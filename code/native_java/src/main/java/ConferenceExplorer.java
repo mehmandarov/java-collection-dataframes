@@ -2,21 +2,19 @@ import java.util.function.Predicate;
 
 public class ConferenceExplorer extends AbstractConferenceExplorer
 {
-    private final int year;
-
     public ConferenceExplorer(int year)
     {
-        this.year = year;
+        this(yearPredicate(year));
+    }
+
+    public ConferenceExplorer(Predicate<Conference> initialFilter)
+    {
+        super(initialFilter);
         this.loadConferencesFromCsv();
     }
 
-    public int getYear()
+    private static Predicate<Conference> yearPredicate(int year)
     {
-        return this.year;
-    }
-
-    public Predicate<Conference> filterPredicate()
-    {
-        return conference -> conference.startDate().getYear() == this.getYear();
+        return conference -> conference.startDate().getYear() == year;
     }
 }

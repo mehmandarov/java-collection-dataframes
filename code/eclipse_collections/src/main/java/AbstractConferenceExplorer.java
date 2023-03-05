@@ -16,11 +16,11 @@ import org.eclipse.collections.api.set.ImmutableSet;
 public abstract class AbstractConferenceExplorer
 {
     private ImmutableSet<Conference> conferences;
-    private Predicate<Conference> filterPredicate;
+    private Predicate<Conference> initialFilter;
 
     public AbstractConferenceExplorer(Predicate<Conference> filterPredicate)
     {
-        this.filterPredicate = filterPredicate;
+        this.initialFilter = filterPredicate;
     }
 
     protected void loadConferencesFromCsv()
@@ -48,7 +48,7 @@ public abstract class AbstractConferenceExplorer
                                 r.get("Session Types"));
                 tempConferences.add(conference);
             }
-            this.conferences = tempConferences.select(this.filterPredicate()).toImmutableSet();
+            this.conferences = tempConferences.select(this.initialFilter()).toImmutableSet();
         }
         catch (IOException e)
         {
@@ -56,9 +56,9 @@ public abstract class AbstractConferenceExplorer
         }
     }
 
-    public Predicate<Conference> filterPredicate()
+    public Predicate<Conference> initialFilter()
     {
-        return this.filterPredicate;
+        return this.initialFilter;
     }
 
     public ImmutableSet<Conference> getConferences()
