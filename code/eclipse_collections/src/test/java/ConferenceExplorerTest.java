@@ -118,13 +118,13 @@ public class ConferenceExplorerTest
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
         ObjectLongMap<Country> expected = ObjectLongMaps.mutable.<Country>empty()
-                .withKeyValue(Country.SWEDEN, 3)
-                .withKeyValue(Country.USA, 3)
-                .withKeyValue(Country.ROMANIA, 3)
-                .withKeyValue(Country.GREECE, 3)
-                .withKeyValue(Country.GERMANY, 3)
-                .withKeyValue(Country.WWW, 6)
-                .withKeyValue(Country.POLAND, 3);
+                .withKeyValue(Country.SWEDEN, 3L)
+                .withKeyValue(Country.USA, 3L)
+                .withKeyValue(Country.ROMANIA, 3L)
+                .withKeyValue(Country.GREECE, 3L)
+                .withKeyValue(Country.GERMANY, 3L)
+                .withKeyValue(Country.WWW, 6L)
+                .withKeyValue(Country.POLAND, 3L);
         Assertions.assertEquals(expected, explorer.conferenceDaysByCountry());
     }
 }
