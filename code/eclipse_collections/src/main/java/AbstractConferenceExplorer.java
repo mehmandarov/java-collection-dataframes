@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
@@ -14,28 +15,19 @@ import org.eclipse.collections.api.set.ImmutableSet;
 
 public abstract class AbstractConferenceExplorer
 {
-    private static final String CSV_CONFERENCES = """
-            Event Name,Country,City,Start Date,End Date,Session Types
-            Devoxx Greece,Greece,Athens,2023-05-04,2023-05-06,"[talks,workshops]"
-            GeeCon,Poland,Krakow,2023-04-19,2023-04-21,"[talks,workshops]"
-            DevNexus,United States,Atlanta,2023-04-04,2023-04-06,"[talks,workshops]"
-            JavaLand,Germany,Brühl,2023-03-21,2023-03-23,"[talks,workshops]"
-            Voxxed Days Bucharest,Romania,Bucharest,2023-03-22,2023-03-24,"[talks,workshops]"
-            Jfokus,Sweden,Stockholm,2023-02-06,2023-02-08,"[talks,workshops]"
-            jChampionsConf,WWW,Online event,2023-01-19,2023-01-24,"[talks,]"
-            """;
     private ImmutableSet<Conference> conferences;
 
     protected void loadConferencesFromCsv()
     {
         MutableList<Conference> tempConferences = Lists.mutable.empty();
         CsvSchema headerSchema = CsvSchema.emptySchema().withHeader();
+        URL url = AbstractConferenceExplorer.class.getClassLoader().getResource("data/conferences.csv");
         final CsvMapper mapper = new CsvMapper();
         try (
                 MappingIterator<Map<String, String>> it = mapper
                         .readerForMapOf(String.class)
                         .with(headerSchema)
-                        .readValues(CSV_CONFERENCES))
+                        .readValues(url))
         {
             List<Map<String, String>> lists = it.readAll();
             for (Map<String, String> r : lists)
