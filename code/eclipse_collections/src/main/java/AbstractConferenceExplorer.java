@@ -1,13 +1,16 @@
 import java.io.IOException;
 import java.net.URL;
+import java.time.Month;
 import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
+import org.eclipse.collections.api.bag.Bag;
 import org.eclipse.collections.api.block.predicate.Predicate;
 import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.map.primitive.ObjectLongMap;
 import org.eclipse.collections.api.multimap.set.ImmutableSetMultimap;
 import org.eclipse.collections.api.set.ImmutableSet;
 import org.eclipse.collections.impl.utility.LazyIterate;
@@ -89,5 +92,25 @@ public abstract class AbstractConferenceExplorer
     public ImmutableSet<Country> getCountries()
     {
         return this.getConferences().collect(Conference::country);
+    }
+
+    public Bag<Country> countByCountry()
+    {
+        return this.conferences.countBy(Conference::country);
+    }
+
+    public Bag<SessionType> countBySessionType()
+    {
+        return this.conferences.countByEach(Conference::sessionTypes);
+    }
+
+    public Bag<Month> countByMonth()
+    {
+        return this.conferences.countBy(Conference::getMonth);
+    }
+
+    public ObjectLongMap<Country> conferenceDaysByCountry()
+    {
+        return this.conferences.sumByLong(Conference::country, Conference::durationInDays);
     }
 }

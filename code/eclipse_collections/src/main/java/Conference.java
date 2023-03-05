@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.temporal.ChronoUnit;
 
 import org.eclipse.collections.api.set.ImmutableSet;
@@ -49,5 +50,10 @@ public record Conference(
     public String countryName()
     {
         return this.country.getName();
+    }
+
+    public Month getMonth()
+    {
+        return this.startDate.getMonth();
     }
 }

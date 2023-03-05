@@ -1,6 +1,13 @@
+import java.time.Month;
+
 import org.eclipse.collections.api.RichIterable;
+import org.eclipse.collections.api.bag.Bag;
+import org.eclipse.collections.api.bag.MutableBag;
+import org.eclipse.collections.api.factory.Bags;
 import org.eclipse.collections.api.factory.Sets;
+import org.eclipse.collections.api.factory.primitive.ObjectLongMaps;
 import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.map.primitive.ObjectLongMap;
 import org.eclipse.collections.api.multimap.Multimap;
 import org.eclipse.collections.api.multimap.set.ImmutableSetMultimap;
 import org.eclipse.collections.api.set.ImmutableSet;
@@ -66,5 +73,58 @@ public class ConferenceExplorerTest
         ImmutableSet<String> flags = explorer.getCountries().collect(Country::getFlag);
         ImmutableSet<String> expectedFlags = Sets.immutable.with("🇬🇷", "🇵🇱", "🇺🇸", "🇩🇪", "🇷🇴", "🇸🇪", "🕸");
         Assertions.assertEquals(expectedFlags, flags);
+    }
+
+    @Test
+    public void countByCountry()
+    {
+        ConferenceExplorer explorer = new ConferenceExplorer(2023);
+        Bag<Country> expected = Bags.immutable.with(
+                Country.SWEDEN,
+                Country.USA,
+                Country.ROMANIA,
+                Country.GERMANY,
+                Country.GREECE,
+                Country.WWW,
+                Country.POLAND);
+        Assertions.assertEquals(expected, explorer.countByCountry());
+    }
+
+    @Test
+    public void countBySessionType()
+    {
+        ConferenceExplorer explorer = new ConferenceExplorer(2023);
+        Bag<SessionType> expected = Bags.immutable.withOccurrences(
+                SessionType.TALK, 7,
+                SessionType.WORKSHOP, 6);
+        Assertions.assertEquals(expected, explorer.countBySessionType());
+    }
+
+    @Test
+    public void countByMonth()
+    {
+        ConferenceExplorer explorer = new ConferenceExplorer(2023);
+        MutableBag<Month> expected = Bags.mutable.empty();
+        expected.addOccurrences(Month.JANUARY, 1);
+        expected.addOccurrences(Month.FEBRUARY, 1);
+        expected.addOccurrences(Month.MARCH, 2);
+        expected.addOccurrences(Month.APRIL, 2);
+        expected.addOccurrences(Month.MAY, 1);
+        Assertions.assertEquals(expected, explorer.countByMonth());
+    }
+
+    @Test
+    public void conferenceDaysByCountry()
+    {
+        ConferenceExplorer explorer = new ConferenceExplorer(2023);
+        ObjectLongMap<Country> expected = ObjectLongMaps.mutable.<Country>empty()
+                .withKeyValue(Country.SWEDEN, 3)
+                .withKeyValue(Country.USA, 3)
+                .withKeyValue(Country.ROMANIA, 3)
+                .withKeyValue(Country.GREECE, 3)
+                .withKeyValue(Country.GERMANY, 3)
+                .withKeyValue(Country.WWW, 6)
+                .withKeyValue(Country.POLAND, 3);
+        Assertions.assertEquals(expected, explorer.conferenceDaysByCountry());
     }
 }
