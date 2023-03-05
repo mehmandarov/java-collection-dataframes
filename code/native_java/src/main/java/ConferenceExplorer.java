@@ -1,8 +1,7 @@
 import java.io.IOException;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -90,16 +89,12 @@ public class ConferenceExplorer
 
     public Map<SessionType, Set<Conference>> groupBySessionType()
     {
-        Map<SessionType, Set<Conference>> result = new HashMap<>();
-        for (Conference conference : this.conferences)
-        {
-            for (SessionType sessionType : conference.sessionTypes())
-            {
-                result.computeIfAbsent(sessionType, st -> new HashSet<>()).add(conference);
-            }
-        }
-        result.replaceAll((key, value) -> Set.copyOf(value));
-        return Map.copyOf(result);
+        return Map.copyOf(this.conferences.stream()
+                .flatMap(conference -> conference.sessionTypes().stream()
+                        .map(sessionType -> new SimpleEntry<>(sessionType, conference)))
+                .collect(Collectors.groupingBy(
+                        SimpleEntry::getKey,
+                        Collectors.mapping(SimpleEntry::getValue, Collectors.toUnmodifiableSet()))));
     }
 
     public Set<Country> getCountries()
