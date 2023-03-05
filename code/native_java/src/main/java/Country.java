@@ -18,7 +18,7 @@ public enum Country
         return Stream.of(Country.values())
                 .filter(country -> name.equalsIgnoreCase(country.getName()))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> { throw new NullPointerException("No country named: " + name); });
     }
 
     Country(String name, String flag)

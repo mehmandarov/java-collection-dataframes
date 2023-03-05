@@ -21,9 +21,10 @@ public abstract class AbstractConferenceExplorer
     public AbstractConferenceExplorer(Predicate<Conference> filterPredicate)
     {
         this.initialFilter = filterPredicate;
+        this.loadConferencesFromCsv();
     }
 
-    protected void loadConferencesFromCsv()
+    private void loadConferencesFromCsv()
     {
         MutableList<Conference> tempConferences = Lists.mutable.empty();
         CsvSchema headerSchema = CsvSchema.emptySchema().withHeader();

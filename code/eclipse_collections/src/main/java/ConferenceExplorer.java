@@ -10,7 +10,6 @@ public class ConferenceExplorer extends AbstractConferenceExplorer
     public ConferenceExplorer(Predicate<Conference> initialFilter)
     {
         super(initialFilter);
-        this.loadConferencesFromCsv();
     }
 
     private static Predicate<Conference> yearPredicate(int year)

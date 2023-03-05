@@ -8,6 +8,6 @@ public class CountryTest
     {
         Assertions.assertSame(Country.SWEDEN, Country.fromName("Sweden"));
         Assertions.assertSame(Country.USA, Country.fromName("United States"));
-        Assertions.assertNull(Country.fromName("States"));
+        Assertions.assertThrows(NullPointerException.class, () -> Country.fromName("States"));
     }
 }
