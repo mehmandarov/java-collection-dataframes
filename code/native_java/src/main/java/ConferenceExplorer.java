@@ -83,10 +83,9 @@ public class ConferenceExplorer
 
     public List<Conference> sortByDaysToEvent()
     {
-        List<Conference> list = this.conferences.stream()
-                .collect(Collectors.toList());
-        list.sort(Comparator.comparing(Conference::daysToEvent));
-        return List.copyOf(list);
+        return this.conferences.stream()
+                .sorted(Comparator.comparing(Conference::daysToEvent))
+                .toList();
     }
 
     public Map<SessionType, Set<Conference>> groupBySessionType()
