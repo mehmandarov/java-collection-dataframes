@@ -3,6 +3,7 @@ import org.eclipse.collections.api.block.predicate.Predicate;
 public class ConferenceExplorer extends AbstractConferenceExplorer
 {
     private final int year;
+
     public ConferenceExplorer(int year)
     {
         this.year = year;
@@ -16,6 +17,6 @@ public class ConferenceExplorer extends AbstractConferenceExplorer
 
     public Predicate<Conference> filterPredicate()
     {
-        return conference -> conference.startDate().getYear() == year;
+        return conference -> conference.startDate().getYear() == this.getYear();
     }
 }
