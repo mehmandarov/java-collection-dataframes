@@ -13,7 +13,7 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 
 public class ConferenceExplorer
 {
-    private static String CSV_CONFERENCES = """
+    private static final String CSV_CONFERENCES = """
             Event Name,Country,City,Start Date,End Date,Session Types
             Devoxx Greece,Greece,Athens,2023-05-04,2023-05-06,"[talks,workshops]"
             GeeCon,Poland,Krakow,2023-04-19,2023-04-21,"[talks,workshops]"
@@ -36,12 +36,12 @@ public class ConferenceExplorer
         List<Conference> tempConferences = new ArrayList<>();
         CsvSchema headerSchema = CsvSchema.emptySchema().withHeader();
         final CsvMapper mapper = new CsvMapper();
-        try
+        try (
+                MappingIterator<Map<String, String>> it = mapper
+                        .readerForMapOf(String.class)
+                        .with(headerSchema)
+                        .readValues(CSV_CONFERENCES))
         {
-            MappingIterator<Map<String, String>> it = mapper
-                    .readerForMapOf(String.class)
-                    .with(headerSchema)
-                    .readValues(CSV_CONFERENCES);
             List<Map<String, String>> lists = it.readAll();
             for (Map<String, String> r : lists)
             {
@@ -77,7 +77,7 @@ public class ConferenceExplorer
     public Map<String, Set<Conference>> groupByCity()
     {
         return this.conferences.stream()
-            .collect(Collectors.groupingBy(Conference::city, Collectors.toUnmodifiableSet()));
+                .collect(Collectors.groupingBy(Conference::city, Collectors.toUnmodifiableSet()));
     }
 
     public List<Conference> sortByDaysToEvent()
