@@ -1,6 +1,6 @@
 import java.io.IOException;
 import java.net.URL;
-import java.util.AbstractMap;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +15,7 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 public abstract class AbstractConferenceExplorer
 {
     private Set<Conference> conferences;
-    private Predicate<Conference> initialFilter;
+    private final Predicate<Conference> initialFilter;
 
     public AbstractConferenceExplorer(Predicate<Conference> filterPredicate)
     {
@@ -90,10 +90,10 @@ public abstract class AbstractConferenceExplorer
     {
         return Map.copyOf(this.conferences.stream()
                 .flatMap(conference -> conference.sessionTypes().stream()
-                        .map(sessionType -> new AbstractMap.SimpleEntry<>(sessionType, conference)))
+                        .map(sessionType -> new SimpleEntry<>(sessionType, conference)))
                 .collect(Collectors.groupingBy(
-                        AbstractMap.SimpleEntry::getKey,
-                        Collectors.mapping(AbstractMap.SimpleEntry::getValue, Collectors.toUnmodifiableSet()))));
+                        SimpleEntry::getKey,
+                        Collectors.mapping(SimpleEntry::getValue, Collectors.toUnmodifiableSet()))));
     }
 
     public Set<Country> getCountries()

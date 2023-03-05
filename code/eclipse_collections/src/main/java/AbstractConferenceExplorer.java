@@ -15,7 +15,7 @@ import org.eclipse.collections.impl.utility.LazyIterate;
 public abstract class AbstractConferenceExplorer
 {
     private ImmutableSet<Conference> conferences;
-    private Predicate<Conference> initialFilter;
+    private final Predicate<Conference> initialFilter;
 
     public AbstractConferenceExplorer(Predicate<Conference> filterPredicate)
     {
