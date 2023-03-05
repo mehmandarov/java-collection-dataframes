@@ -37,19 +37,8 @@ public abstract class AbstractConferenceExplorer
                         .readValues(url))
         {
             List<Map<String, String>> lists = it.readAll();
-            for (Map<String, String> r : lists)
-            {
-                Conference conference =
-                        new Conference(
-                                r.get("Event Name"),
-                                r.get("Country"),
-                                r.get("City"),
-                                r.get("Start Date"),
-                                r.get("End Date"),
-                                r.get("Session Types"));
-                tempConferences.add(conference);
-            }
-            this.conferences = tempConferences.stream()
+            this.conferences = lists.stream()
+                    .map(this::createConference)
                     .filter(this.initialFilter())
                     .collect(Collectors.toUnmodifiableSet());
         }
@@ -57,6 +46,17 @@ public abstract class AbstractConferenceExplorer
         {
             throw new RuntimeException(e);
         }
+    }
+
+    private Conference createConference(Map<String, String> map)
+    {
+        return new Conference(
+                map.get("Event Name"),
+                map.get("Country"),
+                map.get("City"),
+                map.get("Start Date"),
+                map.get("End Date"),
+                map.get("Session Types"));
     }
 
     public Predicate<Conference> initialFilter()
