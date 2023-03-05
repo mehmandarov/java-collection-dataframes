@@ -16,6 +16,12 @@ import org.eclipse.collections.api.set.ImmutableSet;
 public abstract class AbstractConferenceExplorer
 {
     private ImmutableSet<Conference> conferences;
+    private Predicate<Conference> filterPredicate;
+
+    public AbstractConferenceExplorer(Predicate<Conference> filterPredicate)
+    {
+        this.filterPredicate = filterPredicate;
+    }
 
     protected void loadConferencesFromCsv()
     {
@@ -50,7 +56,10 @@ public abstract class AbstractConferenceExplorer
         }
     }
 
-    public abstract Predicate<Conference> filterPredicate();
+    public Predicate<Conference> filterPredicate()
+    {
+        return this.filterPredicate;
+    }
 
     public ImmutableSet<Conference> getConferences()
     {
