@@ -12,6 +12,7 @@ import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.multimap.set.ImmutableSetMultimap;
 import org.eclipse.collections.api.set.ImmutableSet;
+import org.eclipse.collections.impl.utility.LazyIterate;
 
 public abstract class AbstractConferenceExplorer
 {
@@ -37,24 +38,25 @@ public abstract class AbstractConferenceExplorer
                         .readValues(url))
         {
             List<Map<String, String>> lists = it.readAll();
-            for (Map<String, String> r : lists)
-            {
-                Conference conference =
-                        new Conference(
-                                r.get("Event Name"),
-                                r.get("Country"),
-                                r.get("City"),
-                                r.get("Start Date"),
-                                r.get("End Date"),
-                                r.get("Session Types"));
-                tempConferences.add(conference);
-            }
-            this.conferences = tempConferences.select(this.initialFilter()).toImmutableSet();
+            this.conferences = LazyIterate.collect(lists, this::createConference)
+                    .select(this.initialFilter())
+                    .toImmutableSet();
         }
         catch (IOException e)
         {
             throw new RuntimeException(e);
         }
+    }
+
+    private Conference createConference(Map<String, String> map)
+    {
+        return new Conference(
+                map.get("Event Name"),
+                map.get("Country"),
+                map.get("City"),
+                map.get("Start Date"),
+                map.get("End Date"),
+                map.get("Session Types"));
     }
 
     public Predicate<Conference> initialFilter()
