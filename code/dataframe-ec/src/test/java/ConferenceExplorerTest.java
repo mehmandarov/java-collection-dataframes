@@ -81,26 +81,26 @@ public class ConferenceExplorerTest
         });
     }
 
-    // @Test
-    // public void groupByCountry()
-    // {
-    //     ConferenceExplorer explorer = new ConferenceExplorer(2023);
-    //     Map<Country, Set<Conference>> byCountry = explorer.groupByCountry();
-    //     Set<Conference> conferences = byCountry.get(Country.GREECE);
-    //     Assertions.assertEquals(1, conferences.size());
-    //     Assertions.assertEquals("Athens", conferences.iterator().next().city());
-    // }
-    //
-    // @Test
-    // public void groupByCity()
-    // {
-    //     ConferenceExplorer explorer = new ConferenceExplorer(2023);
-    //     Map<String, Set<Conference>> byCountry = explorer.groupByCity();
-    //     Set<Conference> conferences = byCountry.get("Athens");
-    //     Assertions.assertEquals(1, conferences.size());
-    //     Assertions.assertEquals(Country.GREECE, conferences.iterator().next().country());
-    // }
-    //
+    @Test
+    public void groupByCountry()
+    {
+        ConferenceExplorer explorer = new ConferenceExplorer(2023);
+        DataFrame byCountry = explorer.groupByCountry();
+        DataFrame conferences = byCountry.selectBy("toUpper(Country) == 'GREECE'");
+        Assertions.assertEquals(1, conferences.rowCount());
+        Assertions.assertEquals("Athens", conferences.getValue("City", 0).stringValue());
+    }
+
+    @Test
+    public void groupByCity()
+    {
+        ConferenceExplorer explorer = new ConferenceExplorer(2023);
+        DataFrame byCity = explorer.groupByCity();
+        DataFrame conferences = byCity.selectBy("City == 'Athens'");
+        Assertions.assertEquals(1, conferences.rowCount());
+        Assertions.assertEquals("Greece", conferences.getValue("Country", 0).stringValue());
+    }
+
     // @Test
     // public void groupBySessionTypes()
     // {

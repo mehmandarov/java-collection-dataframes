@@ -146,6 +146,16 @@ public class ConferenceExplorer
         return this.conferences.sumBy(Lists.immutable.with("Duration"), Lists.immutable.with("Country"));
     }
 
+    public DataFrame groupByCountry()
+    {
+        return this.conferences.sortBy(Lists.immutable.with("Country"));
+    }
+
+    public DataFrame groupByCity()
+    {
+        return this.conferences.sortBy(Lists.immutable.with("City"));
+    }
+
     // public DataFrame groupByCountry()
     // {
     //     return this.conferences.stream()
