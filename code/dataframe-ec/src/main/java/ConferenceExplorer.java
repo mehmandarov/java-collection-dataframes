@@ -39,9 +39,11 @@ public class ConferenceExplorer
         URL url = ConferenceExplorer.class.getClassLoader().getResource("data/conferences.csv");
         DataFrame dataFrame = new CsvDataSet(url.getPath(), "Conferences", conferenceSchema).loadAsDataFrame();
         ConferenceExplorer.addDaysUntilFunction();
+        ConferenceExplorer.addDurationFunction();
         ConferenceExplorer.addYearFunction();
         ConferenceExplorer.addMonthFunction();
         dataFrame.attachColumn(dataFrame.createComputedColumn("DaysToEvent", ValueType.LONG, "daysUntil(StartDate)"));
+        dataFrame.attachColumn(dataFrame.createComputedColumn("Duration", ValueType.LONG, "durationInDays(StartDate, EndDate)"));
         dataFrame.attachColumn(dataFrame.createComputedColumn("Month", ValueType.STRING, "monthOf(StartDate)"));
         // TODO apply filter to data
         this.conferences = dataFrame.selectBy(initialFilter);
@@ -101,6 +103,24 @@ public class ConferenceExplorer
         });
     }
 
+    private static void addDurationFunction()
+    {
+        BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptor("durationInDays")
+        {
+            @Override
+            public Value evaluate(VectorValue parameters)
+            {
+                return new LongValue(ChronoUnit.DAYS.between(((DateValue) parameters.get(0)).dateValue(), ((DateValue) parameters.get(1)).dateValue().plusDays(1L)));
+            }
+
+            @Override
+            public ValueType returnType(ListIterable<ValueType> parameterTypes)
+            {
+                return ValueType.LONG;
+            }
+        });
+    }
+
     public DataFrame getConferences()
     {
         return this.conferences;
@@ -119,6 +139,11 @@ public class ConferenceExplorer
     public DataFrame countByCountry()
     {
         return this.conferences.aggregateBy(Lists.immutable.with(AggregateFunction.count("Country", "CountryCount")), Lists.immutable.with("Country"));
+    }
+
+    public DataFrame conferenceDaysByCountry()
+    {
+        return this.conferences.sumBy(Lists.immutable.with("Duration"), Lists.immutable.with("Country"));
     }
 
     // public DataFrame groupByCountry()
