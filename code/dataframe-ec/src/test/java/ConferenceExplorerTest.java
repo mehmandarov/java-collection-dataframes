@@ -23,6 +23,19 @@ public class ConferenceExplorerTest
     }
 
     // @Test
+    // public void countByMonth()
+    // {
+    //     ConferenceExplorer explorer = new ConferenceExplorer(2023);
+    //     Map<Month, Long> expected = new HashMap<>();
+    //     expected.put(Month.JANUARY, 1L);
+    //     expected.put(Month.FEBRUARY, 1L);
+    //     expected.put(Month.MARCH, 2L);
+    //     expected.put(Month.APRIL, 2L);
+    //     expected.put(Month.MAY, 1L);
+    //     Assertions.assertEquals(expected, explorer.countByMonth());
+    // }
+
+    // @Test
     // public void groupByCountry()
     // {
     //     ConferenceExplorer explorer = new ConferenceExplorer(2023);
@@ -91,20 +104,6 @@ public class ConferenceExplorerTest
     //     expected.put(SessionType.WORKSHOP, 6L);
     //     Assertions.assertEquals(expected, explorer.countBySessionType());
     // }
-    //
-    // @Test
-    // public void countByMonth()
-    // {
-    //     ConferenceExplorer explorer = new ConferenceExplorer(2023);
-    //     Map<Month, Long> expected = new HashMap<>();
-    //     expected.put(Month.JANUARY, 1L);
-    //     expected.put(Month.FEBRUARY, 1L);
-    //     expected.put(Month.MARCH, 2L);
-    //     expected.put(Month.APRIL, 2L);
-    //     expected.put(Month.MAY, 1L);
-    //     Assertions.assertEquals(expected, explorer.countByMonth());
-    // }
-    //
     // @Test
     // public void conferenceDaysByCountry()
     // {

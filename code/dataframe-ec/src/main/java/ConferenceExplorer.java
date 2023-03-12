@@ -21,13 +21,12 @@ public class ConferenceExplorer
 
     public ConferenceExplorer(int year)
     {
-        this.loadConferencesFromCsv("StartDate.year = " + year);
+        this.loadConferencesFromCsv("year(StartDate) == " + year);
     }
 
     private void loadConferencesFromCsv(String initialFilter)
     {
-        CsvSchema conferenceSchema = new CsvSchema()
-                .separator(',');
+        CsvSchema conferenceSchema = new CsvSchema().separator(',');
         conferenceSchema.addColumn("EventName", ValueType.STRING);
         conferenceSchema.addColumn("Country", ValueType.STRING);
         conferenceSchema.addColumn("City", ValueType.STRING);
@@ -37,6 +36,15 @@ public class ConferenceExplorer
 
         URL url = ConferenceExplorer.class.getClassLoader().getResource("data/conferences.csv");
         DataFrame dataFrame = new CsvDataSet(url.getPath(), "Conferences", conferenceSchema).loadAsDataFrame();
+        ConferenceExplorer.addDaysUntilFunction();
+        ConferenceExplorer.addYearFunction();
+        dataFrame.attachColumn(dataFrame.createComputedColumn("DaysToEvent", ValueType.LONG, "daysUntil(StartDate)"));
+        // TODO apply filter to data
+        this.conferences = dataFrame.selectBy(initialFilter);
+    }
+
+    private static void addDaysUntilFunction()
+    {
         BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptor("daysUntil")
         {
             @Override
@@ -51,19 +59,43 @@ public class ConferenceExplorer
                 return ValueType.LONG;
             }
         });
-        dataFrame.attachColumn(
-                dataFrame.createComputedColumn(
-                        "DaysToEvent",
-                        ValueType.LONG,
-                        "daysUntil(StartDate)"));
-        // TODO apply filter to data
-        this.conferences = dataFrame;
+    }
+
+    private static void addYearFunction()
+    {
+        BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptor("year")
+        {
+            @Override
+            public Value evaluate(VectorValue parameters)
+            {
+                return new LongValue(((DateValue) parameters.get(0)).dateValue().getYear());
+            }
+
+            @Override
+            public ValueType returnType(ListIterable<ValueType> parameterTypes)
+            {
+                return ValueType.LONG;
+            }
+        });
     }
 
     public DataFrame getConferences()
     {
         return this.conferences;
     }
+
+    public DataFrame sortByDaysToEvent()
+    {
+        return this.conferences.sortBy(Lists.immutable.with("DaysToEvent"));
+    }
+
+
+    // public Map<Month, Long> countByMonth()
+    // {
+    //     AggregateFunction function =
+    //     return this.conferences.aggregate()
+    //             .collect(Collectors.groupingBy(Conference::getMonth, Collectors.counting()));
+    // }
 
     // public DataFrame groupByCountry()
     // {
@@ -76,12 +108,6 @@ public class ConferenceExplorer
     //     return this.conferences.stream()
     //             .collect(Collectors.groupingBy(Conference::city, Collectors.toUnmodifiableSet()));
     // }
-
-    public DataFrame sortByDaysToEvent()
-    {
-        return this.conferences.sortBy(Lists.immutable.with("DaysToEvent"));
-    }
-
     // public Map<SessionType, Set<Conference>> groupBySessionType()
     // {
     //     return Map.copyOf(this.conferences.stream()
@@ -112,13 +138,6 @@ public class ConferenceExplorer
     //                     .map(sessionType -> new SimpleEntry<>(sessionType, conference)))
     //             .collect(Collectors.groupingBy(SimpleEntry::getKey, Collectors.counting()));
     // }
-    //
-    // public Map<Month, Long> countByMonth()
-    // {
-    //     return this.conferences.stream()
-    //             .collect(Collectors.groupingBy(Conference::getMonth, Collectors.counting()));
-    // }
-    //
     // public Map<Country, Long> conferenceDaysByCountry()
     // {
     //     return this.conferences.stream().
