@@ -43,6 +43,25 @@ public class ConferenceExplorerTest
         });
     }
 
+    @Test
+    public void countByCountry()
+    {
+        ConferenceExplorer explorer = new ConferenceExplorer(2023);
+        Map<String, Long> expected = new HashMap<>();
+        expected.put("SWEDEN", 1L);
+        expected.put("UNITED STATES", 1L);
+        expected.put("ROMANIA", 1L);
+        expected.put("GERMANY", 1L);
+        expected.put("GREECE", 1L);
+        expected.put("WWW", 1L);
+        expected.put("POLAND", 1L);
+        DataFrame countByMonth = explorer.countByCountry();
+        expected.forEach((k, v) -> {
+            DataFrame result = countByMonth.selectBy("toUpper(Country) == '" + k + "' and CountryCount == " + v.longValue());
+            Assertions.assertEquals(1, result.rowCount());
+        });
+    }
+
     // @Test
     // public void groupByCountry()
     // {
@@ -87,22 +106,6 @@ public class ConferenceExplorerTest
     //     Set<String> expectedFlags = Set.of("🇬🇷", "🇵🇱", "🇺🇸", "🇩🇪", "🇷🇴", "🇸🇪", "🕸");
     //     Assertions.assertEquals(expectedFlags, flags);
     // }
-    //
-    // @Test
-    // public void countByCountry()
-    // {
-    //     ConferenceExplorer explorer = new ConferenceExplorer(2023);
-    //     Map<Country, Long> expected = new HashMap<>();
-    //     expected.put(Country.SWEDEN, 1L);
-    //     expected.put(Country.USA, 1L);
-    //     expected.put(Country.ROMANIA, 1L);
-    //     expected.put(Country.GERMANY, 1L);
-    //     expected.put(Country.GREECE, 1L);
-    //     expected.put(Country.WWW, 1L);
-    //     expected.put(Country.POLAND, 1L);
-    //     Assertions.assertEquals(expected, explorer.countByCountry());
-    // }
-    //
     // @Test
     // public void countBySessionType()
     // {

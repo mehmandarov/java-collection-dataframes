@@ -116,6 +116,11 @@ public class ConferenceExplorer
         return this.conferences.aggregateBy(Lists.immutable.with(AggregateFunction.count("Month", "MonthCount")), Lists.immutable.with("Month"));
     }
 
+    public DataFrame countByCountry()
+    {
+        return this.conferences.aggregateBy(Lists.immutable.with(AggregateFunction.count("Country", "CountryCount")), Lists.immutable.with("Country"));
+    }
+
     // public DataFrame groupByCountry()
     // {
     //     return this.conferences.stream()
