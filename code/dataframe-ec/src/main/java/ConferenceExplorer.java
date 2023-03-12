@@ -1,9 +1,19 @@
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import io.github.vmzakharov.ecdataframe.dataframe.DataFrame;
 import io.github.vmzakharov.ecdataframe.dataset.CsvDataSet;
 import io.github.vmzakharov.ecdataframe.dataset.CsvSchema;
+import io.github.vmzakharov.ecdataframe.dsl.function.BuiltInFunctions;
+import io.github.vmzakharov.ecdataframe.dsl.function.IntrinsicFunctionDescriptor;
+import io.github.vmzakharov.ecdataframe.dsl.value.DateValue;
+import io.github.vmzakharov.ecdataframe.dsl.value.LongValue;
+import io.github.vmzakharov.ecdataframe.dsl.value.Value;
 import io.github.vmzakharov.ecdataframe.dsl.value.ValueType;
+import io.github.vmzakharov.ecdataframe.dsl.value.VectorValue;
+import org.eclipse.collections.api.factory.Lists;
+import org.eclipse.collections.api.list.ListIterable;
 
 public class ConferenceExplorer
 {
@@ -27,6 +37,25 @@ public class ConferenceExplorer
 
         URL url = ConferenceExplorer.class.getClassLoader().getResource("data/conferences.csv");
         DataFrame dataFrame = new CsvDataSet(url.getPath(), "Conferences", conferenceSchema).loadAsDataFrame();
+        BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptor("daysUntil")
+        {
+            @Override
+            public Value evaluate(VectorValue parameters)
+            {
+                return new LongValue(ChronoUnit.DAYS.between(LocalDate.now(), ((DateValue) parameters.get(0)).dateValue()));
+            }
+
+            @Override
+            public ValueType returnType(ListIterable<ValueType> parameterTypes)
+            {
+                return ValueType.LONG;
+            }
+        });
+        dataFrame.attachColumn(
+                dataFrame.createComputedColumn(
+                        "DaysToEvent",
+                        ValueType.LONG,
+                        "daysUntil(StartDate)"));
         // TODO apply filter to data
         this.conferences = dataFrame;
     }
@@ -47,14 +76,12 @@ public class ConferenceExplorer
     //     return this.conferences.stream()
     //             .collect(Collectors.groupingBy(Conference::city, Collectors.toUnmodifiableSet()));
     // }
-    //
-    // public List<Conference> sortByDaysToEvent()
-    // {
-    //     return this.conferences.stream()
-    //             .sorted(Comparator.comparing(Conference::daysToEvent))
-    //             .toList();
-    // }
-    //
+
+    public DataFrame sortByDaysToEvent()
+    {
+        return this.conferences.sortBy(Lists.immutable.with("DaysToEvent"));
+    }
+
     // public Map<SessionType, Set<Conference>> groupBySessionType()
     // {
     //     return Map.copyOf(this.conferences.stream()

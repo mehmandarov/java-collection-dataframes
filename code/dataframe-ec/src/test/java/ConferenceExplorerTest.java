@@ -1,3 +1,4 @@
+import io.github.vmzakharov.ecdataframe.dataframe.DataFrame;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +9,17 @@ public class ConferenceExplorerTest
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
         Assertions.assertEquals(7, explorer.getConferences().rowCount());
+    }
+
+    @Test
+    public void sortByDaysToEvent()
+    {
+        ConferenceExplorer explorer = new ConferenceExplorer(2023);
+        DataFrame conferences = explorer.sortByDaysToEvent();
+        String closestEvent = conferences.getValue("EventName", 0).stringValue();
+        Assertions.assertEquals("jChampionsConf", closestEvent);
+        String furthestEvent = conferences.getValue("EventName", conferences.rowCount() - 1).stringValue();
+        Assertions.assertEquals("Devoxx Greece", furthestEvent);
     }
 
     // @Test
@@ -28,17 +40,6 @@ public class ConferenceExplorerTest
     //     Set<Conference> conferences = byCountry.get("Athens");
     //     Assertions.assertEquals(1, conferences.size());
     //     Assertions.assertEquals(Country.GREECE, conferences.iterator().next().country());
-    // }
-    //
-    // @Test
-    // public void sortByDaysToEvent()
-    // {
-    //     ConferenceExplorer explorer = new ConferenceExplorer(2023);
-    //     List<Conference> conferences = explorer.sortByDaysToEvent();
-    //     Conference closestEvent = conferences.get(0);
-    //     Assertions.assertEquals("jChampionsConf", closestEvent.eventName());
-    //     Conference furthestEvent = conferences.get(conferences.size() - 1);
-    //     Assertions.assertEquals("Devoxx Greece", furthestEvent.eventName());
     // }
     //
     // @Test
