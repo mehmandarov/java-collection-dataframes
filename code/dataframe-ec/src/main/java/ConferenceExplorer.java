@@ -2,6 +2,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+import io.github.vmzakharov.ecdataframe.dataframe.AggregateFunction;
 import io.github.vmzakharov.ecdataframe.dataframe.DataFrame;
 import io.github.vmzakharov.ecdataframe.dataset.CsvDataSet;
 import io.github.vmzakharov.ecdataframe.dataset.CsvSchema;
@@ -9,6 +10,7 @@ import io.github.vmzakharov.ecdataframe.dsl.function.BuiltInFunctions;
 import io.github.vmzakharov.ecdataframe.dsl.function.IntrinsicFunctionDescriptor;
 import io.github.vmzakharov.ecdataframe.dsl.value.DateValue;
 import io.github.vmzakharov.ecdataframe.dsl.value.LongValue;
+import io.github.vmzakharov.ecdataframe.dsl.value.StringValue;
 import io.github.vmzakharov.ecdataframe.dsl.value.Value;
 import io.github.vmzakharov.ecdataframe.dsl.value.ValueType;
 import io.github.vmzakharov.ecdataframe.dsl.value.VectorValue;
@@ -21,7 +23,7 @@ public class ConferenceExplorer
 
     public ConferenceExplorer(int year)
     {
-        this.loadConferencesFromCsv("year(StartDate) == " + year);
+        this.loadConferencesFromCsv("yearOf(StartDate) == " + year);
     }
 
     private void loadConferencesFromCsv(String initialFilter)
@@ -38,7 +40,9 @@ public class ConferenceExplorer
         DataFrame dataFrame = new CsvDataSet(url.getPath(), "Conferences", conferenceSchema).loadAsDataFrame();
         ConferenceExplorer.addDaysUntilFunction();
         ConferenceExplorer.addYearFunction();
+        ConferenceExplorer.addMonthFunction();
         dataFrame.attachColumn(dataFrame.createComputedColumn("DaysToEvent", ValueType.LONG, "daysUntil(StartDate)"));
+        dataFrame.attachColumn(dataFrame.createComputedColumn("Month", ValueType.STRING, "monthOf(StartDate)"));
         // TODO apply filter to data
         this.conferences = dataFrame.selectBy(initialFilter);
     }
@@ -63,7 +67,7 @@ public class ConferenceExplorer
 
     private static void addYearFunction()
     {
-        BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptor("year")
+        BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptor("yearOf")
         {
             @Override
             public Value evaluate(VectorValue parameters)
@@ -79,6 +83,24 @@ public class ConferenceExplorer
         });
     }
 
+    private static void addMonthFunction()
+    {
+        BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptor("monthOf")
+        {
+            @Override
+            public Value evaluate(VectorValue parameters)
+            {
+                return new StringValue(((DateValue) parameters.get(0)).dateValue().getMonth().toString());
+            }
+
+            @Override
+            public ValueType returnType(ListIterable<ValueType> parameterTypes)
+            {
+                return ValueType.STRING;
+            }
+        });
+    }
+
     public DataFrame getConferences()
     {
         return this.conferences;
@@ -89,13 +111,10 @@ public class ConferenceExplorer
         return this.conferences.sortBy(Lists.immutable.with("DaysToEvent"));
     }
 
-
-    // public Map<Month, Long> countByMonth()
-    // {
-    //     AggregateFunction function =
-    //     return this.conferences.aggregate()
-    //             .collect(Collectors.groupingBy(Conference::getMonth, Collectors.counting()));
-    // }
+    public DataFrame countByMonth()
+    {
+        return this.conferences.aggregateBy(Lists.immutable.with(AggregateFunction.count("Month", "MonthCount")), Lists.immutable.with("Month"));
+    }
 
     // public DataFrame groupByCountry()
     // {

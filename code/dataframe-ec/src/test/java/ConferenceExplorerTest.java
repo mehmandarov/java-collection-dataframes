@@ -1,3 +1,7 @@
+import java.time.Month;
+import java.util.HashMap;
+import java.util.Map;
+
 import io.github.vmzakharov.ecdataframe.dataframe.DataFrame;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -22,18 +26,22 @@ public class ConferenceExplorerTest
         Assertions.assertEquals("Devoxx Greece", furthestEvent);
     }
 
-    // @Test
-    // public void countByMonth()
-    // {
-    //     ConferenceExplorer explorer = new ConferenceExplorer(2023);
-    //     Map<Month, Long> expected = new HashMap<>();
-    //     expected.put(Month.JANUARY, 1L);
-    //     expected.put(Month.FEBRUARY, 1L);
-    //     expected.put(Month.MARCH, 2L);
-    //     expected.put(Month.APRIL, 2L);
-    //     expected.put(Month.MAY, 1L);
-    //     Assertions.assertEquals(expected, explorer.countByMonth());
-    // }
+    @Test
+    public void countByMonth()
+    {
+        ConferenceExplorer explorer = new ConferenceExplorer(2023);
+        Map<Month, Long> expected = new HashMap<>();
+        expected.put(Month.JANUARY, 1L);
+        expected.put(Month.FEBRUARY, 1L);
+        expected.put(Month.MARCH, 2L);
+        expected.put(Month.APRIL, 2L);
+        expected.put(Month.MAY, 1L);
+        DataFrame countByMonth = explorer.countByMonth();
+        expected.forEach((k, v) -> {
+            DataFrame result = countByMonth.selectBy("Month == '" + k + "' and MonthCount == " + v.longValue());
+            Assertions.assertEquals(1, result.rowCount());
+        });
+    }
 
     // @Test
     // public void groupByCountry()
