@@ -156,17 +156,6 @@ public class ConferenceExplorer
         return this.conferences.sortBy(Lists.immutable.with("City"));
     }
 
-    // public DataFrame groupByCountry()
-    // {
-    //     return this.conferences.stream()
-    //             .collect(Collectors.groupingBy(Conference::country, Collectors.toUnmodifiableSet()));
-    // }
-    //
-    // public Map<String, Set<Conference>> groupByCity()
-    // {
-    //     return this.conferences.stream()
-    //             .collect(Collectors.groupingBy(Conference::city, Collectors.toUnmodifiableSet()));
-    // }
     // public Map<SessionType, Set<Conference>> groupBySessionType()
     // {
     //     return Map.copyOf(this.conferences.stream()
@@ -184,22 +173,11 @@ public class ConferenceExplorer
     //             .collect(Collectors.toUnmodifiableSet());
     // }
     //
-    // public Map<Country, Long> countByCountry()
-    // {
-    //     return this.conferences.stream()
-    //             .collect(Collectors.groupingBy(Conference::country, Collectors.counting()));
-    // }
-    //
     // public Map<SessionType, Long> countBySessionType()
     // {
     //     return this.conferences.stream()
     //             .flatMap(conference -> conference.sessionTypes().stream()
     //                     .map(sessionType -> new SimpleEntry<>(sessionType, conference)))
     //             .collect(Collectors.groupingBy(SimpleEntry::getKey, Collectors.counting()));
-    // }
-    // public Map<Country, Long> conferenceDaysByCountry()
-    // {
-    //     return this.conferences.stream().
-    //             collect(Collectors.groupingBy(Conference::country, Collectors.summingLong(Conference::durationInDays)));
     // }
 }
