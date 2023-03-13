@@ -39,7 +39,7 @@ public class ConferenceExplorer
     private void loadConferencesFromCsv()
     {
         CsvSchema headerSchema = CsvSchema.emptySchema().withHeader();
-        URL url = AbstractConferenceExplorer.class.getClassLoader().getResource("data/conferences.csv");
+        URL url = ConferenceExplorer.class.getClassLoader().getResource("data/conferences.csv");
         final CsvMapper mapper = new CsvMapper();
         try (
                 MappingIterator<Map<String, String>> it = mapper
