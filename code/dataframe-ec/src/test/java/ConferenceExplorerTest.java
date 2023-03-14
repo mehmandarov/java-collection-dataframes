@@ -142,14 +142,14 @@ public class ConferenceExplorerTest
          Assertions.assertEquals(0, bySessionType.get("workshops").selectBy("EventName == \"jChampionsConf\"").rowCount());
      }
 
-    //
-    // @Test
-    // public void countBySessionType()
-    // {
-    //     ConferenceExplorer explorer = new ConferenceExplorer(2023);
-    //     Map<SessionType, Long> expected = new HashMap<>();
-    //     expected.put(SessionType.TALK, 7L);
-    //     expected.put(SessionType.WORKSHOP, 6L);
-    //     Assertions.assertEquals(expected, explorer.countBySessionType());
-    // }
+
+     @Test
+     public void countBySessionType()
+     {
+         ConferenceExplorer explorer = new ConferenceExplorer(2023);
+         Map<String, Long> expected = new HashMap<>();
+         expected.put("talks", 7L);
+         expected.put("workshops", 6L);
+         Assertions.assertEquals(expected, explorer.countBySessionType());
+     }
 }

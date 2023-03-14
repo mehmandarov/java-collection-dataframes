@@ -260,34 +260,14 @@ public class ConferenceExplorer
         groupedBySessionTypes.put("workshops", sessionTypePivot.selectBy("HasWorkshops == \"1\""));
         return groupedBySessionTypes;
     }
-    /* TODO:
-    1. Session type -> from string to list or DF
-    2. Join with country codes and generate emojis
-    3. Putting slides together
-    */
 
-    // public Map<SessionType, Set<Conference>> groupBySessionType()
-    // {
-    //     return Map.copyOf(this.conferences.stream()
-    //             .flatMap(conference -> conference.sessionTypes().stream()
-    //                     .map(sessionType -> new SimpleEntry<>(sessionType, conference)))
-    //             .collect(Collectors.groupingBy(
-    //                     SimpleEntry::getKey,
-    //                     Collectors.mapping(SimpleEntry::getValue, Collectors.toUnmodifiableSet()))));
-    // }
-    //
-    // public Set<Country> getCountries()
-    // {
-    //     return this.conferences.stream()
-    //             .map(Conference::country)
-    //             .collect(Collectors.toUnmodifiableSet());
-    // }
-    //
-    // public Map<SessionType, Long> countBySessionType()
-    // {
-    //     return this.conferences.stream()
-    //             .flatMap(conference -> conference.sessionTypes().stream()
-    //                     .map(sessionType -> new SimpleEntry<>(sessionType, conference)))
-    //             .collect(Collectors.groupingBy(SimpleEntry::getKey, Collectors.counting()));
-    // }
+
+     public Map<String, Long> countBySessionType()
+     {
+         Map<String, DataFrame> groupedBySessionTypes = groupBySessionType();
+         Map<String, Long> countBySessionTypes = new HashMap<>();
+         countBySessionTypes.put("talks", (long) groupedBySessionTypes.get("talks").rowCount());
+         countBySessionTypes.put("workshops", (long) groupedBySessionTypes.get("workshops").rowCount());
+         return countBySessionTypes;
+     }
 }
