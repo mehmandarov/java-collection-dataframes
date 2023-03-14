@@ -4,6 +4,7 @@ import java.time.temporal.ChronoUnit;
 
 import io.github.vmzakharov.ecdataframe.dataframe.AggregateFunction;
 import io.github.vmzakharov.ecdataframe.dataframe.DataFrame;
+import io.github.vmzakharov.ecdataframe.dataframe.DfJoin;
 import io.github.vmzakharov.ecdataframe.dataset.CsvDataSet;
 import io.github.vmzakharov.ecdataframe.dataset.CsvSchema;
 import io.github.vmzakharov.ecdataframe.dsl.function.BuiltInFunctions;
@@ -17,13 +18,17 @@ import io.github.vmzakharov.ecdataframe.dsl.value.VectorValue;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ListIterable;
 
+import static io.github.vmzakharov.ecdataframe.dataframe.AggregateFunction.count;
+
 public class ConferenceExplorer
 {
     private DataFrame conferences;
+    private DataFrame countryCodes;
 
     public ConferenceExplorer(int year)
     {
         this.loadConferencesFromCsv("yearOf(StartDate) == " + year);
+        this.loadCountryCodesFromCsv();
     }
 
     private void loadConferencesFromCsv(String initialFilter)
@@ -47,6 +52,20 @@ public class ConferenceExplorer
         dataFrame.attachColumn(dataFrame.createComputedColumn("Month", ValueType.STRING, "monthOf(StartDate)"));
         // TODO apply filter to data
         this.conferences = dataFrame.selectBy(initialFilter);
+    }
+
+    private void loadCountryCodesFromCsv()
+    {
+        CsvSchema countryCodesSchema = new CsvSchema().separator(',');
+        countryCodesSchema.addColumn("Country", ValueType.STRING);
+        countryCodesSchema.addColumn("Alpha2Code", ValueType.STRING);
+
+        URL url = ConferenceExplorer.class.getClassLoader().getResource("data/country_codes.csv");
+        DataFrame countryCodesDataFrame = new CsvDataSet(url.getPath(), "CountryCodes", countryCodesSchema).loadAsDataFrame();
+
+        ConferenceExplorer.addflagEmojiFunction();
+
+        this.countryCodes = countryCodesDataFrame;
     }
 
     private static void addDaysUntilFunction()
@@ -121,6 +140,27 @@ public class ConferenceExplorer
         });
     }
 
+    private static void addflagEmojiFunction()
+    {
+        BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptor("toFlagEmoji")
+        {
+            @Override
+            public Value evaluate(VectorValue parameters)
+            {
+                EmojiHelper emojiHelper = new EmojiHelper();
+                return new StringValue(
+                        ((String) emojiHelper.toFlagEmoji(parameters.get(0).stringValue()))
+                );
+            }
+
+            @Override
+            public ValueType returnType(ListIterable<ValueType> parameterTypes)
+            {
+                return ValueType.STRING;
+            }
+        });
+    }
+
     public DataFrame getConferences()
     {
         return this.conferences;
@@ -156,6 +196,32 @@ public class ConferenceExplorer
         return this.conferences.sortBy(Lists.immutable.with("City"));
     }
 
+
+    public DataFrame getCountries()
+    {
+        // TODO: Fix this workaround when a new version of DataFrame-EC gets released with 'unique()'.
+        DataFrame countByCountry = this.conferences.aggregateBy(
+                Lists.immutable.of(count("Country", "ConfCount")),
+                Lists.immutable.of("Country")
+        ).keepColumns(Lists.immutable.of("Country"));
+
+        // Join two dataframes on 'Country' key. Add '**unknown**' if there is no hit in the countryCodes dataframe.
+        countByCountry.lookup(DfJoin.to(this.countryCodes)
+                .match("Country", "Country")
+                .select("Alpha2Code")
+                .ifAbsent("**unknown**"));
+        countByCountry.sortBy(Lists.immutable.of("Country"));
+
+        countByCountry.addColumn("Flag", ValueType.STRING, "toFlagEmoji( Alpha2Code )");
+
+        System.out.println(countByCountry.asCsvString());
+        return countByCountry;
+    }
+
+    //    public DataFrame getCountries()
+    //    {
+    //        return this.getConferences().collect(Conference::country);
+    //    }
     // public Map<SessionType, Set<Conference>> groupBySessionType()
     // {
     //     return Map.copyOf(this.conferences.stream()

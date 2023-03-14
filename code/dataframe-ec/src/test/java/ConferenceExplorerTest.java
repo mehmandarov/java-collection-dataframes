@@ -3,8 +3,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.github.vmzakharov.ecdataframe.dataframe.DataFrame;
+import io.github.vmzakharov.ecdataframe.dsl.value.ValueType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import javax.xml.crypto.Data;
 
 public class ConferenceExplorerTest
 {
@@ -101,6 +104,31 @@ public class ConferenceExplorerTest
         Assertions.assertEquals("Greece", conferences.getValue("Country", 0).stringValue());
     }
 
+     @Test
+     public void getCountries()
+     {
+         ConferenceExplorer explorer = new ConferenceExplorer(2023);
+         DataFrame flags = explorer.getCountries().getColumnNamed("Flag").getDataFrame();
+
+         DataFrame expectedFlags = new DataFrame("Flag");
+         expectedFlags.addColumn("Flag", ValueType.STRING);
+         Map<String, String> expected = new HashMap<>();
+         expected.put("SWEDEN", "🇸🇪");
+         expected.put("UNITED STATES", "🇺🇸");
+         expected.put("ROMANIA", "🇷🇴");
+         expected.put("GERMANY", "🇩🇪");
+         expected.put("GREECE", "🇬🇷");
+         expected.put("WWW", "🌐");
+         expected.put("POLAND", "🇵🇱");
+
+         expected.forEach((k, v) -> {
+             DataFrame result = flags.selectBy("toUpper(Country) == '" + k + "' and Flag == '" + v + "'");
+             String error = "Unexpected results for Country: %s and Flag: %s.";
+             Assertions.assertEquals(1, result.rowCount(), String.format(error, k, v));
+         });
+
+     }
+
     // @Test
     // public void groupBySessionTypes()
     // {
@@ -115,16 +143,6 @@ public class ConferenceExplorerTest
     //     Assertions.assertEquals("jChampionsConf", difference.iterator().next().eventName());
     // }
     //
-    // @Test
-    // public void getCountries()
-    // {
-    //     ConferenceExplorer explorer = new ConferenceExplorer(2023);
-    //     Set<String> flags = explorer.getCountries().stream()
-    //             .map(Country::getFlag)
-    //             .collect(Collectors.toSet());
-    //     Set<String> expectedFlags = Set.of("🇬🇷", "🇵🇱", "🇺🇸", "🇩🇪", "🇷🇴", "🇸🇪", "🕸");
-    //     Assertions.assertEquals(expectedFlags, flags);
-    // }
     // @Test
     // public void countBySessionType()
     // {
