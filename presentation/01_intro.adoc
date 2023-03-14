@@ -1,0 +1,20 @@
+==== Dataframes, Collections, and Streams in Java - Introduction
+
+===== Rustam Mehmandarov (link:https://twitter.com/rmehmandarov[@rmehmandarov])
+* Passionate computer scientist
+* Java Champion (2017)
+* Google Developers Expert (GDE) for Cloud
+* JavaOne Rockstar
+* Ex-leader of JavaZone and Norwegian JUG – javaBin
+
+===== Donald Raab (link:https://twitter.com/TheDonRaab[@TheDonRaab])
+* Managing Director & Distinguished Engineer, BNY Mellon
+* Creator, Project Lead, Committer for link:https://github.com/eclipse/eclipse-collections[Eclipse Collections]
+* Java Champion (2018)
+* Member of the JSR 335 Expert Group (Lambdas, Streams)
+* Contributing Author, "link:https://www.oreilly.com/library/view/97-things-every/9781491952689/[97 Things Every Java Programmer Should Know]" - O'Reilly
+
+---
+
+link:toc.adoc[⬆️ TOC] /
+link:./02_the_problem.adoc[➡️ The Problem]

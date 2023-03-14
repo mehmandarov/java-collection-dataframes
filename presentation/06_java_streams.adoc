@@ -1,0 +1,7 @@
+==== Eclipse Collections
+
+---
+
+link:toc.adoc[⬆️ TOC] /
+link:./05_eclipse_collections.adoc[⬅️ Eclipse Collections] /
+link:./06_java_streams.adoc[➡️ Java Streams]

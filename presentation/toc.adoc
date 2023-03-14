@@ -1,0 +1,15 @@
+==== Dataframes, Collections, and Streams in Java
+===== Table of Contents
+
+* link:00_title.adoc[Title]
+* link:01_intro.adoc[Introduction]
+* link:02_the_problem.adoc[The Problem]
+* link:03_conference_explorer.adoc[Conference Explorer]
+* link:04_data_frame_ec.adoc[DataFrame-EC]
+* link:05_eclipse_collections.adoc[Eclipse Collections]
+* link:06_java_streams.adoc[Java Streams]
+* link:A0_appendix.adoc[Appendix]
+
+---
+===== link:https://twitter.com/rmehmandarov[@rmehmandarov], link:https://twitter.com/TheDonRaab[@TheDonRaab]
+

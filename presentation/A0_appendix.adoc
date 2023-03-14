@@ -1,0 +1,7 @@
+== Appendix
+
+
+---
+
+link:./toc.adoc[⬆️ TOC] /
+link:06_java_streams.adoc[⬅️ Java Streams]
