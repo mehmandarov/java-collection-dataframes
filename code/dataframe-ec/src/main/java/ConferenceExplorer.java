@@ -210,9 +210,9 @@ public class ConferenceExplorer
                 .ifAbsent("**unknown**"));
         countByCountry.sortBy(Lists.immutable.of("Country"));
 
+        // Generate flag emojis using the two-letter country code and add them as a new column.
         countByCountry.addColumn("Flag", ValueType.STRING, "toFlagEmoji( Alpha2Code )");
 
-        System.out.println(countByCountry.asCsvString());
         return countByCountry;
     }
 
