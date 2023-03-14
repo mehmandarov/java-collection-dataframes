@@ -1,6 +1,8 @@
 import java.time.Month;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import io.github.vmzakharov.ecdataframe.dataframe.DataFrame;
 import io.github.vmzakharov.ecdataframe.dsl.value.ValueType;
@@ -127,19 +129,19 @@ public class ConferenceExplorerTest
 
      }
 
-    // @Test
-    // public void groupBySessionTypes()
-    // {
-    //     ConferenceExplorer explorer = new ConferenceExplorer(2023);
-    //     Map<SessionType, Set<Conference>> bySessionType = explorer.groupBySessionType();
-    //     Assertions.assertEquals(7, bySessionType.get(SessionType.TALK).size());
-    //     Assertions.assertEquals(6, bySessionType.get(SessionType.WORKSHOP).size());
-    //     Set<Conference> difference =
-    //             bySessionType.get(SessionType.TALK).stream()
-    //                     .filter(each -> !bySessionType.get(SessionType.WORKSHOP).contains(each))
-    //                     .collect(Collectors.toSet());
-    //     Assertions.assertEquals("jChampionsConf", difference.iterator().next().eventName());
-    // }
+     @Test
+     public void groupBySessionTypes()
+     {
+         ConferenceExplorer explorer = new ConferenceExplorer(2023);
+         Map<String, DataFrame> bySessionType = explorer.groupBySessionType();
+
+         Assertions.assertEquals(7, bySessionType.get("talks").rowCount());
+         Assertions.assertEquals(6, bySessionType.get("workshops").rowCount());
+
+         Assertions.assertEquals(1, bySessionType.get("talks").selectBy("EventName == \"jChampionsConf\"").rowCount());
+         Assertions.assertEquals(0, bySessionType.get("workshops").selectBy("EventName == \"jChampionsConf\"").rowCount());
+     }
+
     //
     // @Test
     // public void countBySessionType()

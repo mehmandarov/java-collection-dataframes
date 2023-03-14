@@ -1,6 +1,9 @@
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import io.github.vmzakharov.ecdataframe.dataframe.AggregateFunction;
 import io.github.vmzakharov.ecdataframe.dataframe.DataFrame;
@@ -17,6 +20,8 @@ import io.github.vmzakharov.ecdataframe.dsl.value.ValueType;
 import io.github.vmzakharov.ecdataframe.dsl.value.VectorValue;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ListIterable;
+
+import javax.xml.crypto.Data;
 
 import static io.github.vmzakharov.ecdataframe.dataframe.AggregateFunction.count;
 
@@ -47,6 +52,7 @@ public class ConferenceExplorer
         ConferenceExplorer.addDurationFunction();
         ConferenceExplorer.addYearFunction();
         ConferenceExplorer.addMonthFunction();
+        ConferenceExplorer.addExtractSessionTypesFunction();
         dataFrame.attachColumn(dataFrame.createComputedColumn("DaysToEvent", ValueType.LONG, "daysUntil(StartDate)"));
         dataFrame.attachColumn(dataFrame.createComputedColumn("Duration", ValueType.LONG, "durationInDays(StartDate, EndDate)"));
         dataFrame.attachColumn(dataFrame.createComputedColumn("Month", ValueType.STRING, "monthOf(StartDate)"));
@@ -159,6 +165,33 @@ public class ConferenceExplorer
         });
     }
 
+    private static void addExtractSessionTypesFunction()
+    {
+        BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptor("extractSessionTypes")
+        {
+            @Override
+            public Value evaluate(VectorValue parameters)
+            {
+                String sessionTypes = parameters.get(0).stringValue().toLowerCase();
+                String lookupSessionType = parameters.get(1).stringValue().toLowerCase();
+                if (sessionTypes.contains(lookupSessionType))
+                {
+                    return new StringValue("1");
+                }
+                else
+                {
+                    return new StringValue("0");
+                }
+            }
+
+            @Override
+            public ValueType returnType(ListIterable<ValueType> parameterTypes)
+            {
+                return ValueType.STRING;
+            }
+        });
+    }
+
     public DataFrame getConferences()
     {
         return this.conferences;
@@ -216,16 +249,23 @@ public class ConferenceExplorer
         return countByCountry;
     }
 
+    public Map<String, DataFrame> groupBySessionType()
+    {
+        DataFrame sessionTypePivot = this.conferences.copy("Conference Session Type Pivot");
+        sessionTypePivot.addColumn("HasTalks", ValueType.STRING, "extractSessionTypes( SessionTypes, \"talks\" )");
+        sessionTypePivot.addColumn("HasWorkshops", ValueType.STRING, "extractSessionTypes( SessionTypes, \"workshops\" )");
+
+        Map<String, DataFrame> groupedBySessionTypes = new HashMap<>();
+        groupedBySessionTypes.put("talks", sessionTypePivot.selectBy("HasTalks == \"1\""));
+        groupedBySessionTypes.put("workshops", sessionTypePivot.selectBy("HasWorkshops == \"1\""));
+        return groupedBySessionTypes;
+    }
     /* TODO:
     1. Session type -> from string to list or DF
     2. Join with country codes and generate emojis
     3. Putting slides together
     */
 
-    //    public DataFrame getCountries()
-    //    {
-    //        return this.getConferences().collect(Conference::country);
-    //    }
     // public Map<SessionType, Set<Conference>> groupBySessionType()
     // {
     //     return Map.copyOf(this.conferences.stream()
