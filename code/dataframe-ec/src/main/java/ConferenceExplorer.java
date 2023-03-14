@@ -63,7 +63,7 @@ public class ConferenceExplorer
         URL url = ConferenceExplorer.class.getClassLoader().getResource("data/country_codes.csv");
         DataFrame countryCodesDataFrame = new CsvDataSet(url.getPath(), "CountryCodes", countryCodesSchema).loadAsDataFrame();
 
-        ConferenceExplorer.addflagEmojiFunction();
+        ConferenceExplorer.addFlagEmojiFunction();
 
         this.countryCodes = countryCodesDataFrame;
     }
@@ -140,7 +140,7 @@ public class ConferenceExplorer
         });
     }
 
-    private static void addflagEmojiFunction()
+    private static void addFlagEmojiFunction()
     {
         BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptor("toFlagEmoji")
         {
@@ -148,9 +148,7 @@ public class ConferenceExplorer
             public Value evaluate(VectorValue parameters)
             {
                 EmojiHelper emojiHelper = new EmojiHelper();
-                return new StringValue(
-                        ((String) emojiHelper.toFlagEmoji(parameters.get(0).stringValue()))
-                );
+                return new StringValue(emojiHelper.toFlagEmoji(parameters.get(0).stringValue()));
             }
 
             @Override
@@ -217,6 +215,12 @@ public class ConferenceExplorer
         System.out.println(countByCountry.asCsvString());
         return countByCountry;
     }
+
+    /* TODO:
+    1. Session type -> from string to list or DF
+    2. Join with country codes and generate emojis
+    3. Putting slides together
+    */
 
     //    public DataFrame getCountries()
     //    {
