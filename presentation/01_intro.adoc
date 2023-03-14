@@ -1,7 +1,7 @@
 ==== Dataframes, Collections, and Streams in Java - Introduction
 
-===== Rustam Mehmandarov (link:https://twitter.com/rmehmandarov[@rmehmandarov])
-* Passionate computer scientist
+===== Rustam Mehmandarov (link:https://twitter.com/RMehmandarov[@RMehmandarov])
+* Chief Engineer @ Computas
 * Java Champion (2017)
 * Google Developers Expert (GDE) for Cloud
 * JavaOne Rockstar

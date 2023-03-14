@@ -2,6 +2,16 @@
 
 ---
 
+* We have data that needs to be processed.
+** Conferences, of course!
+* Can we do that in Java in an efficient way?
+** How?
+* What options do we have? Some examples:
+** Java Streams
+** Eclipse Collections
+** DataFrame-EC
+
+
 link:toc.adoc[⬆️ TOC] /
 link:./01_intro.adoc[⬅️ Intro] /
 link:./03_conference_explorer.adoc[➡️ Conference Explorer]
