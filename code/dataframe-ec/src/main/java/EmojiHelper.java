@@ -50,12 +50,4 @@ public class EmojiHelper {
         }
         return stringBuilder.toString();
     }
-
-    public static void main(String[] args) {
-        EmojiHelper eh = new EmojiHelper();
-        System.out.println(eh.toFlagEmoji("NO"));
-        System.out.println(eh.toFlagEmoji("WWW"));
-        System.out.println(eh.toFlagEmoji("ES"));
-        System.out.println(eh.toFlagEmoji("**unknown**"));
-    }
 }

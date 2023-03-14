@@ -7,8 +7,6 @@ import io.github.vmzakharov.ecdataframe.dsl.value.ValueType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import javax.xml.crypto.Data;
-
 public class ConferenceExplorerTest
 {
     @Test
