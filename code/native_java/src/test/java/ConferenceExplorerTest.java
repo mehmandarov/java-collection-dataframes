@@ -22,7 +22,7 @@ public class ConferenceExplorerTest
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
         Map<Country, Set<Conference>> byCountry = explorer.groupByCountry();
-        Set<Conference> conferences = byCountry.get(Country.GREECE);
+        Set<Conference> conferences = byCountry.get(Country.getByName("GREECE"));
         Assertions.assertEquals(1, conferences.size());
         Assertions.assertEquals("Athens", conferences.iterator().next().city());
     }
@@ -34,7 +34,7 @@ public class ConferenceExplorerTest
         Map<String, Set<Conference>> byCountry = explorer.groupByCity();
         Set<Conference> conferences = byCountry.get("Athens");
         Assertions.assertEquals(1, conferences.size());
-        Assertions.assertEquals(Country.GREECE, conferences.iterator().next().country());
+        Assertions.assertEquals(Country.getByName("GREECE"), conferences.iterator().next().country());
     }
 
     @Test
@@ -67,9 +67,9 @@ public class ConferenceExplorerTest
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
         Set<String> flags = explorer.getCountries().stream()
-                .map(Country::getFlag)
+                .map(Country::flag)
                 .collect(Collectors.toSet());
-        Set<String> expectedFlags = Set.of("🇬🇷", "🇵🇱", "🇺🇸", "🇩🇪", "🇷🇴", "🇸🇪", "🕸");
+        Set<String> expectedFlags = Set.of("🇬🇷", "🇵🇱", "🇺🇸", "🇩🇪", "🇷🇴", "🇸🇪", "🌐");
         Assertions.assertEquals(expectedFlags, flags);
     }
 
@@ -78,13 +78,13 @@ public class ConferenceExplorerTest
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
         Map<Country, Long> expected = new HashMap<>();
-        expected.put(Country.SWEDEN, 1L);
-        expected.put(Country.USA, 1L);
-        expected.put(Country.ROMANIA, 1L);
-        expected.put(Country.GERMANY, 1L);
-        expected.put(Country.GREECE, 1L);
-        expected.put(Country.WWW, 1L);
-        expected.put(Country.POLAND, 1L);
+        expected.put(Country.getByName("Sweden"), 1L);
+        expected.put(Country.getByName("United States"), 1L);
+        expected.put(Country.getByName("Romania"), 1L);
+        expected.put(Country.getByName("Germany"), 1L);
+        expected.put(Country.getByName("Greece"), 1L);
+        expected.put(Country.getByName("WWW"), 1L);
+        expected.put(Country.getByName("Poland"), 1L);
         Assertions.assertEquals(expected, explorer.countByCountry());
     }
 
@@ -116,13 +116,13 @@ public class ConferenceExplorerTest
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
         Map<Country, Long> expected = new HashMap<>();
-        expected.put(Country.SWEDEN, 3L);
-        expected.put(Country.USA, 3L);
-        expected.put(Country.ROMANIA, 3L);
-        expected.put(Country.GREECE, 3L);
-        expected.put(Country.GERMANY, 3L);
-        expected.put(Country.WWW, 6L);
-        expected.put(Country.POLAND, 3L);
+        expected.put(Country.getByName("Sweden"), 3L);
+        expected.put(Country.getByName("United States"), 3L);
+        expected.put(Country.getByName("Romania"), 3L);
+        expected.put(Country.getByName("Greece"), 3L);
+        expected.put(Country.getByName("Germany"), 3L);
+        expected.put(Country.getByName("WWW"), 6L);
+        expected.put(Country.getByName("Poland"), 3L);
         Assertions.assertEquals(expected, explorer.conferenceDaysByCountry());
     }
 }

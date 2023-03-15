@@ -29,8 +29,8 @@ public class ConferenceExplorer
     public ConferenceExplorer(Predicate<Conference> initialFilter)
     {
         this.initialFilter = initialFilter;
-        this.loadConferencesFromCsv();
         this.loadCountriesFromCsv();
+        this.loadConferencesFromCsv();
     }
 
     private static Predicate<Conference> yearPredicate(int year)
@@ -60,6 +60,17 @@ public class ConferenceExplorer
         }
     }
 
+    private Conference createConference(Map<String, String> map)
+    {
+        return new Conference(
+                map.get("Event Name"),
+                map.get("Country"),
+                map.get("City"),
+                map.get("Start Date"),
+                map.get("End Date"),
+                map.get("Session Types"));
+    }
+
     private void loadCountriesFromCsv()
     {
         CsvSchema headerSchema = CsvSchema.emptySchema().withHeader();
@@ -81,17 +92,6 @@ public class ConferenceExplorer
         }
     }
 
-    private Conference createConference(Map<String, String> map)
-    {
-        return new Conference(
-                map.get("Event Name"),
-                map.get("Country"),
-                map.get("City"),
-                map.get("Start Date"),
-                map.get("End Date"),
-                map.get("Session Types"));
-    }
-
     private Country createCountry(Map<String, String> map)
     {
         return Country.newIfAbsent(
@@ -99,7 +99,6 @@ public class ConferenceExplorer
                 map.get("Alpha2Code")
         );
     }
-
 
     public Predicate<Conference> initialFilter()
     {

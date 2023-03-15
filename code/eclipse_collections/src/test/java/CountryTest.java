@@ -1,4 +1,3 @@
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +15,7 @@ public class CountryTest
     @Test
     public void caseInsensitiveLookup()
     {
-        Assert.assertSame(Country.newIfAbsent("USA", "US"), Country.newIfAbsent("usa", "us"));
-        Assert.assertNotSame(Country.newIfAbsent("USA", "US"), Country.newIfAbsent("United States", "us"));
+        Assertions.assertSame(Country.newIfAbsent("USA", "US"), Country.newIfAbsent("usa", "us"));
+        Assertions.assertNotSame(Country.newIfAbsent("USA", "US"), Country.newIfAbsent("United States", "us"));
     }
 }

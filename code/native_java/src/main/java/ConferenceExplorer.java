@@ -17,6 +17,7 @@ public class ConferenceExplorer
 {
     private final Predicate<Conference> initialFilter;
     private Set<Conference> conferences;
+    private Set<Country> countries;
 
     public ConferenceExplorer(int year)
     {
@@ -26,6 +27,7 @@ public class ConferenceExplorer
     public ConferenceExplorer(Predicate<Conference> initialFilter)
     {
         this.initialFilter = initialFilter;
+        this.loadCountriesFromCsv();
         this.loadConferencesFromCsv();
     }
 
@@ -66,6 +68,36 @@ public class ConferenceExplorer
                 map.get("Start Date"),
                 map.get("End Date"),
                 map.get("Session Types"));
+    }
+
+    private void loadCountriesFromCsv()
+    {
+        CsvSchema headerSchema = CsvSchema.emptySchema().withHeader();
+        URL url = ConferenceExplorer.class.getClassLoader().getResource("data/country_codes.csv");
+        final CsvMapper mapper = new CsvMapper();
+        try (
+                MappingIterator<Map<String, String>> it = mapper
+                        .readerForMapOf(String.class)
+                        .with(headerSchema)
+                        .readValues(url))
+        {
+            List<Map<String, String>> lists = it.readAll();
+            this.countries = lists.stream()
+                    .map(this::createCountry)
+                    .collect(Collectors.toUnmodifiableSet());
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private Country createCountry(Map<String, String> map)
+    {
+        return Country.newIfAbsent(
+                map.get("Country"),
+                map.get("Alpha2Code")
+        );
     }
 
     public Predicate<Conference> initialFilter()

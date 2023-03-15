@@ -39,14 +39,11 @@ public record Country(String name, String code, String flag)
 
     private static MutableMap<String, Country> COUNTRY_BY_NAME =
             UnifiedMapWithHashingStrategy.<String, Country>newMap(HashingStrategies.fromFunction(String::toUpperCase)).asSynchronized();
-    private static MutableMap<String, Country> COUNTRY_BY_CODE =
-            UnifiedMapWithHashingStrategy.<String, Country>newMap(HashingStrategies.fromFunction(String::toUpperCase)).asSynchronized();
 
     public Country(String name, String code)
     {
         this(name, code, Country.flagFromCode(code));
         COUNTRY_BY_NAME.putIfAbsent(name, this);
-        COUNTRY_BY_CODE.putIfAbsent(code, this);
     }
 
     public static Country newIfAbsent(String name, String code)
@@ -57,11 +54,6 @@ public record Country(String name, String code, String flag)
     public static Country getByName(String name)
     {
         return COUNTRY_BY_NAME.get(name);
-    }
-
-    public static Country getByCode(String code)
-    {
-        return COUNTRY_BY_CODE.get(code);
     }
 
     private static String flagFromCode(String countryCode)
