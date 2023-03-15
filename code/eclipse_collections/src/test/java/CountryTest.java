@@ -1,13 +1,22 @@
+import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class CountryTest
 {
     @Test
-    public void fromName()
+    public void getFlag()
     {
-        Assertions.assertSame(Country.SWEDEN, Country.fromName("Sweden"));
-        Assertions.assertSame(Country.USA, Country.fromName("United States"));
-        Assertions.assertThrows(NullPointerException.class, () -> Country.fromName("States"));
+        Assertions.assertEquals("🇺🇸", Country.newIfAbsent("United States", "US").flag());
+        Assertions.assertEquals("🇺🇸", Country.newIfAbsent("USA", "US").flag());
+        Assertions.assertEquals("🇺🇸", Country.newIfAbsent("usa", "us").flag());
+        Assertions.assertEquals("🇬🇧", Country.newIfAbsent("UK", "GB").flag());
+    }
+
+    @Test
+    public void caseInsensitiveLookup()
+    {
+        Assert.assertSame(Country.newIfAbsent("USA", "US"), Country.newIfAbsent("usa", "us"));
+        Assert.assertNotSame(Country.newIfAbsent("USA", "US"), Country.newIfAbsent("United States", "us"));
     }
 }

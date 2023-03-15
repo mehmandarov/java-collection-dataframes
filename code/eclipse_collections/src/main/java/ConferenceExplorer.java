@@ -19,6 +19,7 @@ public class ConferenceExplorer
 {
     private final Predicate<Conference> initialFilter;
     private ImmutableSet<Conference> conferences;
+    private ImmutableSet<Country> countries;
 
     public ConferenceExplorer(int year)
     {
@@ -29,6 +30,7 @@ public class ConferenceExplorer
     {
         this.initialFilter = initialFilter;
         this.loadConferencesFromCsv();
+        this.loadCountriesFromCsv();
     }
 
     private static Predicate<Conference> yearPredicate(int year)
@@ -58,6 +60,27 @@ public class ConferenceExplorer
         }
     }
 
+    private void loadCountriesFromCsv()
+    {
+        CsvSchema headerSchema = CsvSchema.emptySchema().withHeader();
+        URL url = ConferenceExplorer.class.getClassLoader().getResource("data/country_codes.csv");
+        final CsvMapper mapper = new CsvMapper();
+        try (
+                MappingIterator<Map<String, String>> it = mapper
+                        .readerForMapOf(String.class)
+                        .with(headerSchema)
+                        .readValues(url))
+        {
+            List<Map<String, String>> lists = it.readAll();
+            this.countries = LazyIterate.collect(lists, this::createCountry)
+                    .toImmutableSet();
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
     private Conference createConference(Map<String, String> map)
     {
         return new Conference(
@@ -68,6 +91,15 @@ public class ConferenceExplorer
                 map.get("End Date"),
                 map.get("Session Types"));
     }
+
+    private Country createCountry(Map<String, String> map)
+    {
+        return Country.newIfAbsent(
+                map.get("Country"),
+                map.get("Alpha2Code")
+        );
+    }
+
 
     public Predicate<Conference> initialFilter()
     {

@@ -28,7 +28,7 @@ public class ConferenceExplorerTest
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
         Multimap<Country, Conference> byCountry = explorer.groupByCountry();
-        RichIterable<Conference> conferences = byCountry.get(Country.GREECE);
+        RichIterable<Conference> conferences = byCountry.get(Country.getByName("Greece"));
         Assertions.assertEquals(1, conferences.size());
         Assertions.assertEquals("Athens", conferences.getFirst().city());
     }
@@ -40,7 +40,7 @@ public class ConferenceExplorerTest
         Multimap<String, Conference> byCountry = explorer.groupByCity();
         RichIterable<Conference> conferences = byCountry.get("Athens");
         Assertions.assertEquals(1, conferences.size());
-        Assertions.assertEquals(Country.GREECE, conferences.getFirst().country());
+        Assertions.assertEquals(Country.getByName("Greece"), conferences.getFirst().country());
     }
 
     @Test
@@ -70,8 +70,8 @@ public class ConferenceExplorerTest
     public void getCountries()
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
-        ImmutableSet<String> flags = explorer.getCountries().collect(Country::getFlag);
-        ImmutableSet<String> expectedFlags = Sets.immutable.with("🇬🇷", "🇵🇱", "🇺🇸", "🇩🇪", "🇷🇴", "🇸🇪", "🕸");
+        ImmutableSet<String> flags = explorer.getCountries().collect(Country::flag);
+        ImmutableSet<String> expectedFlags = Sets.immutable.with("🇬🇷", "🇵🇱", "🇺🇸", "🇩🇪", "🇷🇴", "🇸🇪", "🌐");
         Assertions.assertEquals(expectedFlags, flags);
     }
 
@@ -80,13 +80,13 @@ public class ConferenceExplorerTest
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
         Bag<Country> expected = Bags.immutable.with(
-                Country.SWEDEN,
-                Country.USA,
-                Country.ROMANIA,
-                Country.GERMANY,
-                Country.GREECE,
-                Country.WWW,
-                Country.POLAND);
+                Country.getByName("Sweden"),
+                Country.getByName("United States"),
+                Country.getByName("Romania"),
+                Country.getByName("Germany"),
+                Country.getByName("Greece"),
+                Country.getByName("WWW"),
+                Country.getByName("Poland"));
         Assertions.assertEquals(expected, explorer.countByCountry());
     }
 
@@ -118,13 +118,13 @@ public class ConferenceExplorerTest
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
         ObjectLongMap<Country> expected = ObjectLongMaps.mutable.<Country>empty()
-                .withKeyValue(Country.SWEDEN, 3L)
-                .withKeyValue(Country.USA, 3L)
-                .withKeyValue(Country.ROMANIA, 3L)
-                .withKeyValue(Country.GREECE, 3L)
-                .withKeyValue(Country.GERMANY, 3L)
-                .withKeyValue(Country.WWW, 6L)
-                .withKeyValue(Country.POLAND, 3L);
+                .withKeyValue(Country.getByName("Sweden"), 3L)
+                .withKeyValue(Country.getByName("United States"), 3L)
+                .withKeyValue(Country.getByName("Romania"), 3L)
+                .withKeyValue(Country.getByName("Greece"), 3L)
+                .withKeyValue(Country.getByName("Germany"), 3L)
+                .withKeyValue(Country.getByName("WWW"), 6L)
+                .withKeyValue(Country.getByName("Poland"), 3L);
         Assertions.assertEquals(expected, explorer.conferenceDaysByCountry());
     }
 }

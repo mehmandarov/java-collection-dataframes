@@ -15,7 +15,7 @@ public record Conference(
     public Conference(String eventName, String country, String city, String startDate, String endDate, String sessionTypes)
     {
         this(eventName,
-                Country.fromName(country),
+                Country.getByName(country),
                 city,
                 LocalDate.parse(startDate),
                 LocalDate.parse(endDate),
@@ -44,12 +44,12 @@ public record Conference(
 
     public String countryFlag()
     {
-        return this.country.getFlag();
+        return this.country.flag();
     }
 
     public String countryName()
     {
-        return this.country.getName();
+        return this.country.name();
     }
 
     public Month getMonth()
