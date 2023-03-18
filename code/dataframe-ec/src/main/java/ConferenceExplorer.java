@@ -10,15 +10,11 @@ import io.github.vmzakharov.ecdataframe.dataframe.DfJoin;
 import io.github.vmzakharov.ecdataframe.dataset.CsvDataSet;
 import io.github.vmzakharov.ecdataframe.dataset.CsvSchema;
 import io.github.vmzakharov.ecdataframe.dsl.function.BuiltInFunctions;
-import io.github.vmzakharov.ecdataframe.dsl.function.IntrinsicFunctionDescriptor;
-import io.github.vmzakharov.ecdataframe.dsl.value.DateValue;
+import io.github.vmzakharov.ecdataframe.dsl.function.IntrinsicFunctionDescriptorBuilder;
 import io.github.vmzakharov.ecdataframe.dsl.value.LongValue;
 import io.github.vmzakharov.ecdataframe.dsl.value.StringValue;
-import io.github.vmzakharov.ecdataframe.dsl.value.Value;
 import io.github.vmzakharov.ecdataframe.dsl.value.ValueType;
-import io.github.vmzakharov.ecdataframe.dsl.value.VectorValue;
 import org.eclipse.collections.api.factory.Lists;
-import org.eclipse.collections.api.list.ListIterable;
 
 import static io.github.vmzakharov.ecdataframe.dataframe.AggregateFunction.count;
 
@@ -73,120 +69,54 @@ public class ConferenceExplorer
 
     private static void addDaysUntilFunction()
     {
-        BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptor("daysUntil")
-        {
-            @Override
-            public Value evaluate(VectorValue parameters)
-            {
-                return new LongValue(ChronoUnit.DAYS.between(LocalDate.now(), ((DateValue) parameters.get(0)).dateValue()));
-            }
-
-            @Override
-            public ValueType returnType(ListIterable<ValueType> parameterTypes)
-            {
-                return ValueType.LONG;
-            }
-        });
+        BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptorBuilder("daysUntil")
+                .parameterNames("date")
+                .returnType(ValueType.LONG)
+                .action(context -> new LongValue(ChronoUnit.DAYS.between(LocalDate.now(), context.getDate("date")))));
     }
 
     private static void addYearFunction()
     {
-        BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptor("yearOf")
-        {
-            @Override
-            public Value evaluate(VectorValue parameters)
-            {
-                return new LongValue(((DateValue) parameters.get(0)).dateValue().getYear());
-            }
-
-            @Override
-            public ValueType returnType(ListIterable<ValueType> parameterTypes)
-            {
-                return ValueType.LONG;
-            }
-        });
+        BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptorBuilder("yearOf")
+                .parameterNames("date")
+                .returnType(ValueType.LONG)
+                .action(context -> new LongValue(context.getDate("date").getYear())));
     }
 
     private static void addMonthFunction()
     {
-        BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptor("monthOf")
-        {
-            @Override
-            public Value evaluate(VectorValue parameters)
-            {
-                return new StringValue(((DateValue) parameters.get(0)).dateValue().getMonth().toString());
-            }
-
-            @Override
-            public ValueType returnType(ListIterable<ValueType> parameterTypes)
-            {
-                return ValueType.STRING;
-            }
-        });
+        BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptorBuilder("monthOf")
+                .parameterNames("date")
+                .returnType(ValueType.STRING)
+                .action(context -> new StringValue(context.getDate("date").getMonth().toString())));
     }
 
     private static void addDurationFunction()
     {
-        BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptor("durationInDays")
-        {
-            @Override
-            public Value evaluate(VectorValue parameters)
-            {
-                return new LongValue(ChronoUnit.DAYS.between(((DateValue) parameters.get(0)).dateValue(), ((DateValue) parameters.get(1)).dateValue().plusDays(1L)));
-            }
-
-            @Override
-            public ValueType returnType(ListIterable<ValueType> parameterTypes)
-            {
-                return ValueType.LONG;
-            }
-        });
+        BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptorBuilder("durationInDays")
+                .parameterNames("from", "to")
+                .returnType(ValueType.LONG)
+                .action(context -> new LongValue(ChronoUnit.DAYS.between(context.getDate("from"), context.getDate("to").plusDays(1L)))));
     }
 
     private static void addFlagEmojiFunction()
     {
-        BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptor("toFlagEmoji")
-        {
-            @Override
-            public Value evaluate(VectorValue parameters)
-            {
-                EmojiHelper emojiHelper = new EmojiHelper();
-                return new StringValue(emojiHelper.toFlagEmoji(parameters.get(0).stringValue()));
-            }
-
-            @Override
-            public ValueType returnType(ListIterable<ValueType> parameterTypes)
-            {
-                return ValueType.STRING;
-            }
-        });
+        BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptorBuilder("toFlagEmoji")
+                .parameterNames("countryCode")
+                .returnType(ValueType.STRING)
+                .action(context -> new StringValue(new EmojiHelper().toFlagEmoji(context.getString("countryCode")))));
     }
 
     private static void addExtractSessionTypesFunction()
     {
-        BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptor("extractSessionTypes")
-        {
-            @Override
-            public Value evaluate(VectorValue parameters)
-            {
-                String sessionTypes = parameters.get(0).stringValue().toLowerCase();
-                String lookupSessionType = parameters.get(1).stringValue().toLowerCase();
-                if (sessionTypes.contains(lookupSessionType))
-                {
-                    return new StringValue("1");
-                }
-                else
-                {
-                    return new StringValue("0");
-                }
-            }
-
-            @Override
-            public ValueType returnType(ListIterable<ValueType> parameterTypes)
-            {
-                return ValueType.STRING;
-            }
-        });
+        BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptorBuilder("extractSessionTypes")
+                .parameterNames("sessionTypes" , "lookupSessionType")
+                .returnType(ValueType.STRING)
+                .action(context ->
+                        new StringValue(context.getString("sessionTypes")
+                                .toLowerCase()
+                                .contains(context.getString("lookupSessionType").toLowerCase())
+                                ? "1" : "2")));
     }
 
     public DataFrame getConferences()
