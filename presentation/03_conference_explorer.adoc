@@ -2,6 +2,22 @@
 
 ---
 
+* We built a ConferenceExplorer class for each library
+* A ConferenceExplorer does the following:
+** Reads in conferences and countries from two CSV files
+** Filters the data for a specified year
+** Provides methods that do the following:
+*** Sort by days to event
+*** Count by month
+*** Count by country
+*** Sum conference days by country
+*** Group by country
+*** Group by city
+*** Get the unique countries with their flags for all conferences
+*** Group by session types
+*** Count by session type
+** Output each of the above to a CSV file (TBD)
+
 link:toc.adoc[⬆️ TOC] /
 link:./02_the_problem.adoc[⬅️ The Problem] /
 link:./04_data_frame_ec.adoc[➡️ Data Frames]
