@@ -180,23 +180,18 @@ public class ConferenceExplorer
 
     public Map<String, DataFrame> groupBySessionType()
     {
-        DataFrame sessionTypePivot = this.conferences.copy("Conference Session Type Pivot");
-        sessionTypePivot.addColumn("HasTalks","extractSessionTypes( SessionTypes, 'talks')");
-        sessionTypePivot.addColumn("HasWorkshops","extractSessionTypes( SessionTypes, 'workshops')");
-
         Map<String, DataFrame> groupedBySessionTypes = new HashMap<>();
-        groupedBySessionTypes.put("talks", sessionTypePivot.selectBy("HasTalks == '1'"));
-        groupedBySessionTypes.put("workshops", sessionTypePivot.selectBy("HasWorkshops == '1'"));
+        groupedBySessionTypes.put("talks", this.conferences.selectBy("contains( SessionTypes, 'talks')"));
+        groupedBySessionTypes.put("workshops", this.conferences.selectBy("contains( SessionTypes, 'workshops')"));
         return groupedBySessionTypes;
     }
 
-
-     public Map<String, Long> countBySessionType()
-     {
-         Map<String, DataFrame> groupedBySessionTypes = groupBySessionType();
-         Map<String, Long> countBySessionTypes = new HashMap<>();
-         countBySessionTypes.put("talks", (long) groupedBySessionTypes.get("talks").rowCount());
-         countBySessionTypes.put("workshops", (long) groupedBySessionTypes.get("workshops").rowCount());
-         return countBySessionTypes;
-     }
+    public Map<String, Long> countBySessionType()
+    {
+        Map<String, DataFrame> groupedBySessionTypes = groupBySessionType();
+        Map<String, Long> countBySessionTypes = new HashMap<>();
+        countBySessionTypes.put("talks", (long) groupedBySessionTypes.get("talks").rowCount());
+        countBySessionTypes.put("workshops", (long) groupedBySessionTypes.get("workshops").rowCount());
+        return countBySessionTypes;
+    }
 }
