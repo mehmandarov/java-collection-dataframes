@@ -46,9 +46,9 @@ public class ConferenceExplorer
         ConferenceExplorer.addYearFunction();
         ConferenceExplorer.addMonthFunction();
         ConferenceExplorer.addExtractSessionTypesFunction();
-        dataFrame.attachColumn(dataFrame.createComputedColumn("DaysToEvent", ValueType.LONG, "daysUntil(StartDate)"));
-        dataFrame.attachColumn(dataFrame.createComputedColumn("Duration", ValueType.LONG, "durationInDays(StartDate, EndDate)"));
-        dataFrame.attachColumn(dataFrame.createComputedColumn("Month", ValueType.STRING, "monthOf(StartDate)"));
+        dataFrame.addColumn("DaysToEvent", "daysUntil(StartDate)");
+        dataFrame.addColumn("Duration", "durationInDays(StartDate, EndDate)");
+        dataFrame.addColumn("Month", "monthOf(StartDate)");
         // TODO apply filter to data
         this.conferences = dataFrame.selectBy(initialFilter);
     }
@@ -171,7 +171,7 @@ public class ConferenceExplorer
         countByCountry.sortBy(Lists.immutable.of("Country"));
 
         // Generate flag emojis using the two-letter country code and add them as a new column.
-        countByCountry.addColumn("Flag", ValueType.STRING, "toFlagEmoji( Alpha2Code )");
+        countByCountry.addColumn("Flag", "toFlagEmoji( Alpha2Code )");
 
         return countByCountry;
     }
@@ -179,8 +179,8 @@ public class ConferenceExplorer
     public Map<String, DataFrame> groupBySessionType()
     {
         DataFrame sessionTypePivot = this.conferences.copy("Conference Session Type Pivot");
-        sessionTypePivot.addColumn("HasTalks", ValueType.STRING, "extractSessionTypes( SessionTypes, \"talks\" )");
-        sessionTypePivot.addColumn("HasWorkshops", ValueType.STRING, "extractSessionTypes( SessionTypes, \"workshops\" )");
+        sessionTypePivot.addColumn("HasTalks","extractSessionTypes( SessionTypes, \"talks\" )");
+        sessionTypePivot.addColumn("HasWorkshops","extractSessionTypes( SessionTypes, \"workshops\" )");
 
         Map<String, DataFrame> groupedBySessionTypes = new HashMap<>();
         groupedBySessionTypes.put("talks", sessionTypePivot.selectBy("HasTalks == \"1\""));
