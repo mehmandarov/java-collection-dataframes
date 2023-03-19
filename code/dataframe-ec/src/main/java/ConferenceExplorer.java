@@ -6,6 +6,7 @@ import java.util.Map;
 
 import io.github.vmzakharov.ecdataframe.dataframe.AggregateFunction;
 import io.github.vmzakharov.ecdataframe.dataframe.DataFrame;
+import io.github.vmzakharov.ecdataframe.dataframe.DfIndex;
 import io.github.vmzakharov.ecdataframe.dataframe.DfJoin;
 import io.github.vmzakharov.ecdataframe.dataset.CsvDataSet;
 import io.github.vmzakharov.ecdataframe.dataset.CsvSchema;
@@ -16,10 +17,6 @@ import io.github.vmzakharov.ecdataframe.dsl.value.StringValue;
 import io.github.vmzakharov.ecdataframe.dsl.value.ValueType;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.factory.Maps;
-import org.eclipse.collections.api.map.ImmutableMap;
-import org.eclipse.collections.api.map.MutableMap;
-
-import static io.github.vmzakharov.ecdataframe.dataframe.AggregateFunction.count;
 
 public class ConferenceExplorer
 {
@@ -139,34 +136,17 @@ public class ConferenceExplorer
                 Lists.immutable.with("Country"));
     }
 
-    public ImmutableMap<String, DataFrame> groupByCountry()
+    public DfIndex groupByCountry()
     {
-        DataFrame allCountries = this.conferences.distinct(Lists.immutable.with("Country"));
-
-        MutableMap<String, DataFrame> groupedByCountry = Maps.mutable.empty();
-        int rowCount =  allCountries.rowCount();
-        for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-            String countryName = allCountries.getColumnAt(0).getValueAsString(rowIndex);
-            groupedByCountry.put(countryName, this.conferences.selectBy("toUpper(Country) == '" + countryName.toUpperCase() + "'"));
-        }
-
-        return groupedByCountry.toImmutable();
+        DfIndex index = new DfIndex(this.conferences, Lists.immutable.with("Country"));
+        return index;
     }
 
-    public ImmutableMap<String, DataFrame> groupByCity()
+    public DfIndex groupByCity()
     {
-        DataFrame allCities = this.conferences.distinct(Lists.immutable.with("City"));
-
-        MutableMap<String, DataFrame> groupedByCity = Maps.mutable.empty();
-        int rowCount =  allCities.rowCount();
-        for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-            String cityName = allCities.getColumnAt(0).getValueAsString(rowIndex);
-            groupedByCity.put(cityName, this.conferences.selectBy("toUpper(City) == '" + cityName.toUpperCase() + "'"));
-        }
-
-        return groupedByCity.toImmutable();
+        DfIndex index = new DfIndex(this.conferences, Lists.immutable.with("City"));
+        return index;
     }
-
 
     public DataFrame getCountries()
     {
@@ -188,7 +168,7 @@ public class ConferenceExplorer
 
     public Map<String, DataFrame> groupBySessionType()
     {
-        Map<String, DataFrame> groupedBySessionTypes = new HashMap<>();
+        Map<String, DataFrame> groupedBySessionTypes = Maps.mutable.empty();
         groupedBySessionTypes.put("talks", this.conferences.selectBy("contains( SessionTypes, 'talks')"));
         groupedBySessionTypes.put("workshops", this.conferences.selectBy("contains( SessionTypes, 'workshops')"));
         return groupedBySessionTypes;

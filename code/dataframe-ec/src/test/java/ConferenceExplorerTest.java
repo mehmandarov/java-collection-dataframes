@@ -3,8 +3,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.github.vmzakharov.ecdataframe.dataframe.DataFrame;
+import io.github.vmzakharov.ecdataframe.dataframe.DfIndex;
 import io.github.vmzakharov.ecdataframe.dsl.value.ValueType;
-import org.eclipse.collections.api.map.ImmutableMap;
+import org.eclipse.collections.api.factory.Lists;
+import org.eclipse.collections.api.list.primitive.IntList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -87,20 +89,20 @@ public class ConferenceExplorerTest
     public void groupByCountry()
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
-        ImmutableMap<String, DataFrame> byCountry = explorer.groupByCountry();
-        DataFrame conferences = byCountry.get("Greece");
-        Assertions.assertEquals(1, conferences.rowCount());
-        Assertions.assertEquals("Athens", conferences.getString("City", 0));
+        DfIndex byCountry = explorer.groupByCountry();
+        IntList rowIds = byCountry.getRowIndicesAtKey(Lists.mutable.with("Greece"));
+        Assertions.assertEquals(1, rowIds.size());
+        Assertions.assertEquals("Athens", explorer.getConferences().getString("City", rowIds.getFirst()));
     }
 
     @Test
     public void groupByCity()
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
-        ImmutableMap<String, DataFrame> byCity = explorer.groupByCity();
-        DataFrame conferences = byCity.get("Athens");
-        Assertions.assertEquals(1, conferences.rowCount());
-        Assertions.assertEquals("Greece", conferences.getString("Country", 0));
+        DfIndex byCity = explorer.groupByCity();
+        IntList rowIds = byCity.getRowIndicesAtKey(Lists.mutable.with("Athens"));
+        Assertions.assertEquals(1, rowIds.size());
+        Assertions.assertEquals("Greece", explorer.getConferences().getString("Country", rowIds.getFirst()));
     }
 
      @Test
@@ -125,7 +127,6 @@ public class ConferenceExplorerTest
              String error = "Unexpected results for Country: %s and Flag: %s.";
              Assertions.assertEquals(1, result.rowCount(), String.format(error, k, v));
          });
-
      }
 
      @Test
@@ -140,7 +141,6 @@ public class ConferenceExplorerTest
          Assertions.assertEquals(1, bySessionType.get("talks").selectBy("EventName == 'jChampionsConf'").rowCount());
          Assertions.assertEquals(0, bySessionType.get("workshops").selectBy("EventName == 'jChampionsConf'").rowCount());
      }
-
 
      @Test
      public void countBySessionType()
