@@ -45,7 +45,6 @@ public class ConferenceExplorer
         ConferenceExplorer.addDurationFunction();
         ConferenceExplorer.addYearFunction();
         ConferenceExplorer.addMonthFunction();
-        ConferenceExplorer.addExtractSessionTypesFunction();
         dataFrame.addColumn("DaysToEvent", "daysUntil(StartDate)");
         dataFrame.addColumn("Duration", "durationInDays(StartDate, EndDate)");
         dataFrame.addColumn("Month", "monthOf(StartDate)");
@@ -104,18 +103,6 @@ public class ConferenceExplorer
                 .parameterNames("countryCode")
                 .returnType(ValueType.STRING)
                 .action(context -> new StringValue(new CountryToFlagUtil().toFlagEmoji(context.getString("countryCode")))));
-    }
-
-    private static void addExtractSessionTypesFunction()
-    {
-        BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptorBuilder("extractSessionTypes")
-                .parameterNames("sessionTypes" , "lookupSessionType")
-                .returnType(ValueType.STRING)
-                .action(context ->
-                        new StringValue(context.getString("sessionTypes")
-                                .toLowerCase()
-                                .contains(context.getString("lookupSessionType").toLowerCase())
-                                ? "1" : "2")));
     }
 
     public DataFrame getConferences()
