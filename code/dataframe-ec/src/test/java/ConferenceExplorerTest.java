@@ -21,9 +21,9 @@ public class ConferenceExplorerTest
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
         DataFrame conferences = explorer.sortByDaysToEvent();
-        String closestEvent = conferences.getValue("EventName", 0).stringValue();
+        String closestEvent = conferences.getString("EventName", 0);
         Assertions.assertEquals("jChampionsConf", closestEvent);
-        String furthestEvent = conferences.getValue("EventName", conferences.rowCount() - 1).stringValue();
+        String furthestEvent = conferences.getString("EventName", conferences.rowCount() - 1);
         Assertions.assertEquals("Devoxx Greece", furthestEvent);
     }
 
@@ -89,7 +89,7 @@ public class ConferenceExplorerTest
         DataFrame byCountry = explorer.groupByCountry();
         DataFrame conferences = byCountry.selectBy("toUpper(Country) == 'GREECE'");
         Assertions.assertEquals(1, conferences.rowCount());
-        Assertions.assertEquals("Athens", conferences.getValue("City", 0).stringValue());
+        Assertions.assertEquals("Athens", conferences.getString("City", 0));
     }
 
     @Test
@@ -99,7 +99,7 @@ public class ConferenceExplorerTest
         DataFrame byCity = explorer.groupByCity();
         DataFrame conferences = byCity.selectBy("City == 'Athens'");
         Assertions.assertEquals(1, conferences.rowCount());
-        Assertions.assertEquals("Greece", conferences.getValue("Country", 0).stringValue());
+        Assertions.assertEquals("Greece", conferences.getString("Country", 0));
     }
 
      @Test
@@ -136,8 +136,8 @@ public class ConferenceExplorerTest
          Assertions.assertEquals(7, bySessionType.get("talks").rowCount());
          Assertions.assertEquals(6, bySessionType.get("workshops").rowCount());
 
-         Assertions.assertEquals(1, bySessionType.get("talks").selectBy("EventName == \"jChampionsConf\"").rowCount());
-         Assertions.assertEquals(0, bySessionType.get("workshops").selectBy("EventName == \"jChampionsConf\"").rowCount());
+         Assertions.assertEquals(1, bySessionType.get("talks").selectBy("EventName == 'jChampionsConf'").rowCount());
+         Assertions.assertEquals(0, bySessionType.get("workshops").selectBy("EventName == 'jChampionsConf'").rowCount());
      }
 
 
