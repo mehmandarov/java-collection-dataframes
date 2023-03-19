@@ -49,7 +49,6 @@ public class ConferenceExplorer
         dataFrame.addColumn("DaysToEvent", "daysUntil(StartDate)");
         dataFrame.addColumn("Duration", "durationInDays(StartDate, EndDate)");
         dataFrame.addColumn("Month", "monthOf(StartDate)");
-        // TODO apply filter to data
         this.conferences = dataFrame.selectBy(initialFilter);
     }
 
@@ -131,17 +130,23 @@ public class ConferenceExplorer
 
     public DataFrame countByMonth()
     {
-        return this.conferences.aggregateBy(Lists.immutable.with(AggregateFunction.count("Month", "MonthCount")), Lists.immutable.with("Month"));
+        return this.conferences.aggregateBy(
+                Lists.immutable.with(AggregateFunction.count("Month", "MonthCount")),
+                Lists.immutable.with("Month"));
     }
 
     public DataFrame countByCountry()
     {
-        return this.conferences.aggregateBy(Lists.immutable.with(AggregateFunction.count("Country", "CountryCount")), Lists.immutable.with("Country"));
+        return this.conferences.aggregateBy(
+                Lists.immutable.with(AggregateFunction.count("Country", "CountryCount")),
+                Lists.immutable.with("Country"));
     }
 
     public DataFrame conferenceDaysByCountry()
     {
-        return this.conferences.sumBy(Lists.immutable.with("Duration"), Lists.immutable.with("Country"));
+        return this.conferences.sumBy(
+                Lists.immutable.with("Duration"),
+                Lists.immutable.with("Country"));
     }
 
     public DataFrame groupByCountry()
@@ -179,12 +184,12 @@ public class ConferenceExplorer
     public Map<String, DataFrame> groupBySessionType()
     {
         DataFrame sessionTypePivot = this.conferences.copy("Conference Session Type Pivot");
-        sessionTypePivot.addColumn("HasTalks","extractSessionTypes( SessionTypes, \"talks\" )");
-        sessionTypePivot.addColumn("HasWorkshops","extractSessionTypes( SessionTypes, \"workshops\" )");
+        sessionTypePivot.addColumn("HasTalks","extractSessionTypes( SessionTypes, 'talks')");
+        sessionTypePivot.addColumn("HasWorkshops","extractSessionTypes( SessionTypes, 'workshops')");
 
         Map<String, DataFrame> groupedBySessionTypes = new HashMap<>();
-        groupedBySessionTypes.put("talks", sessionTypePivot.selectBy("HasTalks == \"1\""));
-        groupedBySessionTypes.put("workshops", sessionTypePivot.selectBy("HasWorkshops == \"1\""));
+        groupedBySessionTypes.put("talks", sessionTypePivot.selectBy("HasTalks == '1'"));
+        groupedBySessionTypes.put("workshops", sessionTypePivot.selectBy("HasWorkshops == '1'"));
         return groupedBySessionTypes;
     }
 
