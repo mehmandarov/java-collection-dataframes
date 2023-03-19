@@ -20,4 +20,4 @@
 
 link:toc.adoc[⬆️ TOC] /
 link:./02_the_problem.adoc[⬅️ The Problem] /
-link:./04_java_streams.adoc[➡️ Data Frames]
+link:./04_java_streams.adoc[➡️ Java Streams]
