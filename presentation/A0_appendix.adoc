@@ -5,4 +5,4 @@ TODO: Links and references go here.
 ---
 
 link:./toc.adoc[⬆️ TOC] /
-link:06_java_streams.adoc[⬅️ Java Streams]
+link:04_java_streams.adoc[⬅️ Java Streams]

@@ -1,7 +1,0 @@
-==== DataFrame-EC
-
----
-
-link:toc.adoc[⬆️ TOC] /
-link:./03_conference_explorer.adoc[⬅️ The Problem] /
-link:./05_eclipse_collections.adoc[➡️ Data Frames]
