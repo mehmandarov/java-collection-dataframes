@@ -162,23 +162,20 @@ public class ConferenceExplorer
 
     public DataFrame getCountries()
     {
-        // TODO: Fix this workaround when a new version of DataFrame-EC gets released with 'unique()'.
-        DataFrame countByCountry = this.conferences.aggregateBy(
-                Lists.immutable.of(count("Country", "ConfCount")),
-                Lists.immutable.of("Country")
-        ).keepColumns(Lists.immutable.of("Country"));
+        // Get distinct list of countries
+        DataFrame distinctCountries = this.conferences.distinct(Lists.immutable.of("Country"));
 
         // Join two dataframes on 'Country' key. Add '**unknown**' if there is no hit in the countryCodes dataframe.
-        countByCountry.lookup(DfJoin.to(this.countryCodes)
+        distinctCountries.lookup(DfJoin.to(this.countryCodes)
                 .match("Country", "Country")
                 .select("Alpha2Code")
                 .ifAbsent("**unknown**"));
-        countByCountry.sortBy(Lists.immutable.of("Country"));
+        distinctCountries.sortBy(Lists.immutable.of("Country"));
 
         // Generate flag emojis using the two-letter country code and add them as a new column.
-        countByCountry.addColumn("Flag", "toFlagEmoji( Alpha2Code )");
+        distinctCountries.addColumn("Flag", "toFlagEmoji( Alpha2Code )");
 
-        return countByCountry;
+        return distinctCountries;
     }
 
     public Map<String, DataFrame> groupBySessionType()
