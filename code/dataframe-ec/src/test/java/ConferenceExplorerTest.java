@@ -4,6 +4,7 @@ import java.util.Map;
 
 import io.github.vmzakharov.ecdataframe.dataframe.DataFrame;
 import io.github.vmzakharov.ecdataframe.dsl.value.ValueType;
+import org.eclipse.collections.api.map.ImmutableMap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -86,8 +87,8 @@ public class ConferenceExplorerTest
     public void groupByCountry()
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
-        DataFrame byCountry = explorer.groupByCountry();
-        DataFrame conferences = byCountry.selectBy("toUpper(Country) == 'GREECE'");
+        ImmutableMap<String, DataFrame> byCountry = explorer.groupByCountry();
+        DataFrame conferences = byCountry.get("Greece");
         Assertions.assertEquals(1, conferences.rowCount());
         Assertions.assertEquals("Athens", conferences.getString("City", 0));
     }
@@ -96,8 +97,8 @@ public class ConferenceExplorerTest
     public void groupByCity()
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
-        DataFrame byCity = explorer.groupByCity();
-        DataFrame conferences = byCity.selectBy("City == 'Athens'");
+        ImmutableMap<String, DataFrame> byCity = explorer.groupByCity();
+        DataFrame conferences = byCity.get("Athens");
         Assertions.assertEquals(1, conferences.rowCount());
         Assertions.assertEquals("Greece", conferences.getString("Country", 0));
     }

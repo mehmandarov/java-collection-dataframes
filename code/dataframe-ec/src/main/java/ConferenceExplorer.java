@@ -15,6 +15,9 @@ import io.github.vmzakharov.ecdataframe.dsl.value.LongValue;
 import io.github.vmzakharov.ecdataframe.dsl.value.StringValue;
 import io.github.vmzakharov.ecdataframe.dsl.value.ValueType;
 import org.eclipse.collections.api.factory.Lists;
+import org.eclipse.collections.api.factory.Maps;
+import org.eclipse.collections.api.map.ImmutableMap;
+import org.eclipse.collections.api.map.MutableMap;
 
 import static io.github.vmzakharov.ecdataframe.dataframe.AggregateFunction.count;
 
@@ -136,14 +139,32 @@ public class ConferenceExplorer
                 Lists.immutable.with("Country"));
     }
 
-    public DataFrame groupByCountry()
+    public ImmutableMap<String, DataFrame> groupByCountry()
     {
-        return this.conferences.sortBy(Lists.immutable.with("Country"));
+        DataFrame allCountries = this.conferences.distinct(Lists.immutable.with("Country"));
+
+        MutableMap<String, DataFrame> groupedByCountry = Maps.mutable.empty();
+        int rowCount =  allCountries.rowCount();
+        for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+            String countryName = allCountries.getColumnAt(0).getValueAsString(rowIndex);
+            groupedByCountry.put(countryName, this.conferences.selectBy("toUpper(Country) == '" + countryName.toUpperCase() + "'"));
+        }
+
+        return groupedByCountry.toImmutable();
     }
 
-    public DataFrame groupByCity()
+    public ImmutableMap<String, DataFrame> groupByCity()
     {
-        return this.conferences.sortBy(Lists.immutable.with("City"));
+        DataFrame allCities = this.conferences.distinct(Lists.immutable.with("City"));
+
+        MutableMap<String, DataFrame> groupedByCity = Maps.mutable.empty();
+        int rowCount =  allCities.rowCount();
+        for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+            String cityName = allCities.getColumnAt(0).getValueAsString(rowIndex);
+            groupedByCity.put(cityName, this.conferences.selectBy("toUpper(City) == '" + cityName.toUpperCase() + "'"));
+        }
+
+        return groupedByCity.toImmutable();
     }
 
 
