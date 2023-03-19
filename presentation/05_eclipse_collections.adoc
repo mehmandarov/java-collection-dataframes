@@ -2,6 +2,15 @@
 
 ---
 
+// TODO Sub-slides with code examples:
+////
+*** Sort by
+*** Group by
+*** Count by / Sum by
+*** Get unique values
+*** Input/Output
+////
+
 link:toc.adoc[⬆️ TOC] /
 link:./04_java_streams.adoc[⬅️ Java Streams] /
 link:./06_data_frame_ec.adoc[➡️ DataFrame-EC]

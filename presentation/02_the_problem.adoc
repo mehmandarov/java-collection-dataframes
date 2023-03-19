@@ -2,10 +2,11 @@
 
 ---
 
+// TODO: Add pictures of Lego pieces here
 * We have data that needs to be processed.
-** Conferences, of course!
+** Conference data, of course!
 * Can we do that in Java in an efficient way?
-** How?
+** Yes? How?
 * What options do we have? Some examples:
 ** Java Streams
 ** Eclipse Collections

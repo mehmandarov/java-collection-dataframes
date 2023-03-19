@@ -2,6 +2,17 @@
 
 ---
 
+// TODO Sub-slides with code examples:
+////
+*** Sort by
+*** Group by
+*** Count by / Sum by
+*** Get unique values
+*** Input/Output
+////
+
+
+
 link:toc.adoc[⬆️ TOC] /
 link:./03_conference_explorer.adoc[⬅️ Conference Explorer] /
 link:./05_eclipse_collections.adoc[➡️ Eclipse Collections]

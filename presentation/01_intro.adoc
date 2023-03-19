@@ -5,7 +5,7 @@
 * Java Champion (2017)
 * Google Developers Expert (GDE) for Cloud
 * JavaOne Rockstar
-* Ex-leader of JavaZone and Norwegian JUG – javaBin
+* Community lead
 
 ===== Donald Raab (link:https://twitter.com/TheDonRaab[@TheDonRaab])
 * Managing Director & Distinguished Engineer, BNY Mellon
