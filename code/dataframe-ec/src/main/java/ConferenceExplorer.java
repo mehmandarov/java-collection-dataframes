@@ -103,7 +103,7 @@ public class ConferenceExplorer
         BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptorBuilder("toFlagEmoji")
                 .parameterNames("countryCode")
                 .returnType(ValueType.STRING)
-                .action(context -> new StringValue(new EmojiHelper().toFlagEmoji(context.getString("countryCode")))));
+                .action(context -> new StringValue(new CountryToFlagUtil().toFlagEmoji(context.getString("countryCode")))));
     }
 
     private static void addExtractSessionTypesFunction()

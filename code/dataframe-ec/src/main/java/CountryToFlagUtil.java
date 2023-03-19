@@ -1,7 +1,7 @@
 import org.eclipse.collections.api.map.primitive.ImmutableObjectIntMap;
 import org.eclipse.collections.impl.factory.primitive.ObjectIntMaps;
 
-public class EmojiHelper {
+public class CountryToFlagUtil {
     public static ImmutableObjectIntMap<String> letter2unicode = ObjectIntMaps.mutable.<String>empty()
             .withKeyValue("A", 0x1F1E6)
             .withKeyValue("B", 0x1F1E7)

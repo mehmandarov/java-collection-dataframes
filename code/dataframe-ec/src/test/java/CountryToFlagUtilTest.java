@@ -1,11 +1,11 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class EmojiHelperTest {
+public class CountryToFlagUtilTest {
 
     @Test
     public void toFlagEmoji() {
-        EmojiHelper emoji = new EmojiHelper();
+        CountryToFlagUtil emoji = new CountryToFlagUtil();
         // Test a few countries
         Assertions.assertEquals("🇳🇴", emoji.toFlagEmoji("NO"));
         Assertions.assertEquals("🇪🇸", emoji.toFlagEmoji("ES"));
