@@ -2,16 +2,38 @@
 
 ---
 
-* We built a ConferenceExplorer class for each library
-* A ConferenceExplorer does the following:
-** Reads in conferences and countries from two CSV files
-** Filters the data for a specified year
-** Provides methods that do the following:
-*** Sort by
-*** Group by
-*** Count by / Sum by
-*** Get unique values
-** Output back to files (CSV)
+[width=75%]
+[cols="2a,8a"]
+|====
+| Java Streams
+|
+[source,java,linenums,highlight=2..3]
+----
+public class ConferenceExplorer {
+    private Set<Conference> conferences;
+    private Set<Country> countries;
+----
+| Eclipse Collections
+|
+[source,java,linenums,highlight=2..3]
+----
+public class ConferenceExplorer {
+    private ImmutableSet<Conference> conferences;
+    private ImmutableSet<Country> countries;
+----
+| DataFrame-EC
+|
+[source,java,linenums,highlight=2..3]
+----
+public class ConferenceExplorer {
+    private DataFrame conferences;
+    private DataFrame countryCodes;
+----
+|====
+
+* Reads in conferences and countries from two CSV files and filters the data for a specified year
+* Provides methods that Sort by, Group by, Count by, Sum by, Get unique values
+* Output back to files (CSV)
 
 link:toc.adoc[⬆️ TOC] /
 link:./02_the_problem.adoc[⬅️ The Problem] /

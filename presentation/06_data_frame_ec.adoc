@@ -1,15 +1,6 @@
 ==== DataFrame-EC
 
 ---
-* ConferenceExplorer class
-[example]
---
-[source,java,linenums,highlight=2..3]
-----
-public class ConferenceExplorer {
-    private DataFrame conferences;
-    private DataFrame countryCodes;
-----
 
 // TODO Sub-slides with code examples:
 ////
