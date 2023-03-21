@@ -171,6 +171,7 @@ public class ConferenceExplorer
     public Map<Country, Long> conferenceDaysByCountry()
     {
         return this.conferences.stream().
-                collect(Collectors.groupingBy(Conference::country, Collectors.summingLong(Conference::durationInDays)));
+                collect(Collectors.groupingBy(Conference::country,
+                        Collectors.summingLong(Conference::durationInDays)));
     }
 }
