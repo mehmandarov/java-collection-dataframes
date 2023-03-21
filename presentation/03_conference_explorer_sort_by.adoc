@@ -1,0 +1,68 @@
+==== Sort by Days to Event
+
+---
+
+[cols="15a,85a"]
+|====
+| Java Streams
+|
+[source,java,linenums,highlight=2..3]
+----
+public List<Conference> sortByDaysToEvent() {
+    return this.conferences.stream()
+            .sorted(Comparator.comparing(Conference::daysToEvent))
+            .toList();
+}
+public long daysToEvent() {
+    return ChronoUnit.DAYS.between(LocalDate.now(), this.startDate);
+}
+----
+| Eclipse Collections
+|
+[source,java,linenums,highlight=2..3]
+----
+public ImmutableList<Conference> sortByDaysToEvent() {
+    return this.getConferences()
+            .toImmutableSortedListBy(Conference::daysToEvent);
+}
+public long daysToEvent() {
+    return ChronoUnit.DAYS.between(LocalDate.now(), this.startDate);
+}
+----
+| DataFrame-EC
+|
+[source,java,linenums,highlight=2..3]
+----
+public DataFrame sortByDaysToEvent() {
+    return this.conferences.sortBy(Lists.immutable.with("DaysToEvent"));
+}
+private void addDaysUntilFunctionAndDaysToEventColumn(DataFrame dataFrame) {
+    BuiltInFunctions.addFunctionDescriptor(
+            new IntrinsicFunctionDescriptorBuilder("daysUntil")
+                    .parameterNames("date")
+                    .returnType(ValueType.LONG)
+                    .action(context -> new LongValue(
+                            ChronoUnit.DAYS.between(LocalDate.now(),
+                                    context.getDate("date")))));
+    dataFrame.addColumn("DaysToEvent", "daysUntil(StartDate)");
+}
+----
+|====
+
+link:toc.adoc[⬆️ TOC] /
+link:./03_conference_explorer.adoc[⬅️ Conference Explorer] /
+link:./04_java_streams.adoc[➡️ Java Streams]
+
+
+////
+*** Sort by days to event
+*** Count by month
+*** Count by country
+*** Sum conference days by country
+*** Group by country
+*** Group by city
+*** Get the unique countries with their flags for all conferences
+*** Group by session types
+*** Count by session type
+** Output each of the above to a CSV file (TBD)////
+

@@ -86,14 +86,17 @@ public class ConferenceExplorer
         return countryCodesSchema;
     }
 
-    private void addDaysUntilFunctionAndDaysToEventColumn(DataFrame dataFrame)
-    {
-        BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptorBuilder("daysUntil")
-                .parameterNames("date")
-                .returnType(ValueType.LONG)
-                .action(context -> new LongValue(ChronoUnit.DAYS.between(LocalDate.now(), context.getDate("date")))));
-        dataFrame.addColumn("DaysToEvent", "daysUntil(StartDate)");
-    }
+private void addDaysUntilFunctionAndDaysToEventColumn(DataFrame dataFrame)
+{
+    BuiltInFunctions.addFunctionDescriptor(
+            new IntrinsicFunctionDescriptorBuilder("daysUntil")
+                    .parameterNames("date")
+                    .returnType(ValueType.LONG)
+                    .action(context -> new LongValue(
+                            ChronoUnit.DAYS.between(LocalDate.now(),
+                                    context.getDate("date")))));
+    dataFrame.addColumn("DaysToEvent", "daysUntil(StartDate)");
+}
 
     private void addYearOfFunction()
     {
