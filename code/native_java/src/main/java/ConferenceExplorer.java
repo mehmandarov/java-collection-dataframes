@@ -111,13 +111,15 @@ public class ConferenceExplorer
     public Map<Country, Set<Conference>> groupByCountry()
     {
         return this.conferences.stream()
-                .collect(Collectors.groupingBy(Conference::country, Collectors.toUnmodifiableSet()));
+                .collect(Collectors.groupingBy(Conference::country,
+                        Collectors.toUnmodifiableSet()));
     }
 
     public Map<String, Set<Conference>> groupByCity()
     {
         return this.conferences.stream()
-                .collect(Collectors.groupingBy(Conference::city, Collectors.toUnmodifiableSet()));
+                .collect(Collectors.groupingBy(Conference::city,
+                        Collectors.toUnmodifiableSet()));
     }
 
     public List<Conference> sortByDaysToEvent()

@@ -165,14 +165,12 @@ private void addDaysUntilFunctionAndDaysToEventColumn(DataFrame dataFrame)
 
     public DfIndex groupByCountry()
     {
-        DfIndex index = new DfIndex(this.conferences, Lists.immutable.with("Country"));
-        return index;
+        return new DfIndex(this.conferences, Lists.immutable.with("Country"));
     }
 
     public DfIndex groupByCity()
     {
-        DfIndex index = new DfIndex(this.conferences, Lists.immutable.with("City"));
-        return index;
+        return new DfIndex(this.conferences, Lists.immutable.with("City"));
     }
 
     public DataFrame getCountries()
