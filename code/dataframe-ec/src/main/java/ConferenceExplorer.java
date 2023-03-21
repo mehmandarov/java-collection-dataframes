@@ -46,15 +46,12 @@ public class ConferenceExplorer
         this.conferences = dataFrame.selectBy(initialFilter);
     }
 
-    private static void addFunctionsAndColumns(DataFrame dataFrame)
+    private void addFunctionsAndColumns(DataFrame dataFrame)
     {
-        ConferenceExplorer.addDaysUntilFunction();
-        ConferenceExplorer.addDurationFunction();
-        ConferenceExplorer.addYearFunction();
-        ConferenceExplorer.addMonthFunction();
-        dataFrame.addColumn("DaysToEvent", "daysUntil(StartDate)");
-        dataFrame.addColumn("Duration", "durationInDays(StartDate, EndDate)");
-        dataFrame.addColumn("Month", "monthOf(StartDate)");
+        this.addDaysUntilFunctionAndDaysToEventColumn(dataFrame);
+        this.addDurationInDaysFunctionAndDurationColumn(dataFrame);
+        this.addYearOfFunction();
+        this.addMonthOfFunctionAndMonthColumn(dataFrame);
     }
 
     private static CsvSchema createConferenceSchema()
@@ -71,27 +68,34 @@ public class ConferenceExplorer
 
     private void loadCountryCodesFromCsv()
     {
-        CsvSchema countryCodesSchema = new CsvSchema().separator(',');
-        countryCodesSchema.addColumn("Country", ValueType.STRING);
-        countryCodesSchema.addColumn("Alpha2Code", ValueType.STRING);
-
-        URL url = ConferenceExplorer.class.getClassLoader().getResource("data/country_codes.csv");
-        DataFrame countryCodesDataFrame = new CsvDataSet(url.getPath(), "CountryCodes", countryCodesSchema).loadAsDataFrame();
-
-        ConferenceExplorer.addFlagEmojiFunction();
-
+        CsvSchema schema = this.createCountrySchema();
+        URL url = ConferenceExplorer.class.getClassLoader()
+                .getResource("data/country_codes.csv");
+        DataFrame countryCodesDataFrame =
+                new CsvDataSet(url.getPath(), "CountryCodes", schema)
+                        .loadAsDataFrame();
+        this.addFlagEmojiFunction();
         this.countryCodes = countryCodesDataFrame;
     }
 
-    private static void addDaysUntilFunction()
+    private CsvSchema createCountrySchema()
+    {
+        CsvSchema countryCodesSchema = new CsvSchema().separator(',');
+        countryCodesSchema.addColumn("Country", ValueType.STRING);
+        countryCodesSchema.addColumn("Alpha2Code", ValueType.STRING);
+        return countryCodesSchema;
+    }
+
+    private void addDaysUntilFunctionAndDaysToEventColumn(DataFrame dataFrame)
     {
         BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptorBuilder("daysUntil")
                 .parameterNames("date")
                 .returnType(ValueType.LONG)
                 .action(context -> new LongValue(ChronoUnit.DAYS.between(LocalDate.now(), context.getDate("date")))));
+        dataFrame.addColumn("DaysToEvent", "daysUntil(StartDate)");
     }
 
-    private static void addYearFunction()
+    private void addYearOfFunction()
     {
         BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptorBuilder("yearOf")
                 .parameterNames("date")
@@ -99,23 +103,25 @@ public class ConferenceExplorer
                 .action(context -> new LongValue(context.getDate("date").getYear())));
     }
 
-    private static void addMonthFunction()
+    private void addMonthOfFunctionAndMonthColumn(DataFrame dataFrame)
     {
         BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptorBuilder("monthOf")
                 .parameterNames("date")
                 .returnType(ValueType.STRING)
                 .action(context -> new StringValue(context.getDate("date").getMonth().toString())));
+        dataFrame.addColumn("Month", "monthOf(StartDate)");
     }
 
-    private static void addDurationFunction()
+    private void addDurationInDaysFunctionAndDurationColumn(DataFrame dataFrame)
     {
         BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptorBuilder("durationInDays")
                 .parameterNames("from", "to")
                 .returnType(ValueType.LONG)
                 .action(context -> new LongValue(ChronoUnit.DAYS.between(context.getDate("from"), context.getDate("to").plusDays(1L)))));
+        dataFrame.addColumn("Duration", "durationInDays(StartDate, EndDate)");
     }
 
-    private static void addFlagEmojiFunction()
+    private void addFlagEmojiFunction()
     {
         BuiltInFunctions.addFunctionDescriptor(new IntrinsicFunctionDescriptorBuilder("toFlagEmoji")
                 .parameterNames("countryCode")
