@@ -36,16 +36,18 @@ public class ConferenceExplorer
 
     private void loadConferencesFromCsv(String initialFilter)
     {
-        CsvSchema conferenceSchema = new CsvSchema().separator(',');
-        conferenceSchema.addColumn("EventName", ValueType.STRING);
-        conferenceSchema.addColumn("Country", ValueType.STRING);
-        conferenceSchema.addColumn("City", ValueType.STRING);
-        conferenceSchema.addColumn("StartDate", ValueType.DATE);
-        conferenceSchema.addColumn("EndDate", ValueType.DATE);
-        conferenceSchema.addColumn("SessionTypes", ValueType.STRING);
+        CsvSchema schema = this.createConferenceSchema();
+        URL url = ConferenceExplorer.class.getClassLoader()
+                .getResource("data/conferences.csv");
+        DataFrame dataFrame =
+                new CsvDataSet(url.getPath(), "Conferences", schema)
+                        .loadAsDataFrame();
+        this.addFunctionsAndColumns(dataFrame);
+        this.conferences = dataFrame.selectBy(initialFilter);
+    }
 
-        URL url = ConferenceExplorer.class.getClassLoader().getResource("data/conferences.csv");
-        DataFrame dataFrame = new CsvDataSet(url.getPath(), "Conferences", conferenceSchema).loadAsDataFrame();
+    private static void addFunctionsAndColumns(DataFrame dataFrame)
+    {
         ConferenceExplorer.addDaysUntilFunction();
         ConferenceExplorer.addDurationFunction();
         ConferenceExplorer.addYearFunction();
@@ -53,7 +55,18 @@ public class ConferenceExplorer
         dataFrame.addColumn("DaysToEvent", "daysUntil(StartDate)");
         dataFrame.addColumn("Duration", "durationInDays(StartDate, EndDate)");
         dataFrame.addColumn("Month", "monthOf(StartDate)");
-        this.conferences = dataFrame.selectBy(initialFilter);
+    }
+
+    private static CsvSchema createConferenceSchema()
+    {
+        CsvSchema conferenceSchema = new CsvSchema().separator(',');
+        conferenceSchema.addColumn("EventName", ValueType.STRING);
+        conferenceSchema.addColumn("Country", ValueType.STRING);
+        conferenceSchema.addColumn("City", ValueType.STRING);
+        conferenceSchema.addColumn("StartDate", ValueType.DATE);
+        conferenceSchema.addColumn("EndDate", ValueType.DATE);
+        conferenceSchema.addColumn("SessionTypes", ValueType.STRING);
+        return conferenceSchema;
     }
 
     private void loadCountryCodesFromCsv()

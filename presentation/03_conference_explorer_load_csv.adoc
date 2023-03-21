@@ -1,0 +1,71 @@
+==== Load Conference Data from CSV
+
+---
+
+[cols="15a,85a"]
+|====
+| Java Streams with Jackson CSV
+|
+[source,java,linenums,highlight=2..3]
+----
+private void loadConferencesFromCsv(Predicate<Conference> initialFilter) {
+    CsvSchema headerSchema = CsvSchema.emptySchema().withHeader();
+    URL url = ConferenceExplorer.class.getClassLoader()
+            .getResource("data/conferences.csv");
+    final CsvMapper mapper = new CsvMapper();
+    try (MappingIterator<Map<String, String>> it = mapper
+                    .readerForMapOf(String.class)
+                    .with(headerSchema)
+                    .readValues(url)) {
+        this.createConferencesFromList(initialFilter, it.readAll());
+    }
+----
+| Eclipse Collections with Jackson CSV
+|
+[source,java,linenums,highlight=2..3]
+----
+private void loadConferencesFromCsv(Predicate<Conference> initialFilter) {
+    CsvSchema headerSchema = CsvSchema.emptySchema().withHeader();
+    URL url = ConferenceExplorer.class.getClassLoader()
+            .getResource("data/conferences.csv");
+    final CsvMapper mapper = new CsvMapper();
+    try (MappingIterator<Map<String, String>> it = mapper
+                    .readerForMapOf(String.class)
+                    .with(headerSchema)
+                    .readValues(url)) {
+        this.createConferencesFromList(initialFilter, it.readAll());
+    }
+----
+| DataFrame-EC
+|
+[source,java,linenums,highlight=2..3]
+----
+private void loadConferencesFromCsv(String initialFilter) {
+    CsvSchema schema = this.createConferenceSchema();
+    URL url = ConferenceExplorer.class.getClassLoader()
+            .getResource("data/conferences.csv");
+    DataFrame dataFrame =
+            new CsvDataSet(url.getPath(), "Conferences", schema)
+                    .loadAsDataFrame();
+    this.addFunctionsAndColumns(dataFrame);
+    this.conferences = dataFrame.selectBy(initialFilter);
+----
+|====
+
+link:toc.adoc[⬆️ TOC] /
+link:./03_conference_explorer.adoc[⬅️ Conference Explorer] /
+link:./04_java_streams.adoc[➡️ Java Streams]
+
+
+////
+*** Sort by days to event
+*** Count by month
+*** Count by country
+*** Sum conference days by country
+*** Group by country
+*** Group by city
+*** Get the unique countries with their flags for all conferences
+*** Group by session types
+*** Count by session type
+** Output each of the above to a CSV file (TBD)////
+

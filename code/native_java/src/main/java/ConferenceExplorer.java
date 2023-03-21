@@ -37,7 +37,8 @@ public class ConferenceExplorer
     private void loadConferencesFromCsv(Predicate<Conference> initialFilter)
     {
         CsvSchema headerSchema = CsvSchema.emptySchema().withHeader();
-        URL url = ConferenceExplorer.class.getClassLoader().getResource("data/conferences.csv");
+        URL url = ConferenceExplorer.class.getClassLoader()
+                .getResource("data/conferences.csv");
         final CsvMapper mapper = new CsvMapper();
         try (
                 MappingIterator<Map<String, String>> it = mapper
@@ -45,16 +46,20 @@ public class ConferenceExplorer
                         .with(headerSchema)
                         .readValues(url))
         {
-            List<Map<String, String>> lists = it.readAll();
-            this.conferences = lists.stream()
-                    .map(this::createConference)
-                    .filter(initialFilter)
-                    .collect(Collectors.toUnmodifiableSet());
+            this.createConferencesFromList(initialFilter, it.readAll());
         }
         catch (IOException e)
         {
             throw new RuntimeException(e);
         }
+    }
+
+    private void createConferencesFromList(Predicate<Conference> initialFilter, List<Map<String, String>> lists)
+    {
+        this.conferences = lists.stream()
+                .map(this::createConference)
+                .filter(initialFilter)
+                .collect(Collectors.toUnmodifiableSet());
     }
 
     private Conference createConference(Map<String, String> map)
