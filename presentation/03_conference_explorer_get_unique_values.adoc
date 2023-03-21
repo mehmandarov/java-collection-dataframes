@@ -1,0 +1,60 @@
+==== Get unique Countries
+
+---
+
+[cols="15a,85a"]
+|====
+| Java Streams
+|
+[source,java,linenums,highlight=2..3]
+----
+public Set<Country> getCountries() {
+    return this.conferences.stream()
+            .map(Conference::country)
+            .collect(Collectors.toUnmodifiableSet());
+}
+----
+| Eclipse Collections
+|
+[source,java,linenums,highlight=2..3]
+----
+public ImmutableSet<Country> getCountries() {
+    return this.getConferences().collect(Conference::country);
+}
+----
+| DataFrame-EC
+|
+[source,java,linenums,highlight=2..3]
+----
+public DataFrame getCountries() {
+    DataFrame distinctCountries =
+            this.conferences.distinct(Lists.immutable.of("Country"));
+    distinctCountries.lookup(DfJoin.to(this.countryCodes)
+            .match("Country", "Country")
+            .select("Alpha2Code")
+            .ifAbsent("**unknown**"));
+    distinctCountries.sortBy(Lists.immutable.of("Country"));
+
+    distinctCountries.addColumn("Flag", "toFlagEmoji( Alpha2Code )");
+    return distinctCountries;
+}
+----
+|====
+
+link:toc.adoc[⬆️ TOC] /
+link:./03_conference_explorer.adoc[⬅️ Conference Explorer] /
+link:./04_java_streams.adoc[➡️ Java Streams]
+
+
+////
+*** Sort by days to event
+*** Count by month
+*** Count by country
+*** Sum conference days by country
+*** Group by country
+*** Group by city
+*** Get the unique countries with their flags for all conferences
+*** Group by session types
+*** Count by session type
+** Output each of the above to a CSV file (TBD)////
+
