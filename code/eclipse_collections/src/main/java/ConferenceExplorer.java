@@ -17,7 +17,6 @@ import org.eclipse.collections.impl.utility.LazyIterate;
 
 public class ConferenceExplorer
 {
-    private final Predicate<Conference> initialFilter;
     private ImmutableSet<Conference> conferences;
     private ImmutableSet<Country> countries;
 
@@ -28,9 +27,8 @@ public class ConferenceExplorer
 
     public ConferenceExplorer(Predicate<Conference> initialFilter)
     {
-        this.initialFilter = initialFilter;
         this.loadCountriesFromCsv();
-        this.loadConferencesFromCsv();
+        this.loadConferencesFromCsv(initialFilter);
     }
 
     private static Predicate<Conference> yearPredicate(int year)
@@ -38,7 +36,7 @@ public class ConferenceExplorer
         return conference -> conference.startDate().getYear() == year;
     }
 
-    private void loadConferencesFromCsv()
+    private void loadConferencesFromCsv(Predicate<Conference> initialFilter)
     {
         CsvSchema headerSchema = CsvSchema.emptySchema().withHeader();
         URL url = ConferenceExplorer.class.getClassLoader().getResource("data/conferences.csv");
@@ -51,7 +49,7 @@ public class ConferenceExplorer
         {
             List<Map<String, String>> lists = it.readAll();
             this.conferences = LazyIterate.collect(lists, this::createConference)
-                    .select(this.initialFilter())
+                    .select(initialFilter)
                     .toImmutableSet();
         }
         catch (IOException e)
@@ -98,11 +96,6 @@ public class ConferenceExplorer
                 map.get("Country"),
                 map.get("Alpha2Code")
         );
-    }
-
-    public Predicate<Conference> initialFilter()
-    {
-        return this.initialFilter;
     }
 
     public ImmutableSet<Conference> getConferences()

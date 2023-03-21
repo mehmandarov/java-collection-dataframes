@@ -2,8 +2,19 @@
 
 ---
 
+* ConferenceExplorer class
+[example]
+--
+[source,java,linenums,highlight=2..3]
+----
+public class ConferenceExplorer {
+    private Set<Conference> conferences;
+    private Set<Country> countries;
+----
+
 // TODO Sub-slides with code examples:
 ////
+*** Load data from CSV
 *** Sort by
 *** Group by
 *** Count by / Sum by

@@ -25,8 +25,13 @@ public class ConferenceExplorer
 
     public ConferenceExplorer(int year)
     {
-        this.loadConferencesFromCsv("yearOf(StartDate) == " + year);
+        this("yearOf(StartDate) == " + year);
+    }
+
+    public ConferenceExplorer(String intialFilter)
+    {
         this.loadCountryCodesFromCsv();
+        this.loadConferencesFromCsv(intialFilter);
     }
 
     private void loadConferencesFromCsv(String initialFilter)
