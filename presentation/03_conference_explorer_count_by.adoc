@@ -50,8 +50,8 @@ public DataFrame countByMonth() {
 |====
 
 link:toc.adoc[⬆️ TOC] /
-link:./03_conference_explorer.adoc[⬅️ Conference Explorer] /
-link:./04_java_streams.adoc[➡️ Java Streams]
+link:./03_conference_explorer_group_by.adoc[⬅️ ConferenceExplorer - GroupBy] /
+link:./03_conference_explorer_sum_by.adoc[➡️ ConferenceExplorer - SumBy]
 
 
 ////

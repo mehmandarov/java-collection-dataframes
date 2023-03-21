@@ -50,8 +50,8 @@ private void addDaysUntilFunctionAndDaysToEventColumn(DataFrame dataFrame) {
 |====
 
 link:toc.adoc[⬆️ TOC] /
-link:./03_conference_explorer.adoc[⬅️ Conference Explorer] /
-link:./04_java_streams.adoc[➡️ Java Streams]
+link:./03_conference_explorer_load_csv.adoc[⬅️ ConferenceExplorer - Load CSV Data] /
+link:./03_conference_explorer_group_by.adoc[➡️ ConferenceExplorer - GroupBy]
 
 
 ////

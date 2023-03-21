@@ -44,8 +44,8 @@ public DfIndex groupByCity() {
 |====
 
 link:toc.adoc[⬆️ TOC] /
-link:./03_conference_explorer.adoc[⬅️ Conference Explorer] /
-link:./04_java_streams.adoc[➡️ Java Streams]
+link:./03_conference_explorer_sort_by.adoc[⬅️ ConferenceExplorer - SortBy] /
+link:./03_conference_explorer_count_by.adoc[➡️ ConferenceExplorer - CountBy]
 
 
 ////
