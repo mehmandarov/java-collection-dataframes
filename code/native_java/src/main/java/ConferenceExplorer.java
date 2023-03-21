@@ -149,7 +149,15 @@ public class ConferenceExplorer
     public Map<Country, Long> countByCountry()
     {
         return this.conferences.stream()
-                .collect(Collectors.groupingBy(Conference::country, Collectors.counting()));
+                .collect(Collectors.groupingBy(Conference::country,
+                        Collectors.counting()));
+    }
+
+    public Map<Month, Long> countByMonth()
+    {
+        return this.conferences.stream()
+                .collect(Collectors.groupingBy(Conference::getMonth,
+                        Collectors.counting()));
     }
 
     public Map<SessionType, Long> countBySessionType()
@@ -158,12 +166,6 @@ public class ConferenceExplorer
                 .flatMap(conference -> conference.sessionTypes().stream()
                         .map(sessionType -> new AbstractMap.SimpleEntry<>(sessionType, conference)))
                 .collect(Collectors.groupingBy(AbstractMap.SimpleEntry::getKey, Collectors.counting()));
-    }
-
-    public Map<Month, Long> countByMonth()
-    {
-        return this.conferences.stream()
-                .collect(Collectors.groupingBy(Conference::getMonth, Collectors.counting()));
     }
 
     public Map<Country, Long> conferenceDaysByCountry()

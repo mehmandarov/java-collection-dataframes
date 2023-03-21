@@ -138,14 +138,14 @@ public class ConferenceExplorer
         return this.conferences.countBy(Conference::country);
     }
 
-    public Bag<SessionType> countBySessionType()
-    {
-        return this.conferences.countByEach(Conference::sessionTypes);
-    }
-
     public Bag<Month> countByMonth()
     {
         return this.conferences.countBy(Conference::getMonth);
+    }
+
+    public Bag<SessionType> countBySessionType()
+    {
+        return this.conferences.countByEach(Conference::sessionTypes);
     }
 
     public ObjectLongMap<Country> conferenceDaysByCountry()

@@ -142,18 +142,18 @@ private void addDaysUntilFunctionAndDaysToEventColumn(DataFrame dataFrame)
         return this.conferences.sortBy(Lists.immutable.with("DaysToEvent"));
     }
 
-    public DataFrame countByMonth()
-    {
-        return this.conferences.aggregateBy(
-                Lists.immutable.with(AggregateFunction.count("Month", "MonthCount")),
-                Lists.immutable.with("Month"));
-    }
-
     public DataFrame countByCountry()
     {
         return this.conferences.aggregateBy(
                 Lists.immutable.with(AggregateFunction.count("Country", "CountryCount")),
                 Lists.immutable.with("Country"));
+    }
+
+    public DataFrame countByMonth()
+    {
+        return this.conferences.aggregateBy(
+                Lists.immutable.with(AggregateFunction.count("Month", "MonthCount")),
+                Lists.immutable.with("Month"));
     }
 
     public DataFrame conferenceDaysByCountry()

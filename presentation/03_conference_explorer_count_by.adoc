@@ -1,0 +1,68 @@
+==== Count conferences by Country and by Month
+
+---
+
+[cols="15a,85a"]
+|====
+| Java Streams
+|
+[source,java,linenums,highlight=2..3]
+----
+public Map<Country, Long> countByCountry() {
+    return this.conferences.stream()
+            .collect(Collectors.groupingBy(Conference::country,
+                    Collectors.counting()));
+}
+public Map<Month, Long> countByMonth() {
+    return this.conferences.stream()
+            .collect(Collectors.groupingBy(Conference::getMonth,
+                    Collectors.counting()));
+}
+----
+| Eclipse Collections
+|
+[source,java,linenums,highlight=2..3]
+----
+public Bag<Country> countByCountry() {
+    return this.conferences.countBy(Conference::country);
+}
+public Bag<Month> countByMonth() {
+    return this.conferences.countBy(Conference::getMonth);
+}
+----
+| DataFrame-EC
+|
+[source,java,linenums,highlight=2..3]
+----
+public DataFrame countByCountry() {
+    return this.conferences.aggregateBy(
+            Lists.immutable.with(
+                    AggregateFunction.count("Country", "CountryCount")),
+            Lists.immutable.with("Country"));
+}
+public DataFrame countByMonth() {
+    return this.conferences.aggregateBy(
+            Lists.immutable.with(
+                    AggregateFunction.count("Month", "MonthCount")),
+            Lists.immutable.with("Month"));
+}
+----
+|====
+
+link:toc.adoc[⬆️ TOC] /
+link:./03_conference_explorer.adoc[⬅️ Conference Explorer] /
+link:./04_java_streams.adoc[➡️ Java Streams]
+
+
+////
+*** Sort by days to event
+*** Count by month
+*** Count by country
+*** Sum conference days by country
+*** Group by country
+*** Group by city
+*** Get the unique countries with their flags for all conferences
+*** Group by session types
+*** Count by session type
+** Output each of the above to a CSV file (TBD)////
+
