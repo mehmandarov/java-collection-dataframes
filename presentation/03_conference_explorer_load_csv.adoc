@@ -54,7 +54,7 @@ private void loadConferencesFromCsv(String initialFilter) {
 
 link:toc.adoc[⬆️ TOC] /
 link:./03_conference_explorer.adoc[⬅️ Conference Explorer] /
-link:./03_conference_explorer_sort_by.adoc[➡️ ConferenceExplorer - Sort by Country]
+link:./03_conference_explorer_sort_by.adoc[➡️ ConferenceExplorer - Sort by Days to Event]
 
 
 ////
