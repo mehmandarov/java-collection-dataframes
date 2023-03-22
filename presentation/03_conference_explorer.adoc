@@ -37,7 +37,7 @@ public class ConferenceExplorer {
 
 link:toc.adoc[⬆️ TOC] /
 link:./02_the_problem.adoc[⬅️ The Problem] /
-link:./04_java_streams.adoc[➡️ Java Streams]
+link:./03_conference_explorer_load_csv.adoc[➡️ Load data from CSV]
 
 
 ////

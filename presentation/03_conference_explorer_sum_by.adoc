@@ -36,7 +36,7 @@ public DataFrame conferenceDaysByCountry() {
 |====
 
 link:toc.adoc[⬆️ TOC] /
-link:./03_conference_explorer_count_by.adoc[⬅️ ConferenceExplorer - CountBy] /
+link:./03_conference_explorer_count_by_month.adoc[⬅️ ConferenceExplorer - CountBy] /
 link:./03_conference_explorer_get_unique_values.adoc[➡️ ConferenceExplorer - GetUniqueValues]
 
 

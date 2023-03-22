@@ -1,4 +1,4 @@
-==== Group conferences by Country and by City
+==== Group conferences by City
 
 ---
 
@@ -8,11 +8,6 @@
 |
 [source,java,linenums,highlight=2..3]
 ----
-public Map<Country, Set<Conference>> groupByCountry() {
-    return this.conferences.stream()
-            .collect(Collectors.groupingBy(Conference::country,
-                    Collectors.toUnmodifiableSet()));
-}
 public Map<String, Set<Conference>> groupByCity() {
     return this.conferences.stream()
             .collect(Collectors.groupingBy(Conference::city,
@@ -23,9 +18,6 @@ public Map<String, Set<Conference>> groupByCity() {
 |
 [source,java,linenums,highlight=2..3]
 ----
-public ImmutableSetMultimap<Country, Conference> groupByCountry() {
-    return this.getConferences().groupBy(Conference::country);
-}
 public ImmutableSetMultimap<String, Conference> groupByCity() {
     return this.getConferences().groupBy(Conference::city);
 }
@@ -34,9 +26,6 @@ public ImmutableSetMultimap<String, Conference> groupByCity() {
 |
 [source,java,linenums,highlight=2..3]
 ----
-public DfIndex groupByCountry() {
-    return new DfIndex(this.conferences, Lists.immutable.with("Country"));
-}
 public DfIndex groupByCity() {
     return new DfIndex(this.conferences, Lists.immutable.with("City"));
 }
@@ -44,8 +33,8 @@ public DfIndex groupByCity() {
 |====
 
 link:toc.adoc[⬆️ TOC] /
-link:./03_conference_explorer_sort_by.adoc[⬅️ ConferenceExplorer - SortBy] /
-link:./03_conference_explorer_count_by.adoc[➡️ ConferenceExplorer - CountBy]
+link:./03_conference_explorer_group_by_country.adoc[⬅️ ConferenceExplorer - Group by Country] /
+link:./03_conference_explorer_count_by_country.adoc[➡️ ConferenceExplorer - Count by Country]
 
 
 ////
