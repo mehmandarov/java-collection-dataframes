@@ -19,7 +19,7 @@ public Map<String, Set<Conference>> groupByCity() {
 [source,java,linenums,highlight=2..3]
 ----
 public ImmutableSetMultimap<String, Conference> groupByCity() {
-    return this.getConferences().groupBy(Conference::city);
+    return this.conferences.groupBy(Conference::city);
 }
 ----
 | DataFrame-EC
@@ -27,7 +27,7 @@ public ImmutableSetMultimap<String, Conference> groupByCity() {
 [source,java,linenums,highlight=2..3]
 ----
 public DfIndex groupByCity() {
-    return new DfIndex(this.conferences, Lists.immutable.with("City"));
+    return this.conferences.index("City");
 }
 ----
 |====

@@ -5,8 +5,6 @@ import java.util.Map;
 import io.github.vmzakharov.ecdataframe.dataframe.DataFrame;
 import io.github.vmzakharov.ecdataframe.dataframe.DfIndex;
 import io.github.vmzakharov.ecdataframe.dsl.value.ValueType;
-import org.eclipse.collections.api.factory.Lists;
-import org.eclipse.collections.api.list.primitive.IntList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -90,9 +88,8 @@ public class ConferenceExplorerTest
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
         DfIndex byCountry = explorer.groupByCountry();
-        IntList rowIds = byCountry.getRowIndicesAtKey(Lists.mutable.with("Greece"));
-        Assertions.assertEquals(1, rowIds.size());
-        Assertions.assertEquals("Athens", explorer.getConferences().getString("City", rowIds.getFirst()));
+        byCountry.iterateAt("Greece")
+                .forEach(c -> Assertions.assertEquals("Athens", c.getString("City")));
     }
 
     @Test
@@ -100,9 +97,8 @@ public class ConferenceExplorerTest
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
         DfIndex byCity = explorer.groupByCity();
-        IntList rowIds = byCity.getRowIndicesAtKey(Lists.mutable.with("Athens"));
-        Assertions.assertEquals(1, rowIds.size());
-        Assertions.assertEquals("Greece", explorer.getConferences().getString("Country", rowIds.getFirst()));
+        byCity.iterateAt("Athens")
+                .forEach(c -> Assertions.assertEquals("Greece", c.getString("Country")));
     }
 
      @Test

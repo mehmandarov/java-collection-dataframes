@@ -22,7 +22,7 @@ public long daysToEvent() {
 [source,java,linenums,highlight=2..3]
 ----
 public ImmutableList<Conference> sortByDaysToEvent() {
-    return this.getConferences()
+    return this.conferences
             .toImmutableSortedListBy(Conference::daysToEvent);
 }
 public long daysToEvent() {

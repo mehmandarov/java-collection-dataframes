@@ -110,27 +110,27 @@ public class ConferenceExplorer
 
     public ImmutableSetMultimap<Country, Conference> groupByCountry()
     {
-        return this.getConferences().groupBy(Conference::country);
+        return this.conferences.groupBy(Conference::country);
     }
 
     public ImmutableSetMultimap<String, Conference> groupByCity()
     {
-        return this.getConferences().groupBy(Conference::city);
+        return this.conferences.groupBy(Conference::city);
     }
 
     public ImmutableList<Conference> sortByDaysToEvent()
     {
-        return this.getConferences().toImmutableSortedListBy(Conference::daysToEvent);
+        return this.conferences.toImmutableSortedListBy(Conference::daysToEvent);
     }
 
     public ImmutableSetMultimap<SessionType, Conference> groupBySessionType()
     {
-        return this.getConferences().groupByEach(Conference::sessionTypes);
+        return this.conferences.groupByEach(Conference::sessionTypes);
     }
 
     public ImmutableSet<Country> getCountries()
     {
-        return this.getConferences().collect(Conference::country);
+        return this.conferences.collect(Conference::country);
     }
 
     public Bag<Country> countByCountry()

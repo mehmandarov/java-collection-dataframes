@@ -19,7 +19,7 @@ public Set<Country> getCountries() {
 [source,java,linenums,highlight=2..3]
 ----
 public ImmutableSet<Country> getCountries() {
-    return this.getConferences().collect(Conference::country);
+    return this.conferences.collect(Conference::country);
 }
 ----
 | DataFrame-EC

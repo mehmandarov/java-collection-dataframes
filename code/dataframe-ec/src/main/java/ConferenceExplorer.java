@@ -32,6 +32,8 @@ public class ConferenceExplorer
     {
         this.loadCountryCodesFromCsv();
         this.loadConferencesFromCsv(intialFilter);
+        this.conferences.createIndex("Country", Lists.immutable.with("Country"));
+        this.conferences.createIndex("City", Lists.immutable.with("City"));
     }
 
     private void loadConferencesFromCsv(String initialFilter)
@@ -86,17 +88,18 @@ public class ConferenceExplorer
         return countryCodesSchema;
     }
 
-private void addDaysUntilFunctionAndDaysToEventColumn(DataFrame dataFrame)
-{
-    BuiltInFunctions.addFunctionDescriptor(
-            new IntrinsicFunctionDescriptorBuilder("daysUntil")
-                    .parameterNames("date")
-                    .returnType(ValueType.LONG)
-                    .action(context -> new LongValue(
-                            ChronoUnit.DAYS.between(LocalDate.now(),
-                                    context.getDate("date")))));
-    dataFrame.addColumn("DaysToEvent", "daysUntil(StartDate)");
-}
+    private void addDaysUntilFunctionAndDaysToEventColumn(DataFrame dataFrame)
+    {
+        BuiltInFunctions.addFunctionDescriptor(
+                new IntrinsicFunctionDescriptorBuilder("daysUntil")
+                        .parameterNames("date")
+                        .returnType(ValueType.LONG)
+                        .action(context -> new LongValue(
+                                ChronoUnit.DAYS.between(
+                                        LocalDate.now(),
+                                        context.getDate("date")))));
+        dataFrame.addColumn("DaysToEvent", "daysUntil(StartDate)");
+    }
 
     private void addYearOfFunction()
     {
@@ -165,12 +168,12 @@ private void addDaysUntilFunctionAndDaysToEventColumn(DataFrame dataFrame)
 
     public DfIndex groupByCountry()
     {
-        return new DfIndex(this.conferences, Lists.immutable.with("Country"));
+        return this.conferences.index("Country");
     }
 
     public DfIndex groupByCity()
     {
-        return new DfIndex(this.conferences, Lists.immutable.with("City"));
+        return this.conferences.index("City");
     }
 
     public DataFrame getCountries()
