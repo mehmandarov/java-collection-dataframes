@@ -1,4 +1,4 @@
-==== CSV Data to Load _(pretty printed)_
+=== CSV Data to Load _(example, pretty printed)_
 
 ---
 
@@ -15,18 +15,4 @@ jChampionsConf,WWW,Online event,2023-01-19,2023-01-24,"[talks,]"
 |===
 link:toc.adoc[⬆️ TOC] /
 link:./02_the_problem.adoc[⬅️ The Problem] /
-link:./03_conference_explorer.adoc[➡️ ConferenceExplorer]
-
-
-////
-*** Sort by days to event
-*** Count by month
-*** Count by country
-*** Sum conference days by country
-*** Group by country
-*** Group by city
-*** Get the unique countries with their flags for all conferences
-*** Group by session types
-*** Count by session type
-** Output each of the above to a CSV file (TBD)////
-
+link:./02_the_problem_what_to_choose[➡️ What to Choose?]

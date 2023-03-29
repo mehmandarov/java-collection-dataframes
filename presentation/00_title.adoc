@@ -1,10 +1,10 @@
 == Dataframes, Collections, and Streams in Java
 
-image:assets/tobias-fischer-unsplash.jpg[Title Picture]
+image:assets/tobias-fischer-unsplash.jpg[Title Picture,900]
 
-===== Rustam Mehmandarov -- link:https://twitter.com/rmehmandarov[@RMehmandarov]
-===== Donald Raab -- link:https://twitter.com/TheDonRaab[@TheDonRaab]
-=== Devnexus 2023
+==== Rustam Mehmandarov -- link:https://twitter.com/rmehmandarov[@RMehmandarov]
+==== Donald Raab -- link:https://twitter.com/TheDonRaab[@TheDonRaab]
+=== _Devnexus 2023_
 ---
 
 link:01_intro.adoc[➡️ Introduction]

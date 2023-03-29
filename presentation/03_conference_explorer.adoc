@@ -1,4 +1,4 @@
-==== Conference Explorer
+=== Conference Explorer
 
 ---
 
@@ -36,7 +36,7 @@ public class ConferenceExplorer {
 * Output back to files (CSV)
 
 link:toc.adoc[⬆️ TOC] /
-link:./02_the_problem.adoc[⬅️ The Problem] /
+link:./02_the_problem_what_to_choose_deatils.adoc[⬅️ What to Choose? In detail.] /
 link:./03_conference_explorer_load_csv.adoc[➡️ Load data from CSV]
 
 

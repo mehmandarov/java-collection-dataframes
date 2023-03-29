@@ -1,13 +1,13 @@
-==== Dataframes, Collections, and Streams in Java - Introduction
+=== Dataframes, Collections, and Streams in Java - Introduction
 
-===== Rustam Mehmandarov (link:https://twitter.com/RMehmandarov[@RMehmandarov])
+==== Rustam Mehmandarov (link:https://twitter.com/RMehmandarov[@RMehmandarov])
 * Chief Engineer @ Computas
 * Java Champion (2017)
 * Google Developers Expert (GDE) for Cloud
 * JavaOne Rockstar
 * Community lead
 
-===== Donald Raab (link:https://twitter.com/TheDonRaab[@TheDonRaab])
+==== Donald Raab (link:https://twitter.com/TheDonRaab[@TheDonRaab])
 * Managing Director & Distinguished Engineer, BNY Mellon
 * Creator, Project Lead, Committer for link:https://github.com/eclipse/eclipse-collections[Eclipse Collections]
 * Java Champion (2018)

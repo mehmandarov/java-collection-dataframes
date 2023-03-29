@@ -1,4 +1,4 @@
-==== Java Streams
+=== Java Streams
 
 ---
 
@@ -17,17 +17,6 @@
 * Memory inefficient collections (HashSet)
 * Open Source but requires signing OCA and takes time to earn credibility
 |====
-
-// TODO Sub-slides with code examples:
-////
-*** Load data from CSV
-*** Sort by
-*** Group by
-*** Count by / Sum by
-*** Get unique values
-*** Input/Output
-////
-
 
 
 link:toc.adoc[⬆️ TOC] /

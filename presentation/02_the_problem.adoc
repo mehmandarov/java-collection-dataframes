@@ -1,8 +1,7 @@
-==== The Problem
+=== The Problem
 
 ---
 
-// TODO: Add pictures of Lego pieces here
 * We have data that needs to be processed.
 ** Conference data, of course!
 * Can we do that in Java in an efficient way?
