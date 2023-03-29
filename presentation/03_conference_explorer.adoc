@@ -32,7 +32,7 @@ public class ConferenceExplorer {
 |====
 
 * Reads in conferences and countries from two CSV files and filters the data for a specified year
-* Provides methods that Sort by, Group by, Count by, Sum by, Get unique values
+* Provides methods that `Sort by`, `Group by`, `Count by`, `Sum by`, `Get unique values`
 * Output back to files (CSV)
 
 link:toc.adoc[⬆️ TOC] /
