@@ -1,4 +1,4 @@
-=== Sort by Days to Event
+=== Sort by `Days to Event`
 
 ---
 

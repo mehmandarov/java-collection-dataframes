@@ -4,14 +4,14 @@
 
 [cols="a"]
 |====
-| Pros
+|*Pros*
 | * Rich and concise API
 * Built-in support for CSV
 * Flexibility - no need to define a data structure/type and everything can be purely dynamic
 * Built-in DSL
 * Eclipse Collections is a dependency so it's collections are available to use
 * Open Source with helpful and active maintainer
-|Cons
+|*Cons*
 | * Multiple Third-party dependencies
 * Limited books/training available
 * Minimal available skilled resources

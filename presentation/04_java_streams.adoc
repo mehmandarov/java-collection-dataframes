@@ -4,13 +4,13 @@
 
 [cols="a"]
 |====
-| Pros
+| *Pros*
 | * Built-in to Java and continuing to evolve
 * Only requires Jackson CSV dependency
 * Extensive books/training available
 * Able to  leverage new data-oriented language features like records
 * Large pool of skilled resources
-|Cons
+|*Cons*
 | * Verbose (No eager methods)
 * Null unsafe result types for groupingBy, counting (Map)
 * No primitive collections

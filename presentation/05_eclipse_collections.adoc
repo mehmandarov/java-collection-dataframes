@@ -4,14 +4,14 @@
 
 [cols="a"]
 |====
-| Pros
+|*Pros*
 | * Rich and concise API
 * Null safe result types for groupBy, countBy (Multimap, Bag)
 * Primitive Collection support
 * Able to  leverage new data-oriented language features (e.g. records)
 * Extensive Code Katas available
 * Open Source at Eclipse Foundation with contributions welcome
-|Cons
+|*Cons*
 | * Third-party dependency
 * Limited books/training available
 * Less available skilled resources

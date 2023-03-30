@@ -1,4 +1,4 @@
-=== Get Unique `Countries` + Get Country Flags 🚩
+=== Get Unique `Countries` + Get Country Flags `🚩`
 
 ---
 
@@ -43,7 +43,7 @@ public DataFrame getCountries() {
 
 link:toc.adoc[⬆️ TOC] /
 link:./03_conference_explorer_sum_by.adoc[⬅️ ConferenceExplorer - SumBy] /
-link:./04_java_streams.adoc[➡️ Java Streams]
+link:./03_conference_explorer_output.adoc[➡️ Output to CSV]
 
 
 ////
