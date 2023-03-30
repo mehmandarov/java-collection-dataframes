@@ -15,9 +15,9 @@
 * Null unsafe result types for groupingBy, counting (Map)
 * No primitive collections
 * Memory inefficient collections (HashSet)
-* Open Source but requires signing OCA and takes time to earn credibility
+* Slow evolution (mature)
+* Open Source but requires signing OCA and takes time to earn credibility to contribute
 |====
-
 
 link:toc.adoc[⬆️ TOC] /
 link:./03_conference_explorer_sum_by.adoc[⬅️ Conference Explorer - Sum conference days by Country] /

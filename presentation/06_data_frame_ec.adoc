@@ -17,16 +17,6 @@
 * Minimal available skilled resources
 * Less mature and evolved compared to Java alternatives like TableSaw
 
-// TODO Sub-slides with code examples:
-////
-*** Load data from CSV
-*** Sort by
-*** Group by
-*** Count by / Sum by
-*** Get unique values
-*** Input/Output
-////
-
 link:toc.adoc[⬆️ TOC] /
 link:./05_eclipse_collections.adoc[⬅️ Eclipse Collections] /
 link:./07_summary.adoc[➡️ Summary]

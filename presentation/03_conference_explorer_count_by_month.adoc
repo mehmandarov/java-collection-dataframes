@@ -6,7 +6,7 @@
 |====
 | Java Streams
 |
-[source,java,linenums,highlight=2..3]
+[source,java,linenums,highlight=2..4]
 ----
 public Map<Month, Long> countByMonth() {
     return this.conferences.stream()
@@ -16,7 +16,7 @@ public Map<Month, Long> countByMonth() {
 ----
 | Eclipse Collections
 |
-[source,java,linenums,highlight=2..3]
+[source,java,linenums,highlight=2..2]
 ----
 public Bag<Month> countByMonth() {
     return this.conferences.countBy(Conference::getMonth);
@@ -24,7 +24,7 @@ public Bag<Month> countByMonth() {
 ----
 | DataFrame-EC
 |
-[source,java,linenums,highlight=2..3]
+[source,java,linenums,highlight=2..5]
 ----
 public DataFrame countByMonth() {
     return this.conferences.aggregateBy(

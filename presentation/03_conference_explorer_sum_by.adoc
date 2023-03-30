@@ -6,7 +6,7 @@
 |====
 | Java Streams
 |
-[source,java,linenums,highlight=2..3]
+[source,java,linenums,highlight=2..4]
 ----
 public Map<Country, Long> conferenceDaysByCountry() {
     return this.conferences.stream().
@@ -25,7 +25,7 @@ public ObjectLongMap<Country> conferenceDaysByCountry() {
 ----
 | DataFrame-EC
 |
-[source,java,linenums,highlight=2..3]
+[source,java,linenums,highlight=2..4]
 ----
 public DataFrame conferenceDaysByCountry() {
     return this.conferences.sumBy(

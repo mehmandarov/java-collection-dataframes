@@ -6,7 +6,7 @@
 |====
 | Java Streams
 |
-[source,java,linenums,highlight=2..3]
+[source,java,linenums,highlight=2..4]
 ----
 public Set<Country> getCountries() {
     return this.conferences.stream()
@@ -16,7 +16,7 @@ public Set<Country> getCountries() {
 ----
 | Eclipse Collections
 |
-[source,java,linenums,highlight=2..3]
+[source,java,linenums,highlight=2..2]
 ----
 public ImmutableSet<Country> getCountries() {
     return this.conferences.collect(Conference::country);
@@ -24,7 +24,7 @@ public ImmutableSet<Country> getCountries() {
 ----
 | DataFrame-EC
 |
-[source,java,linenums,highlight=2..3]
+[source,java,linenums,highlight=2..11]
 ----
 public DataFrame getCountries() {
     DataFrame distinctCountries =

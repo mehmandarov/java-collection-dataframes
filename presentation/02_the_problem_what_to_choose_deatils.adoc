@@ -10,6 +10,7 @@ image:assets/lego_stack.jpg[assets/lego_stack.jpg,500,float=right]
 
 ==== Eclipse Collections => Lego Technic
 * More specialized building blocks
+* Performance optimized
 * Still compatible with the basic building blocks
 * _Age: 16+_
 

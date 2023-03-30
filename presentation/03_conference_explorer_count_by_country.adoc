@@ -6,7 +6,7 @@
 |====
 | Java Streams
 |
-[source,java,linenums,highlight=2..3]
+[source,java,linenums,highlight=2..4]
 ----
 public Map<Country, Long> countByCountry() {
     return this.conferences.stream()
@@ -16,7 +16,7 @@ public Map<Country, Long> countByCountry() {
 ----
 | Eclipse Collections
 |
-[source,java,linenums,highlight=2..3]
+[source,java,linenums,highlight=2..2]
 ----
 public Bag<Country> countByCountry() {
     return this.conferences.countBy(Conference::country);
@@ -24,7 +24,7 @@ public Bag<Country> countByCountry() {
 ----
 | DataFrame-EC
 |
-[source,java,linenums,highlight=2..3]
+[source,java,linenums,highlight=2..5]
 ----
 public DataFrame countByCountry() {
     return this.conferences.aggregateBy(
