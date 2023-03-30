@@ -34,13 +34,13 @@
 
     <properties>
         <eclipse.collections.version>11.1.0</eclipse.collections.version>
-        <jackson.dataformat.csv.version>2.14.2</jackson.dataformat.csv.version>
+        <jackson.version>2.14.2</jackson.version>
         <dataframe.ec.version>0.19.3</dataframe.ec.version>
         <junit5.version>5.9.2</junit5.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>20</maven.compiler.source>
+        <maven.compiler.target>20</maven.compiler.target>
         <maven.compiler.fork>true</maven.compiler.fork>
         <maven.compiler.verbose>true</maven.compiler.verbose>
         <maven.compiler.meminitial>2048m</maven.compiler.meminitial>
@@ -53,9 +53,20 @@
         <pluginManagement>
             <plugins>
                 <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <compilerArgs>
+                            --enable-preview
+                        </compilerArgs>
+                    </configuration>
+                </plugin>
+                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.22.2</version>
+                    <configuration>
+                        <argLine>--enable-preview</argLine>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -63,18 +74,17 @@
 
     <dependencyManagement>
         <dependencies>
+<!--            Eclipse Collections-->
             <dependency>
                 <groupId>org.eclipse.collections</groupId>
                 <artifactId>eclipse-collections-api</artifactId>
                 <version>${eclipse.collections.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.eclipse.collections</groupId>
                 <artifactId>eclipse-collections</artifactId>
                 <version>${eclipse.collections.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.eclipse.collections</groupId>
                 <artifactId>eclipse-collections-testutils</artifactId>
@@ -82,24 +92,41 @@
                 <scope>test</scope>
             </dependency>
 
+<!--            Jackson-->
             <dependency>
                 <groupId>com.fasterxml.jackson.dataformat</groupId>
                 <artifactId>jackson-dataformat-csv</artifactId>
-                <version>${jackson.dataformat.csv.version}</version>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jsr310</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-eclipse-collections</artifactId>
+                <version>${jackson.version}</version>
             </dependency>
 
+<!--            DataFrame-EC-->
             <dependency>
                 <groupId>io.github.vmzakharov</groupId>
                 <artifactId>dataframe-ec</artifactId>
                 <version>${dataframe.ec.version}</version>
             </dependency>
 
+<!--            JUnit-->
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter</artifactId>
                 <version>${junit5.version}</version>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
 </project>

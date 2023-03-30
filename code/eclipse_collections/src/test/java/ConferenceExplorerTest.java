@@ -127,4 +127,22 @@ public class ConferenceExplorerTest
                 .withKeyValue(Country.getByName("Poland"), 3L);
         Assertions.assertEquals(expected, explorer.conferenceDaysByCountry());
     }
+
+    @Test
+    public void output()
+    {
+        ConferenceExplorer explorer = new ConferenceExplorer(2023);
+        String s = explorer.outputToJson(explorer::getConferences);
+        System.out.println(s);
+        String s2 = explorer.outputToJson(explorer::countByMonth);
+        System.out.println(s2);
+        String s3 = explorer.outputToJson(explorer::getCountries);
+        System.out.println(s3);
+        String s4 = explorer.outputToJson(explorer::conferenceDaysByCountry);
+        System.out.println(s4);
+        String s5 = explorer.outputToJson(explorer::countBySessionType);
+        System.out.println(s5);
+        String s6 = explorer.outputToJson(explorer::groupByCountry);
+        System.out.println(s6);
+    }
 }
