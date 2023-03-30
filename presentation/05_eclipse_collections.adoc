@@ -6,16 +6,14 @@
 |====
 |*Pros*
 | * Rich and concise API
-* Null safe result types for groupBy, countBy (Multimap, Bag)
+* Null safe result types for `groupBy` => `Multimap` and `countBy` => `Bag`
 * Primitive Collection support
-* Able to  leverage new data-oriented language features (e.g. records)
 * Extensive Code Katas available
-* Open Source at Eclipse Foundation with contributions welcome
+* Open Source at Eclipse Foundation with contributions welcome (requires signing ECA)
 |*Cons*
 | * Third-party dependency
-* Limited books/training available
 * Less available skilled resources
-
+* Requires Jackson CSV and JSON dependency
 |====
 
 link:toc.adoc[⬆️ TOC] /

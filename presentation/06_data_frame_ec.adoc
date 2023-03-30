@@ -13,7 +13,6 @@
 * Open Source with helpful and active maintainer
 |*Cons*
 | * Multiple Third-party dependencies
-* Limited books/training available
 * Minimal available skilled resources
 * Less mature and evolved compared to Java alternatives like TableSaw
 

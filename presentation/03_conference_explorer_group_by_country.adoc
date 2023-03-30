@@ -36,16 +36,3 @@ link:toc.adoc[⬆️ TOC] /
 link:./03_conference_explorer_sort_by.adoc[⬅️ ConferenceExplorer - Sort by Days to Event] /
 link:./03_conference_explorer_group_by_city.adoc[➡️ ConferenceExplorer - Group by City]
 
-
-////
-*** Sort by days to event
-*** Count by month
-*** Count by country
-*** Sum conference days by country
-*** Group by country
-*** Group by city
-*** Get the unique countries with their flags for all conferences
-*** Group by session types
-*** Count by session type
-** Output each of the above to a CSV file (TBD)////
-

@@ -38,17 +38,3 @@ public class ConferenceExplorer {
 link:toc.adoc[⬆️ TOC] /
 link:./02_the_problem_what_to_choose_deatils.adoc[⬅️ What to Choose? In detail.] /
 link:./03_conference_explorer_load_csv.adoc[➡️ Load data from CSV]
-
-
-////
-*** Sort by days to event
-*** Count by month
-*** Count by country
-*** Sum conference days by country
-*** Group by country
-*** Group by city
-*** Get the unique countries with their flags for all conferences
-*** Group by session types
-*** Count by session type
-** Output each of the above to a CSV file (TBD)////
-

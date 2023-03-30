@@ -33,7 +33,7 @@ public ImmutableList<Conference> sortByDaysToEvent() {
 ----
 | DataFrame-EC
 |
-[source,java,linenums,highlight=2..2]
+[source,java,linenums,highlight=2..13]
 ----
 public DataFrame sortByDaysToEvent() {
     return this.conferences.sortBy(Lists.immutable.with("DaysToEvent"));
@@ -55,17 +55,4 @@ private void addDaysUntilFunctionAndDaysToEventColumn(DataFrame dataFrame) {
 link:toc.adoc[⬆️ TOC] /
 link:./03_conference_explorer_load_csv.adoc[⬅️ ConferenceExplorer - Load CSV Data] /
 link:./03_conference_explorer_group_by_country.adoc[➡️ ConferenceExplorer - Group by Country]
-
-
-////
-*** Sort by days to event
-*** Count by month
-*** Count by country
-*** Sum conference days by country
-*** Group by country
-*** Group by city
-*** Get the unique countries with their flags for all conferences
-*** Group by session types
-*** Count by session type
-** Output each of the above to a CSV file (TBD)////
 

@@ -5,6 +5,7 @@
 * Java Streams, Eclipse Collections CSV based solutions benefit from
 ** Java 14+ (Records)
 ** Jackson CSV library (or other CSV library)
+** Jackson JSON library (or other JSON library)
 * Features can determine your preferred approach
 
 link:toc.adoc[⬆️ TOC] /

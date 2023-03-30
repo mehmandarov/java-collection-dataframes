@@ -46,15 +46,3 @@ link:./03_conference_explorer_sum_by.adoc[⬅️ ConferenceExplorer - SumBy] /
 link:./03_conference_explorer_output.adoc[➡️ Output to CSV]
 
 
-////
-*** Sort by days to event
-*** Count by month
-*** Count by country
-*** Sum conference days by country
-*** Group by country
-*** Group by city
-*** Get the unique countries with their flags for all conferences
-*** Group by session types
-*** Count by session type
-** Output each of the above to a CSV file (TBD)////
-

@@ -6,17 +6,14 @@
 |====
 | *Pros*
 | * Built-in to Java and continuing to evolve
-* Only requires Jackson CSV dependency
 * Extensive books/training available
 * Able to  leverage new data-oriented language features like records
 * Large pool of skilled resources
+* Open Source, but takes time to earn credibility to contribute (requires signing OCA)
 |*Cons*
 | * Verbose (No eager methods)
-* Null unsafe result types for groupingBy, counting (Map)
-* No primitive collections
-* Memory inefficient collections (HashSet)
-* Slow evolution (mature)
-* Open Source but requires signing OCA and takes time to earn credibility to contribute
+* Null unsafe result types for `groupingBy`, `counting`=> `Map`
+* Requires Jackson CSV and JSON dependency
 |====
 
 link:toc.adoc[⬆️ TOC] /
