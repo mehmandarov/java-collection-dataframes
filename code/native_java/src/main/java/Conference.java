@@ -3,6 +3,8 @@ import java.time.Month;
 import java.time.temporal.ChronoUnit;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public record Conference(
         String eventName,
         Country country,
@@ -13,7 +15,8 @@ public record Conference(
 {
     public Conference(String eventName, String country, String city, String startDate, String endDate, String sessionTypes)
     {
-        this(eventName,
+        this(
+                eventName,
                 Country.getByName(country),
                 city,
                 LocalDate.parse(startDate),
@@ -31,11 +34,13 @@ public record Conference(
         return ChronoUnit.DAYS.between(LocalDate.now(), this.startDate);
     }
 
+    @JsonIgnore
     public boolean hasWorkshops()
     {
         return this.sessionTypes.contains(SessionType.WORKSHOP);
     }
 
+    @JsonIgnore
     public boolean hasTalks()
     {
         return this.sessionTypes.contains(SessionType.TALK);
@@ -51,6 +56,7 @@ public record Conference(
         return this.country.name();
     }
 
+    @JsonIgnore
     public Month getMonth()
     {
         return this.startDate.getMonth();

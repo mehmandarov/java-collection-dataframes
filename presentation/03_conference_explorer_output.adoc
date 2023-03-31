@@ -6,15 +6,28 @@
 |====
 | Java Streams
 |
-[source,java,linenums,highlight=2..4]
+[source,java,linenums,highlight=3..3]
 ----
+public String outputToJson(Supplier<Object> supplier) {
+    try {
+        return this.getObjectMapper().writeValueAsString(supplier.get());
+    }
 
 ----
 | Eclipse Collections
 |
-[source,java,linenums,highlight=2..3]
+[source,java,linenums,highlight=2..8]
 ----
-
+public String outputToJson(Function0<Object> function) {
+    Object result = function.value();
+    try {
+        return this.getObjectMapper().writeValueAsString(
+                switch (result) {
+                    case Bag<?> b -> b.toMapOfItemToCount();
+                    case Multimap<?, ?> m -> m.toMap(Sets.mutable::empty);
+                    default -> result;
+                });
+    }
 ----
 | DataFrame-EC
 |

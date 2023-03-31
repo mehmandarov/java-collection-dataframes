@@ -7,11 +7,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.MappingIterator;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 public class ConferenceExplorer
 {
@@ -111,14 +115,16 @@ public class ConferenceExplorer
     public Map<Country, Set<Conference>> groupByCountry()
     {
         return this.conferences.stream()
-                .collect(Collectors.groupingBy(Conference::country,
+                .collect(Collectors.groupingBy(
+                        Conference::country,
                         Collectors.toUnmodifiableSet()));
     }
 
     public Map<String, Set<Conference>> groupByCity()
     {
         return this.conferences.stream()
-                .collect(Collectors.groupingBy(Conference::city,
+                .collect(Collectors.groupingBy(
+                        Conference::city,
                         Collectors.toUnmodifiableSet()));
     }
 
@@ -149,14 +155,16 @@ public class ConferenceExplorer
     public Map<Country, Long> countByCountry()
     {
         return this.conferences.stream()
-                .collect(Collectors.groupingBy(Conference::country,
+                .collect(Collectors.groupingBy(
+                        Conference::country,
                         Collectors.counting()));
     }
 
     public Map<Month, Long> countByMonth()
     {
         return this.conferences.stream()
-                .collect(Collectors.groupingBy(Conference::getMonth,
+                .collect(Collectors.groupingBy(
+                        Conference::getMonth,
                         Collectors.counting()));
     }
 
@@ -171,7 +179,26 @@ public class ConferenceExplorer
     public Map<Country, Long> conferenceDaysByCountry()
     {
         return this.conferences.stream().
-                collect(Collectors.groupingBy(Conference::country,
+                collect(Collectors.groupingBy(
+                        Conference::country,
                         Collectors.summingLong(Conference::durationInDays)));
+    }
+
+    private ObjectMapper getObjectMapper()
+    {
+        ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
+        return mapper;
+    }
+
+    public String outputToJson(Supplier<Object> supplier)
+    {
+        try
+        {
+            return this.getObjectMapper().writeValueAsString(supplier.get());
+        }
+        catch (JsonProcessingException e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 }

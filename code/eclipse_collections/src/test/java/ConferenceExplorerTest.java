@@ -133,6 +133,7 @@ public class ConferenceExplorerTest
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
         String s = explorer.outputToJson(explorer::getConferences);
+        Assertions.assertNotNull(s);
         System.out.println(s);
         String s2 = explorer.outputToJson(explorer::countByMonth);
         System.out.println(s2);

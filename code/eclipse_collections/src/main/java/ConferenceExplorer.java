@@ -63,14 +63,6 @@ public class ConferenceExplorer
         }
     }
 
-    private ObjectMapper getObjectMapper()
-    {
-        ObjectMapper mapper = new ObjectMapper()
-                .registerModule(new EclipseCollectionsModule())
-                .registerModule(new JavaTimeModule());
-        return mapper;
-    }
-
     private void createConferencesFromList(Predicate<Conference> initialFilter, List<Map<String, String>> lists)
     {
         this.conferences = LazyIterate.collect(lists, this::createConference)
@@ -168,10 +160,21 @@ public class ConferenceExplorer
         return this.conferences.sumByLong(Conference::country, Conference::durationInDays);
     }
 
-    public String outputToJson(Function0<Object> method) {
-        Object result = method.value();
-        try {
-            return this.getObjectMapper().writeValueAsString(switch (result) {
+    private ObjectMapper getObjectMapper()
+    {
+        ObjectMapper mapper = new ObjectMapper()
+                .registerModule(new EclipseCollectionsModule())
+                .registerModule(new JavaTimeModule());
+        return mapper;
+    }
+
+    public String outputToJson(Function0<Object> function)
+    {
+        Object result = function.value();
+        try
+        {
+            return this.getObjectMapper().writeValueAsString(switch (result)
+                    {
                         case Bag<?> bag -> bag.toMapOfItemToCount();
                         case Multimap<?, ?> multimap -> multimap.toMap(Sets.mutable::empty);
                         default -> result;

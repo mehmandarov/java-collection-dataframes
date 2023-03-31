@@ -23,13 +23,11 @@ public record Conference(
                 SessionType.setFromString(sessionTypes));
     }
 
-    @JsonIgnore
     public long durationInDays()
     {
         return ChronoUnit.DAYS.between(this.startDate, this.endDate.plusDays(1L));
     }
 
-    @JsonIgnore
     public long daysToEvent()
     {
         return ChronoUnit.DAYS.between(LocalDate.now(), this.startDate);
@@ -53,7 +51,6 @@ public record Conference(
         return this.country.flag();
     }
 
-    @JsonIgnore
     public String countryName()
     {
         return this.country.name();
