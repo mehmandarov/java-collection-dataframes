@@ -101,7 +101,7 @@ public class ConferenceExplorerTest
     public void getCountries()
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
-        DataFrame flags = explorer.getCountries().getColumnNamed("Flag").getDataFrame();
+        DataFrame flags = explorer.getCountries();
 
         DataFrame expectedFlags = new DataFrame("Flag")
                 .addStringColumn("Country").addStringColumn("Alpha2Code").addStringColumn("Flag")
