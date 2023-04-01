@@ -1,17 +1,9 @@
-import java.net.URL;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.Version;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import io.github.vmzakharov.ecdataframe.dataframe.AggregateFunction;
 import io.github.vmzakharov.ecdataframe.dataframe.DataFrame;
-import io.github.vmzakharov.ecdataframe.dataframe.DfIndex;
 import io.github.vmzakharov.ecdataframe.dataframe.DfJoin;
 import io.github.vmzakharov.ecdataframe.dataset.CsvDataSet;
 import io.github.vmzakharov.ecdataframe.dataset.CsvSchema;
@@ -20,12 +12,14 @@ import io.github.vmzakharov.ecdataframe.dsl.function.IntrinsicFunctionDescriptor
 import io.github.vmzakharov.ecdataframe.dsl.value.LongValue;
 import io.github.vmzakharov.ecdataframe.dsl.value.StringValue;
 import io.github.vmzakharov.ecdataframe.dsl.value.ValueType;
-import org.eclipse.collections.api.bag.Bag;
-import org.eclipse.collections.api.block.function.Function0;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.factory.Maps;
-import org.eclipse.collections.api.factory.Sets;
-import org.eclipse.collections.api.multimap.Multimap;
+
+import java.net.URL;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ConferenceExplorer
 {
@@ -224,21 +218,22 @@ public class ConferenceExplorer
 
     public String outputToJson(Object data)
     {
-        DataFrameCustomSerializer dfSerializer = new DataFrameCustomSerializer(DataFrame.class);
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        SimpleModule module =
-                new SimpleModule("DataFrameCustomSerializer", new Version(2, 1, 3, null, null, null));
-        module.addSerializer(DataFrame.class, dfSerializer);
-        objectMapper.registerModule(module);
-
         try
         {
-            return objectMapper.writeValueAsString(data);
+            return this.getObjectMapper().writeValueAsString(data);
         }
         catch (JsonProcessingException e)
         {
             throw new RuntimeException(e);
         }
+    }
+
+    private ObjectMapper getObjectMapper()
+    {
+        DataFrameCustomSerializer dfSerializer = new DataFrameCustomSerializer(DataFrame.class);
+        SimpleModule module =
+                new SimpleModule("DataFrameCustomSerializer", new Version(2, 1, 3, null, null, null));
+        module.addSerializer(DataFrame.class, dfSerializer);
+        return new ObjectMapper().registerModule(module);
     }
 }

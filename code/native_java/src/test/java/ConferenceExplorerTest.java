@@ -1,12 +1,12 @@
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import java.time.Month;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 public class ConferenceExplorerTest
 {
@@ -130,18 +130,16 @@ public class ConferenceExplorerTest
     public void output()
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
-        String s = explorer.outputToJson(explorer::getConferences);
+        String s = explorer.outputToJson(explorer.getConferences());
         Assertions.assertNotNull(s);
         System.out.println(s);
-        String s2 = explorer.outputToJson(explorer::countByMonth);
+        String s2 = explorer.outputToJson(explorer.countByMonth());
         System.out.println(s2);
-        String s3 = explorer.outputToJson(explorer::getCountries);
+        String s3 = explorer.outputToJson(explorer.getCountries());
         System.out.println(s3);
-        String s4 = explorer.outputToJson(explorer::conferenceDaysByCountry);
+        String s4 = explorer.outputToJson(explorer.conferenceDaysByCountry());
         System.out.println(s4);
-        String s5 = explorer.outputToJson(explorer::countBySessionType);
+        String s5 = explorer.outputToJson(explorer.countBySessionType());
         System.out.println(s5);
-        String s6 = explorer.outputToJson(explorer::groupByCountry);
-        System.out.println(s6);
     }
 }

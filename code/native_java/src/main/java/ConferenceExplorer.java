@@ -1,21 +1,16 @@
-import java.io.IOException;
-import java.net.URL;
-import java.time.Month;
-import java.util.AbstractMap;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
+import java.io.IOException;
+import java.net.URL;
+import java.time.Month;
+import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class ConferenceExplorer
 {
@@ -186,15 +181,14 @@ public class ConferenceExplorer
 
     private ObjectMapper getObjectMapper()
     {
-        ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
-        return mapper;
+        return new ObjectMapper().registerModule(new JavaTimeModule());
     }
 
-    public String outputToJson(Supplier<Object> supplier)
+    public String outputToJson(Object result)
     {
         try
         {
-            return this.getObjectMapper().writeValueAsString(supplier.get());
+            return this.getObjectMapper().writeValueAsString(result);
         }
         catch (JsonProcessingException e)
         {

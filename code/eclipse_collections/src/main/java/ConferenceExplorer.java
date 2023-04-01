@@ -1,9 +1,3 @@
-import java.io.IOException;
-import java.net.URL;
-import java.time.Month;
-import java.util.List;
-import java.util.Map;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,15 +6,18 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.fasterxml.jackson.datatype.eclipsecollections.EclipseCollectionsModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.eclipse.collections.api.bag.Bag;
-import org.eclipse.collections.api.block.function.Function0;
 import org.eclipse.collections.api.block.predicate.Predicate;
-import org.eclipse.collections.api.factory.Sets;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.primitive.ObjectLongMap;
-import org.eclipse.collections.api.multimap.Multimap;
 import org.eclipse.collections.api.multimap.set.ImmutableSetMultimap;
 import org.eclipse.collections.api.set.ImmutableSet;
 import org.eclipse.collections.impl.utility.LazyIterate;
+
+import java.io.IOException;
+import java.net.URL;
+import java.time.Month;
+import java.util.List;
+import java.util.Map;
 
 public class ConferenceExplorer
 {
@@ -162,21 +159,18 @@ public class ConferenceExplorer
 
     private ObjectMapper getObjectMapper()
     {
-        ObjectMapper mapper = new ObjectMapper()
+        return new ObjectMapper()
                 .registerModule(new EclipseCollectionsModule())
                 .registerModule(new JavaTimeModule());
-        return mapper;
     }
 
-    public String outputToJson(Function0<Object> function)
+    public String outputToJson(Object result)
     {
-        Object result = function.value();
         try
         {
             return this.getObjectMapper().writeValueAsString(switch (result)
                     {
                         case Bag<?> bag -> bag.toMapOfItemToCount();
-                        case Multimap<?, ?> multimap -> multimap.toMap(Sets.mutable::empty);
                         default -> result;
                     });
         }

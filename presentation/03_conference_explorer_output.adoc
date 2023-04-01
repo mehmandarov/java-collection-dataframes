@@ -8,32 +8,52 @@
 |
 [source,java,linenums,highlight=3..3]
 ----
-public String outputToJson(Supplier<Object> supplier) {
+public String outputToJson(Object result) {
     try {
-        return this.getObjectMapper().writeValueAsString(supplier.get());
+        return this.getObjectMapper().writeValueAsString(result);
     }
 
+private ObjectMapper getObjectMapper(){
+    return new ObjectMapper().registerModule(new JavaTimeModule());
+}
 ----
 | Eclipse Collections
 |
 [source,java,linenums,highlight=2..8]
 ----
-public String outputToJson(Function0<Object> function) {
-    Object result = function.value();
+public String outputToJson(Object result) {
     try {
         return this.getObjectMapper().writeValueAsString(
                 switch (result) {
-                    case Bag<?> b -> b.toMapOfItemToCount();
-                    case Multimap<?, ?> m -> m.toMap(Sets.mutable::empty);
-                    default -> result;
-                });
+                    case Bag<?> bag -> bag.toMapOfItemToCount();
+                    default -> result;});
     }
+
+private ObjectMapper getObjectMapper() {
+    return new ObjectMapper()
+            .registerModule(new EclipseCollectionsModule())
+            .registerModule(new JavaTimeModule());
+}
+
 ----
 | DataFrame-EC
 |
 [source,java,linenums,highlight=2..4]
 ----
+public String outputToJson(Object data) {
+    try {
+        return this.getObjectMapper().writeValueAsString(data);
+    }
 
+private ObjectMapper getObjectMapper() {
+    DataFrameCustomSerializer dfSerializer =
+            new DataFrameCustomSerializer(DataFrame.class);
+    SimpleModule module =
+            new SimpleModule("DataFrameCustomSerializer",
+                            new Version(2, 1, 3, null, null, null));
+    module.addSerializer(DataFrame.class, dfSerializer);
+    return new ObjectMapper().registerModule(module);
+}
 ----
 |====
 
