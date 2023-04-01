@@ -1,12 +1,11 @@
+import java.util.HashMap;
+import java.util.Map;
+
 import io.github.vmzakharov.ecdataframe.dataframe.DataFrame;
 import io.github.vmzakharov.ecdataframe.dataframe.util.DataFrameCompare;
 import io.github.vmzakharov.ecdataframe.dsl.value.ValueType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.time.Month;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ConferenceExplorerTest
 {
@@ -31,56 +30,53 @@ public class ConferenceExplorerTest
     @Test
     public void countByMonth()
     {
+        DataFrame expected = new DataFrame("Expected")
+                .addStringColumn("Month").addLongColumn("MonthCount")
+                .addRow("JANUARY", 1L)
+                .addRow("FEBRUARY", 1L)
+                .addRow("MARCH", 2L)
+                .addRow("APRIL", 2L)
+                .addRow("MAY", 1L);
+
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
-        Map<Month, Long> expected = new HashMap<>();
-        expected.put(Month.JANUARY, 1L);
-        expected.put(Month.FEBRUARY, 1L);
-        expected.put(Month.MARCH, 2L);
-        expected.put(Month.APRIL, 2L);
-        expected.put(Month.MAY, 1L);
         DataFrame countByMonth = explorer.countByMonth();
-        expected.forEach((k, v) -> {
-            DataFrame result = countByMonth.selectBy("Month == '" + k + "' and MonthCount == " + v.longValue());
-            Assertions.assertEquals(1, result.rowCount());
-        });
+        Assertions.assertTrue(new DataFrameCompare().equalIgnoreOrder(expected, countByMonth));
     }
 
     @Test
     public void countByCountry()
     {
-        DataFrame expected = new DataFrame("Expected");
-        expected.addColumn("Country", ValueType.STRING);
-        expected.addColumn("CountryCount", ValueType.LONG);
-        expected.addRow("Sweden", 1L);
-        expected.addRow("United States", 1L);
-        expected.addRow("Romania", 1L);
-        expected.addRow("Germany", 1L);
-        expected.addRow("Greece", 1L);
-        expected.addRow("WWW", 1L);
-        expected.addRow("Poland", 1L);
+        DataFrame expected = new DataFrame("Expected")
+                .addStringColumn("Country").addLongColumn("CountryCount")
+                .addRow("Sweden", 1L)
+                .addRow("United States", 1L)
+                .addRow("Romania", 1L)
+                .addRow("Germany", 1L)
+                .addRow("Greece", 1L)
+                .addRow("WWW", 1L)
+                .addRow("Poland", 1L);
 
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
-        DataFrame countByMonth = explorer.countByCountry();
-        Assertions.assertTrue(new DataFrameCompare().equalIgnoreOrder(expected, countByMonth));
+        DataFrame countByCountry = explorer.countByCountry();
+        Assertions.assertTrue(new DataFrameCompare().equalIgnoreOrder(expected, countByCountry));
     }
 
     @Test
     public void conferenceDaysByCountry()
     {
+        DataFrame expected = new DataFrame("Expected")
+                .addStringColumn("Country").addLongColumn("Duration")
+                .addRow("Sweden", 3L)
+                .addRow("United States", 3L)
+                .addRow("Romania", 3L)
+                .addRow("Germany", 3L)
+                .addRow("Greece", 3L)
+                .addRow("WWW", 6L)
+                .addRow("Poland", 3L);
+
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
-        Map<String, Long> expected = new HashMap<>();
-        expected.put("SWEDEN", 3L);
-        expected.put("UNITED STATES", 3L);
-        expected.put("ROMANIA", 3L);
-        expected.put("GREECE", 3L);
-        expected.put("GERMANY", 3L);
-        expected.put("WWW", 6L);
-        expected.put("POLAND", 3L);
         DataFrame sumByCountry = explorer.conferenceDaysByCountry();
-        expected.forEach((k, v) -> {
-            DataFrame result = sumByCountry.selectBy("toUpper(Country) == '" + k + "' and Duration == " + v.longValue());
-            Assertions.assertEquals(1, result.rowCount());
-        });
+        Assertions.assertTrue(new DataFrameCompare().equalIgnoreOrder(expected, sumByCountry));
     }
 
     @Test
@@ -103,52 +99,52 @@ public class ConferenceExplorerTest
                 .forEach(c -> Assertions.assertEquals("Greece", c.getString("Country")));
     }
 
-     @Test
-     public void getCountries()
-     {
-         ConferenceExplorer explorer = new ConferenceExplorer(2023);
-         DataFrame flags = explorer.getCountries().getColumnNamed("Flag").getDataFrame();
+    @Test
+    public void getCountries()
+    {
+        ConferenceExplorer explorer = new ConferenceExplorer(2023);
+        DataFrame flags = explorer.getCountries().getColumnNamed("Flag").getDataFrame();
 
-         DataFrame expectedFlags = new DataFrame("Flag");
-         expectedFlags.addColumn("Flag", ValueType.STRING);
-         Map<String, String> expected = new HashMap<>();
-         expected.put("SWEDEN", "🇸🇪");
-         expected.put("UNITED STATES", "🇺🇸");
-         expected.put("ROMANIA", "🇷🇴");
-         expected.put("GERMANY", "🇩🇪");
-         expected.put("GREECE", "🇬🇷");
-         expected.put("WWW", "🌐");
-         expected.put("POLAND", "🇵🇱");
+        DataFrame expectedFlags = new DataFrame("Flag");
+        expectedFlags.addColumn("Flag", ValueType.STRING);
+        Map<String, String> expected = new HashMap<>();
+        expected.put("SWEDEN", "🇸🇪");
+        expected.put("UNITED STATES", "🇺🇸");
+        expected.put("ROMANIA", "🇷🇴");
+        expected.put("GERMANY", "🇩🇪");
+        expected.put("GREECE", "🇬🇷");
+        expected.put("WWW", "🌐");
+        expected.put("POLAND", "🇵🇱");
 
-         expected.forEach((k, v) -> {
-             DataFrame result = flags.selectBy("toUpper(Country) == '" + k + "' and Flag == '" + v + "'");
-             String error = "Unexpected results for Country: %s and Flag: %s.";
-             Assertions.assertEquals(1, result.rowCount(), String.format(error, k, v));
-         });
-     }
+        expected.forEach((k, v) -> {
+            DataFrame result = flags.selectBy("toUpper(Country) == '" + k + "' and Flag == '" + v + "'");
+            String error = "Unexpected results for Country: %s and Flag: %s.";
+            Assertions.assertEquals(1, result.rowCount(), String.format(error, k, v));
+        });
+    }
 
-     @Test
-     public void groupBySessionTypes()
-     {
-         ConferenceExplorer explorer = new ConferenceExplorer(2023);
-         Map<String, DataFrame> bySessionType = explorer.groupBySessionType();
+    @Test
+    public void groupBySessionTypes()
+    {
+        ConferenceExplorer explorer = new ConferenceExplorer(2023);
+        Map<String, DataFrame> bySessionType = explorer.groupBySessionType();
 
-         Assertions.assertEquals(7, bySessionType.get("talks").rowCount());
-         Assertions.assertEquals(6, bySessionType.get("workshops").rowCount());
+        Assertions.assertEquals(7, bySessionType.get("talks").rowCount());
+        Assertions.assertEquals(6, bySessionType.get("workshops").rowCount());
 
-         Assertions.assertEquals(1, bySessionType.get("talks").selectBy("EventName == 'jChampionsConf'").rowCount());
-         Assertions.assertEquals(0, bySessionType.get("workshops").selectBy("EventName == 'jChampionsConf'").rowCount());
-     }
+        Assertions.assertEquals(1, bySessionType.get("talks").selectBy("EventName == 'jChampionsConf'").rowCount());
+        Assertions.assertEquals(0, bySessionType.get("workshops").selectBy("EventName == 'jChampionsConf'").rowCount());
+    }
 
-     @Test
-     public void countBySessionType()
-     {
-         ConferenceExplorer explorer = new ConferenceExplorer(2023);
-         Map<String, Long> expected = new HashMap<>();
-         expected.put("talks", 7L);
-         expected.put("workshops", 6L);
-         Assertions.assertEquals(expected, explorer.countBySessionType());
-     }
+    @Test
+    public void countBySessionType()
+    {
+        ConferenceExplorer explorer = new ConferenceExplorer(2023);
+        Map<String, Long> expected = new HashMap<>();
+        expected.put("talks", 7L);
+        expected.put("workshops", 6L);
+        Assertions.assertEquals(expected, explorer.countBySessionType());
+    }
 
     @Test
     public void output()
