@@ -1,3 +1,8 @@
+import java.net.URL;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.Map;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,12 +19,6 @@ import io.github.vmzakharov.ecdataframe.dsl.value.StringValue;
 import io.github.vmzakharov.ecdataframe.dsl.value.ValueType;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.factory.Maps;
-
-import java.net.URL;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ConferenceExplorer
 {
@@ -207,12 +206,13 @@ public class ConferenceExplorer
         return groupedBySessionTypes;
     }
 
-    public Map<String, Long> countBySessionType()
+    public DataFrame countBySessionType()
     {
         Map<String, DataFrame> groupedBySessionTypes = groupBySessionType();
-        Map<String, Long> countBySessionTypes = new HashMap<>();
-        countBySessionTypes.put("talks", (long) groupedBySessionTypes.get("talks").rowCount());
-        countBySessionTypes.put("workshops", (long) groupedBySessionTypes.get("workshops").rowCount());
+        DataFrame countBySessionTypes = new DataFrame("countBySessionType")
+                .addStringColumn("Session Type").addLongColumn("Count")
+                .addRow("talks", (long) groupedBySessionTypes.get("talks").rowCount())
+                .addRow("workshops", (long) groupedBySessionTypes.get("workshops").rowCount());
         return countBySessionTypes;
     }
 

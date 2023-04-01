@@ -139,11 +139,13 @@ public class ConferenceExplorerTest
     @Test
     public void countBySessionType()
     {
+        DataFrame expected = new DataFrame("Expected")
+                .addStringColumn("Session Type").addLongColumn("Count")
+                .addRow("talks", 7L)
+                .addRow("workshops", 6L);
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
-        Map<String, Long> expected = new HashMap<>();
-        expected.put("talks", 7L);
-        expected.put("workshops", 6L);
-        Assertions.assertEquals(expected, explorer.countBySessionType());
+        DataFrame countBySessionType = explorer.countBySessionType();
+        Assertions.assertTrue(new DataFrameCompare().equalIgnoreOrder(expected, countBySessionType));
     }
 
     @Test
