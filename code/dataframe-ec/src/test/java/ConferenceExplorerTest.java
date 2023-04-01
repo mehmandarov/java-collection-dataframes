@@ -87,8 +87,9 @@ public class ConferenceExplorerTest
     public void groupByCountry()
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
-        DfIndex byCountry = explorer.groupByCountry();
-        byCountry.iterateAt("Greece")
+        DataFrame byCountry = explorer.groupByCountry();
+        byCountry.index("ByCountry")
+                .iterateAt("Greece")
                 .forEach(c -> Assertions.assertEquals("Athens", c.getString("City")));
     }
 
@@ -96,8 +97,9 @@ public class ConferenceExplorerTest
     public void groupByCity()
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
-        DfIndex byCity = explorer.groupByCity();
-        byCity.iterateAt("Athens")
+        DataFrame byCity = explorer.groupByCity();
+        byCity.index("ByCity")
+                .iterateAt("Athens")
                 .forEach(c -> Assertions.assertEquals("Greece", c.getString("Country")));
     }
 
@@ -147,4 +149,21 @@ public class ConferenceExplorerTest
          expected.put("workshops", 6L);
          Assertions.assertEquals(expected, explorer.countBySessionType());
      }
+
+    @Test
+    public void output()
+    {
+        ConferenceExplorer explorer = new ConferenceExplorer(2023);
+        String s = explorer.outputToJson(explorer.getConferences());
+        Assertions.assertNotNull(s);
+        System.out.println(s);
+        String s2 = explorer.outputToJson(explorer.countByMonth());
+        System.out.println(s2);
+        String s3 = explorer.outputToJson(explorer.getCountries());
+        System.out.println(s3);
+        String s4 = explorer.outputToJson(explorer.conferenceDaysByCountry());
+        System.out.println(s4);
+        String s5 = explorer.outputToJson(explorer.countBySessionType());
+        System.out.println(s5);
+    }
 }
