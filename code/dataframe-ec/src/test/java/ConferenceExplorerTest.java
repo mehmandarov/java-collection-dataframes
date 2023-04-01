@@ -1,12 +1,12 @@
-import java.time.Month;
-import java.util.HashMap;
-import java.util.Map;
-
 import io.github.vmzakharov.ecdataframe.dataframe.DataFrame;
-import io.github.vmzakharov.ecdataframe.dataframe.DfIndex;
+import io.github.vmzakharov.ecdataframe.dataframe.util.DataFrameCompare;
 import io.github.vmzakharov.ecdataframe.dsl.value.ValueType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.time.Month;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ConferenceExplorerTest
 {
@@ -48,20 +48,20 @@ public class ConferenceExplorerTest
     @Test
     public void countByCountry()
     {
+        DataFrame expected = new DataFrame("Expected");
+        expected.addColumn("Country", ValueType.STRING);
+        expected.addColumn("CountryCount", ValueType.LONG);
+        expected.addRow("Sweden", 1L);
+        expected.addRow("United States", 1L);
+        expected.addRow("Romania", 1L);
+        expected.addRow("Germany", 1L);
+        expected.addRow("Greece", 1L);
+        expected.addRow("WWW", 1L);
+        expected.addRow("Poland", 1L);
+
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
-        Map<String, Long> expected = new HashMap<>();
-        expected.put("SWEDEN", 1L);
-        expected.put("UNITED STATES", 1L);
-        expected.put("ROMANIA", 1L);
-        expected.put("GERMANY", 1L);
-        expected.put("GREECE", 1L);
-        expected.put("WWW", 1L);
-        expected.put("POLAND", 1L);
         DataFrame countByMonth = explorer.countByCountry();
-        expected.forEach((k, v) -> {
-            DataFrame result = countByMonth.selectBy("toUpper(Country) == '" + k + "' and CountryCount == " + v.longValue());
-            Assertions.assertEquals(1, result.rowCount());
-        });
+        Assertions.assertTrue(new DataFrameCompare().equalIgnoreOrder(expected, countByMonth));
     }
 
     @Test
