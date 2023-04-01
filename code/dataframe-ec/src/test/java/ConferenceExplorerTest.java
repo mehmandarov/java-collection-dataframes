@@ -1,9 +1,7 @@
-import java.util.HashMap;
 import java.util.Map;
 
 import io.github.vmzakharov.ecdataframe.dataframe.DataFrame;
 import io.github.vmzakharov.ecdataframe.dataframe.util.DataFrameCompare;
-import io.github.vmzakharov.ecdataframe.dsl.value.ValueType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -105,22 +103,17 @@ public class ConferenceExplorerTest
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
         DataFrame flags = explorer.getCountries().getColumnNamed("Flag").getDataFrame();
 
-        DataFrame expectedFlags = new DataFrame("Flag");
-        expectedFlags.addColumn("Flag", ValueType.STRING);
-        Map<String, String> expected = new HashMap<>();
-        expected.put("SWEDEN", "🇸🇪");
-        expected.put("UNITED STATES", "🇺🇸");
-        expected.put("ROMANIA", "🇷🇴");
-        expected.put("GERMANY", "🇩🇪");
-        expected.put("GREECE", "🇬🇷");
-        expected.put("WWW", "🌐");
-        expected.put("POLAND", "🇵🇱");
+        DataFrame expectedFlags = new DataFrame("Flag")
+                .addStringColumn("Country").addStringColumn("Alpha2Code").addStringColumn("Flag")
+                .addRow("Sweden", "SE", "🇸🇪")
+                .addRow("United States", "US", "🇺🇸")
+                .addRow("Romania", "RO", "🇷🇴")
+                .addRow("Germany", "DE", "🇩🇪")
+                .addRow("Greece", "GR", "🇬🇷")
+                .addRow("WWW", "www", "🌐")
+                .addRow("Poland", "PL", "🇵🇱");
 
-        expected.forEach((k, v) -> {
-            DataFrame result = flags.selectBy("toUpper(Country) == '" + k + "' and Flag == '" + v + "'");
-            String error = "Unexpected results for Country: %s and Flag: %s.";
-            Assertions.assertEquals(1, result.rowCount(), String.format(error, k, v));
-        });
+        Assertions.assertTrue(new DataFrameCompare().equalIgnoreOrder(expectedFlags, flags));
     }
 
     @Test
