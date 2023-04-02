@@ -24,9 +24,10 @@ public ImmutableSetMultimap<String, Conference> groupByCity() {
 ----
 | DataFrame-EC
 |
-[source,java,linenums,highlight=2..2]
+[source,java,linenums,highlight=2..3]
 ----
 public DfIndex groupByCity() {
+    this.conferences.createIndex("City", Lists.immutable.of("City"));
     return this.conferences.index("City");
 }
 ----

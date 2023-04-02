@@ -5,9 +5,10 @@
 |*Source Code*
 | * link:https://github.com/eclipse/eclipse-collections[Eclipse Collections]
 * link:https://github.com/vmzakharov/dataframe-ec[Dataframe-EC]
-* link:https://github.com/FasterXML/jackson-dataformats-text[Jackson Dataformat CSV]
-* link:https://github.com/FasterXML/jackson-datatypes-collections[Jackson Datatypes Collections]
-* link:https://github.com/FasterXML/jackson-modules-java8[Jackson Modules Java 8]
+* Jackson Serialization Libraries
+** link:https://github.com/FasterXML/jackson-dataformats-text[Jackson Dataformat CSV]
+** link:https://github.com/FasterXML/jackson-datatypes-collections[Jackson Datatypes Collections]
+** link:https://github.com/FasterXML/jackson-modules-java8[Jackson Modules Java 8]
 |*Hands-on Training*
 | * link:https://github.com/eclipse/eclipse-collections-kata[Eclipse Collections Kata]
 * link:https://github.com/vmzakharov/dataframe-ec-kata[Dataframe-EC Kata]
@@ -20,4 +21,4 @@
 ---
 
 link:./toc.adoc[⬆️ TOC] /
-link:04_java_streams.adoc[⬅️ Java Streams]
+link:07_summary.adoc[⬅️ Summary]

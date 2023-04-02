@@ -12,7 +12,7 @@
 * Open Source, but takes time to earn credibility to contribute (requires signing OCA)
 |*Cons*
 | * Verbose (No eager methods)
-* Null unsafe result types for `groupingBy`, `counting`=> `Map`
+* Null unsafe result types for `groupingBy` => `Map` and `counting` => `Map`
 * Requires Jackson CSV and JSON dependency
 |====
 

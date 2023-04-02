@@ -2,6 +2,7 @@ import java.util.Map;
 
 import io.github.vmzakharov.ecdataframe.dataframe.DataFrame;
 import io.github.vmzakharov.ecdataframe.dataframe.util.DataFrameCompare;
+import org.eclipse.collections.api.factory.Lists;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -81,8 +82,7 @@ public class ConferenceExplorerTest
     public void groupByCountry()
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
-        DataFrame byCountry = explorer.groupByCountry();
-        byCountry.index("ByCountry")
+        explorer.groupByCountry()
                 .iterateAt("Greece")
                 .forEach(c -> Assertions.assertEquals("Athens", c.getString("City")));
     }
@@ -91,8 +91,7 @@ public class ConferenceExplorerTest
     public void groupByCity()
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
-        DataFrame byCity = explorer.groupByCity();
-        byCity.index("ByCity")
+        explorer.groupByCity()
                 .iterateAt("Athens")
                 .forEach(c -> Assertions.assertEquals("Greece", c.getString("Country")));
     }
@@ -115,7 +114,7 @@ public class ConferenceExplorerTest
 
         Assertions.assertTrue(new DataFrameCompare().equalIgnoreOrder(expectedCountries, countries));
 
-        DataFrame flags = expectedCountries.copy("Flags").dropColumn("Country").dropColumn("Alpha2Code");
+        DataFrame flags = expectedCountries.distinct(Lists.immutable.of("Flag"));
         DataFrame expectedFlags = new DataFrame("Flags")
                 .addStringColumn("Flag")
                 .addRow("🇸🇪")

@@ -6,7 +6,7 @@
 |====
 | Java Streams with Jackson CSV
 |
-[source,java,linenums,highlight=2..3]
+[source,java,linenums,highlight=5..9]
 ----
 private void loadConferencesFromCsv(Predicate<Conference> initialFilter) {
     CsvSchema headerSchema = CsvSchema.emptySchema().withHeader();
@@ -22,7 +22,7 @@ private void loadConferencesFromCsv(Predicate<Conference> initialFilter) {
 ----
 | Eclipse Collections with Jackson CSV
 |
-[source,java,linenums,highlight=2..3]
+[source,java,linenums,highlight=5..9]
 ----
 private void loadConferencesFromCsv(Predicate<Conference> initialFilter) {
     CsvSchema headerSchema = CsvSchema.emptySchema().withHeader();
@@ -38,7 +38,7 @@ private void loadConferencesFromCsv(Predicate<Conference> initialFilter) {
 ----
 | DataFrame-EC
 |
-[source,java,linenums,highlight=2..3]
+[source,java,linenums,highlight=5..8]
 ----
 private void loadConferencesFromCsv(String initialFilter) {
     CsvSchema schema = this.createConferenceSchema();

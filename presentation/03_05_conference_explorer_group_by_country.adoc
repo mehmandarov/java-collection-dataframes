@@ -24,9 +24,11 @@ public ImmutableSetMultimap<Country, Conference> groupByCountry() {
 ----
 | DataFrame-EC
 |
-[source,java,linenums,highlight=2..2]
+[source,java,linenums,highlight=2..4]
 ----
 public DfIndex groupByCountry() {
+    this.conferences.createIndex(
+            "Country", Lists.immutable.of("Country"));
     return this.conferences.index("Country");
 }
 ----

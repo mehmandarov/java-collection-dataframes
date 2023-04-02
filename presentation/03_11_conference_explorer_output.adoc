@@ -1,4 +1,4 @@
-==== Output Back to CSV
+==== Output Back to JSON using Jackson `ObjectMapper`
 
 ---
 

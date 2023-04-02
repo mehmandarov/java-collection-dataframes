@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import io.github.vmzakharov.ecdataframe.dataframe.AggregateFunction;
 import io.github.vmzakharov.ecdataframe.dataframe.DataFrame;
+import io.github.vmzakharov.ecdataframe.dataframe.DfIndex;
 import io.github.vmzakharov.ecdataframe.dataframe.DfJoin;
 import io.github.vmzakharov.ecdataframe.dataset.CsvDataSet;
 import io.github.vmzakharov.ecdataframe.dataset.CsvSchema;
@@ -168,16 +169,14 @@ public class ConferenceExplorer
                 Lists.immutable.with("Country"));
     }
 
-    public DataFrame groupByCountry()
+    public DfIndex groupByCountry()
     {
-        this.conferences.createIndex("ByCountry", Lists.immutable.of("Country"));
-        return this.conferences;
+        return this.conferences.index("Country");
     }
 
-    public DataFrame groupByCity()
+    public DfIndex groupByCity()
     {
-        this.conferences.createIndex("ByCity", Lists.immutable.of("City"));
-        return this.conferences;
+        return this.conferences.index("City");
     }
 
     public DataFrame getCountries()

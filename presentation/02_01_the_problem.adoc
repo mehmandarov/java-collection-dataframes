@@ -8,8 +8,11 @@
 ** Yes? How?
 * What options do we have? Some examples:
 ** Java Streams
-** Eclipse Collections
-** DataFrame-EC
+*** Part of Java standard library
+** link:https://github.com/eclipse/eclipse-collections[Eclipse Collections]
+*** Open Source library maintained at Eclipse Foundation
+** link:https://github.com/vmzakharov/dataframe-ec[DataFrame-EC]
+*** Open Source library created by Vladimir Zakharov
 
 
 link:toc.adoc[⬆️ TOC] /

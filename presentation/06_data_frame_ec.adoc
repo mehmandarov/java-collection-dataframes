@@ -14,7 +14,7 @@
 |*Cons*
 | * Multiple Third-party dependencies
 * Minimal available skilled resources
-* Less mature and evolved compared to Java alternatives like TableSaw
+* Less mature and evolved compared to Java alternatives, like TableSaw
 
 link:toc.adoc[⬆️ TOC] /
 link:./05_eclipse_collections.adoc[⬅️ Eclipse Collections] /

@@ -2,10 +2,11 @@
 
 ---
 * Data-oriented programming is feasible, flexible and enjoyable in Java
-* Java Streams, Eclipse Collections CSV based solutions benefit from
+* Java Streams and Eclipse Collections leverage
 ** Java 14+ (Records)
-** Jackson CSV library (or other CSV library)
-** Jackson JSON library (or other JSON library)
+** Jackson CSV library
+* All three libraries leverage
+** Jackson JSON library
 * Features can determine your preferred approach
 
 link:toc.adoc[⬆️ TOC] /
