@@ -8,6 +8,6 @@ image:assets/lego.jpg[assets/lego.jpg,800]
 
 link:toc.adoc[⬆️ TOC] /
 link:./02_the_problem_csv_data_to_load.adoc[⬅️ CSV Data to Load ] /
-link:./02_the_problem_what_to_choose_deatils.adoc[➡️ What to Choose? In detail.]
+link:./02_04_the_problem_what_to_choose_deatils.adoc[➡️ What to Choose? In detail.]
 
 

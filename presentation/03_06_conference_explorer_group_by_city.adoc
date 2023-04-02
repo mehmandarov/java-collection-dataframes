@@ -33,5 +33,5 @@ public DfIndex groupByCity() {
 |====
 
 link:toc.adoc[⬆️ TOC] /
-link:./03_conference_explorer_group_by_country.adoc[⬅️ ConferenceExplorer - Group by Country] /
-link:./03_conference_explorer_count_by_country.adoc[➡️ ConferenceExplorer - Count by Country]
+link:./03_05_conference_explorer_group_by_country.adoc[⬅️ ConferenceExplorer - Group by Country] /
+link:./03_07_conference_explorer_count_by_country.adoc[➡️ ConferenceExplorer - Count by Country]

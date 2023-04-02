@@ -36,7 +36,7 @@ public DataFrame countByMonth() {
 |====
 
 link:toc.adoc[⬆️ TOC] /
-link:./03_conference_explorer_count_by_country.adoc[⬅️ ConferenceExplorer - Count by Country] /
-link:./03_conference_explorer_sum_by.adoc[➡️ ConferenceExplorer - Sum conference days by Country]
+link:./03_07_conference_explorer_count_by_country.adoc[⬅️ ConferenceExplorer - Count by Country] /
+link:./03_09_conference_explorer_sum_by.adoc[➡️ ConferenceExplorer - Sum conference days by Country]
 
 

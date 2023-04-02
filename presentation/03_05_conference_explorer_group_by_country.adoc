@@ -33,6 +33,6 @@ public DfIndex groupByCountry() {
 |====
 
 link:toc.adoc[⬆️ TOC] /
-link:./03_conference_explorer_sort_by.adoc[⬅️ ConferenceExplorer - Sort by Days to Event] /
-link:./03_conference_explorer_group_by_city.adoc[➡️ ConferenceExplorer - Group by City]
+link:./03_04_conference_explorer_sort_by.adoc[⬅️ ConferenceExplorer - Sort by Days to Event] /
+link:./03_06_conference_explorer_group_by_city.adoc[➡️ ConferenceExplorer - Group by City]
 

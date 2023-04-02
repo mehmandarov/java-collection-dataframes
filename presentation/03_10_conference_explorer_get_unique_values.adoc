@@ -42,7 +42,7 @@ public DataFrame getCountries() {
 |====
 
 link:toc.adoc[⬆️ TOC] /
-link:./03_conference_explorer_sum_by.adoc[⬅️ ConferenceExplorer - SumBy] /
-link:./03_conference_explorer_output.adoc[➡️ Output to CSV]
+link:./03_09_conference_explorer_sum_by.adoc[⬅️ ConferenceExplorer - SumBy] /
+link:./03_11_conference_explorer_output.adoc[➡️ Output to CSV]
 
 
