@@ -9,8 +9,10 @@
 |
 [source,java,linenums,highlight=1..4]
 ----
-public record Conference(String eventName,
-        Country country, String city,
+public record Conference(
+        String eventName,
+        Country country,
+        String city,
         LocalDate startDate, LocalDate endDate,
         Set<SessionType> sessionTypes)
 ----
