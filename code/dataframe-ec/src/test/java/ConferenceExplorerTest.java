@@ -101,9 +101,9 @@ public class ConferenceExplorerTest
     public void getCountries()
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
-        DataFrame flags = explorer.getCountries();
+        DataFrame countries = explorer.getCountries();
 
-        DataFrame expectedFlags = new DataFrame("Flag")
+        DataFrame expectedCountries = new DataFrame("Countries")
                 .addStringColumn("Country").addStringColumn("Alpha2Code").addStringColumn("Flag")
                 .addRow("Sweden", "SE", "🇸🇪")
                 .addRow("United States", "US", "🇺🇸")
@@ -113,6 +113,18 @@ public class ConferenceExplorerTest
                 .addRow("WWW", "www", "🌐")
                 .addRow("Poland", "PL", "🇵🇱");
 
+        Assertions.assertTrue(new DataFrameCompare().equalIgnoreOrder(expectedCountries, countries));
+
+        DataFrame flags = expectedCountries.copy("Flags").dropColumn("Country").dropColumn("Alpha2Code");
+        DataFrame expectedFlags = new DataFrame("Flags")
+                .addStringColumn("Flag")
+                .addRow("🇸🇪")
+                .addRow("🇺🇸")
+                .addRow("🇷🇴")
+                .addRow("🇩🇪")
+                .addRow("🇬🇷")
+                .addRow("🌐")
+                .addRow("🇵🇱");
         Assertions.assertTrue(new DataFrameCompare().equalIgnoreOrder(expectedFlags, flags));
     }
 
