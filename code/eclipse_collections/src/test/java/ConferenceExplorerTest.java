@@ -1,3 +1,5 @@
+import java.time.Month;
+
 import org.eclipse.collections.api.RichIterable;
 import org.eclipse.collections.api.bag.Bag;
 import org.eclipse.collections.api.bag.MutableBag;
@@ -11,8 +13,6 @@ import org.eclipse.collections.api.multimap.set.ImmutableSetMultimap;
 import org.eclipse.collections.api.set.ImmutableSet;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.time.Month;
 
 public class ConferenceExplorerTest
 {
@@ -114,7 +114,7 @@ public class ConferenceExplorerTest
     }
 
     @Test
-    public void conferenceDaysByCountry()
+    public void sumConferenceDaysByCountry()
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
         ObjectLongMap<Country> expected = ObjectLongMaps.mutable.<Country>empty()
@@ -125,7 +125,7 @@ public class ConferenceExplorerTest
                 .withKeyValue(Country.getByName("Germany"), 3L)
                 .withKeyValue(Country.getByName("WWW"), 6L)
                 .withKeyValue(Country.getByName("Poland"), 3L);
-        Assertions.assertEquals(expected, explorer.conferenceDaysByCountry());
+        Assertions.assertEquals(expected, explorer.sumConferenceDaysByCountry());
     }
 
     @Test
@@ -139,7 +139,7 @@ public class ConferenceExplorerTest
         System.out.println(s2);
         String s3 = explorer.outputToJson(explorer.getCountries());
         System.out.println(s3);
-        String s4 = explorer.outputToJson(explorer.conferenceDaysByCountry());
+        String s4 = explorer.outputToJson(explorer.sumConferenceDaysByCountry());
         System.out.println(s4);
         String s5 = explorer.outputToJson(explorer.countBySessionType());
         System.out.println(s5);

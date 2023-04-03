@@ -1,3 +1,9 @@
+import java.io.IOException;
+import java.net.URL;
+import java.time.Month;
+import java.util.List;
+import java.util.Map;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,12 +18,6 @@ import org.eclipse.collections.api.map.primitive.ObjectLongMap;
 import org.eclipse.collections.api.multimap.set.ImmutableSetMultimap;
 import org.eclipse.collections.api.set.ImmutableSet;
 import org.eclipse.collections.impl.utility.LazyIterate;
-
-import java.io.IOException;
-import java.net.URL;
-import java.time.Month;
-import java.util.List;
-import java.util.Map;
 
 public class ConferenceExplorer
 {
@@ -152,7 +152,7 @@ public class ConferenceExplorer
         return this.conferences.countByEach(Conference::sessionTypes);
     }
 
-    public ObjectLongMap<Country> conferenceDaysByCountry()
+    public ObjectLongMap<Country> sumConferenceDaysByCountry()
     {
         return this.conferences.sumByLong(Conference::country, Conference::durationInDays);
     }

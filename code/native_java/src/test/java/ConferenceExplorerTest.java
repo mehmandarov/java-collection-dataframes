@@ -1,12 +1,12 @@
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import java.time.Month;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class ConferenceExplorerTest
 {
@@ -112,7 +112,7 @@ public class ConferenceExplorerTest
     }
 
     @Test
-    public void conferenceDaysByCountry()
+    public void sumConferenceDaysByCountry()
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
         Map<Country, Long> expected = new HashMap<>();
@@ -123,7 +123,7 @@ public class ConferenceExplorerTest
         expected.put(Country.getByName("Germany"), 3L);
         expected.put(Country.getByName("WWW"), 6L);
         expected.put(Country.getByName("Poland"), 3L);
-        Assertions.assertEquals(expected, explorer.conferenceDaysByCountry());
+        Assertions.assertEquals(expected, explorer.sumConferenceDaysByCountry());
     }
 
     @Test
@@ -137,7 +137,7 @@ public class ConferenceExplorerTest
         System.out.println(s2);
         String s3 = explorer.outputToJson(explorer.getCountries());
         System.out.println(s3);
-        String s4 = explorer.outputToJson(explorer.conferenceDaysByCountry());
+        String s4 = explorer.outputToJson(explorer.sumConferenceDaysByCountry());
         System.out.println(s4);
         String s5 = explorer.outputToJson(explorer.countBySessionType());
         System.out.println(s5);

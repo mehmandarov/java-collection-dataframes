@@ -22,11 +22,11 @@
     @Test
     public void countByCountry()
     @Test
-    public void countBySessionType()
-    @Test
     public void countByMonth()
     @Test
-    public void conferenceDaysByCountry()
+    public void countBySessionType()
+    @Test
+    public void sumConferenceDaysByCountry()
     @Test
     public void getCountries()
     @Test

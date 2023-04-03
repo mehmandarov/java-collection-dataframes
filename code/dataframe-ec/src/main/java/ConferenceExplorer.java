@@ -162,7 +162,7 @@ public class ConferenceExplorer
                 Lists.immutable.with("Month"));
     }
 
-    public DataFrame conferenceDaysByCountry()
+    public DataFrame sumConferenceDaysByCountry()
     {
         return this.conferences.sumBy(
                 Lists.immutable.with("Duration"),

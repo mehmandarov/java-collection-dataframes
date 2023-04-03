@@ -61,7 +61,7 @@ public class ConferenceExplorerTest
     }
 
     @Test
-    public void conferenceDaysByCountry()
+    public void sumConferenceDaysByCountry()
     {
         DataFrame expected = new DataFrame("Expected")
                 .addStringColumn("Country").addLongColumn("Duration")
@@ -74,7 +74,7 @@ public class ConferenceExplorerTest
                 .addRow("Poland", 3L);
 
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
-        DataFrame sumByCountry = explorer.conferenceDaysByCountry();
+        DataFrame sumByCountry = explorer.sumConferenceDaysByCountry();
         Assertions.assertTrue(new DataFrameCompare().equalIgnoreOrder(expected, sumByCountry));
     }
 
@@ -163,7 +163,7 @@ public class ConferenceExplorerTest
         System.out.println(s2);
         String s3 = explorer.outputToJson(explorer.getCountries());
         System.out.println(s3);
-        String s4 = explorer.outputToJson(explorer.conferenceDaysByCountry());
+        String s4 = explorer.outputToJson(explorer.sumConferenceDaysByCountry());
         System.out.println(s4);
         String s5 = explorer.outputToJson(explorer.countBySessionType());
         System.out.println(s5);
