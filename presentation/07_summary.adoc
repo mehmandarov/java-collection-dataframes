@@ -2,12 +2,17 @@
 
 ---
 * Data-oriented programming is feasible, flexible and enjoyable in Java
-* Java Streams and Eclipse Collections leverage
-** Java 14+ (Records)
+* Features and dependencies can determine your preferred approach
+* Some useful things we leveraged and learned preparing for this talk
+** Java Records (Java 14+)
+** Java Pattern Matching for Switch (4th Preview Feature in Java 20)
+** Java Time (LocalDate)
 ** Jackson CSV library
-* All three libraries leverage
 ** Jackson JSON library
-* Features can determine your preferred approach
+** Flag Emojis
+** AsciiDoc
+** IntelliJ IDEA
+** JUnit 5
 
 link:toc.adoc[⬆️ TOC] /
 link:./06_data_frame_ec.adoc[⬅️ DataFrame-EC] /
