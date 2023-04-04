@@ -12,14 +12,13 @@ public String outputToJson(Object result) {
     try {
         return this.getObjectMapper().writeValueAsString(result);
     }
-
 private ObjectMapper getObjectMapper(){
     return new ObjectMapper().registerModule(new JavaTimeModule());
 }
 ----
 | link:../code/eclipse_collections/src/test/java/ConferenceExplorerTest.java[Eclipse Collections]
 |
-[source,java,linenums,highlight=2..8]
+[source,java,linenums,highlight=3..6]
 ----
 public String outputToJson(Object result) {
     try {
@@ -28,7 +27,6 @@ public String outputToJson(Object result) {
                     case Bag<?> bag -> bag.toMapOfItemToCount();
                     default -> result;});
     }
-
 private ObjectMapper getObjectMapper() {
     return new ObjectMapper()
             .registerModule(new EclipseCollectionsModule())
@@ -38,13 +36,12 @@ private ObjectMapper getObjectMapper() {
 ----
 | link:../code/dataframe-ec/src/test/java/ConferenceExplorerTest.java[DataFrame-EC]
 |
-[source,java,linenums,highlight=2..4]
+[source,java,linenums,highlight=3..3]
 ----
 public String outputToJson(Object data) {
     try {
         return this.getObjectMapper().writeValueAsString(data);
     }
-
 private ObjectMapper getObjectMapper() {
     DataFrameCustomSerializer dfSerializer =
             new DataFrameCustomSerializer(DataFrame.class);
