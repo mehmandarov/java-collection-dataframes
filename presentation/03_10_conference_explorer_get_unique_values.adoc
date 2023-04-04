@@ -4,7 +4,7 @@
 
 [cols="15a,85a"]
 |====
-| Java Streams
+| link:../code/native_java/src/test/java/ConferenceExplorerTest.java[Java Streams]
 |
 [source,java,linenums,highlight=2..4]
 ----
@@ -14,7 +14,7 @@ public Set<Country> getCountries() {
             .collect(Collectors.toUnmodifiableSet());
 }
 ----
-| Eclipse Collections
+| link:../code/eclipse_collections/src/test/java/ConferenceExplorerTest.java[Eclipse Collections]
 |
 [source,java,linenums,highlight=2..2]
 ----
@@ -22,7 +22,7 @@ public ImmutableSet<Country> getCountries() {
     return this.conferences.collect(Conference::country);
 }
 ----
-| DataFrame-EC
+| link:../code/dataframe-ec/src/test/java/ConferenceExplorerTest.java[DataFrame-EC]
 |
 [source,java,linenums,highlight=2..11]
 ----

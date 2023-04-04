@@ -5,7 +5,7 @@
 [width=75%]
 [cols="2a,8a"]
 |====
-| Conference Record
+| link:../code/eclipse_collections/src/main/java/Conference.java[Conference Record]
 |
 [source,java,linenums,highlight=1..4]
 ----
@@ -16,7 +16,7 @@ public record Conference(
         LocalDate startDate, LocalDate endDate,
         Set<SessionType> sessionTypes)
 ----
-| Java Streams
+| link:../code/native_java/src/main/java/ConferenceExplorer.java[Java Streams]
 |
 [source,java,linenums,highlight=2..3]
 ----
@@ -24,7 +24,7 @@ public class ConferenceExplorer {
     private Set<Conference> conferences;
     private Set<Country> countries;
 ----
-| Eclipse Collections
+| link:../code/eclipse_collections/src/main/java/ConferenceExplorer.java[Eclipse Collections]
 |
 [source,java,linenums,highlight=2..3]
 ----
@@ -32,7 +32,7 @@ public class ConferenceExplorer {
     private ImmutableSet<Conference> conferences;
     private ImmutableSet<Country> countries;
 ----
-| DataFrame-EC
+| link:../code/dataframe-ec/src/main/java/ConferenceExplorer.java[DataFrame-EC]
 |
 [source,java,linenums,highlight=2..3]
 ----

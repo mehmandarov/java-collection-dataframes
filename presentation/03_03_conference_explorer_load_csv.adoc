@@ -4,7 +4,7 @@
 
 [cols="15a,85a"]
 |====
-| Java Streams with Jackson CSV
+| link:../code/native_java/src/main/java/ConferenceExplorer.java[Java Streams with Jackson CSV]
 |
 [source,java,linenums,highlight=5..9]
 ----
@@ -20,7 +20,7 @@ private void loadConferencesFromCsv(Predicate<Conference> initialFilter) {
         this.createConferencesFromList(initialFilter, it.readAll());
     }
 ----
-| Eclipse Collections with Jackson CSV
+| link:../code/eclipse_collections/src/main/java/ConferenceExplorer.java[Eclipse Collections with Jackson CSV]
 |
 [source,java,linenums,highlight=5..9]
 ----
@@ -36,7 +36,7 @@ private void loadConferencesFromCsv(Predicate<Conference> initialFilter) {
         this.createConferencesFromList(initialFilter, it.readAll());
     }
 ----
-| DataFrame-EC
+| link:../code/dataframe-ec/src/main/java/ConferenceExplorer.java[DataFrame-EC]
 |
 [source,java,linenums,highlight=5..8]
 ----

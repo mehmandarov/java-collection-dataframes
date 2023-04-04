@@ -4,7 +4,7 @@
 
 [cols="15a,85a"]
 |====
-| Java Streams
+| link:../code/native_java/src/test/java/ConferenceExplorerTest.java[Java Streams]
 |
 [source,java,linenums,highlight=2..4]
 ----
@@ -14,7 +14,7 @@ public Map<Country, Long> sumConferenceDaysByCountry() {
                     Collectors.summingLong(Conference::durationInDays)));
 }
 ----
-| Eclipse Collections
+| link:../code/eclipse_collections/src/test/java/ConferenceExplorerTest.java[Eclipse Collections]
 |
 [source,java,linenums,highlight=2..3]
 ----
@@ -23,7 +23,7 @@ public ObjectLongMap<Country> sumConferenceDaysByCountry() {
             .sumByLong(Conference::country, Conference::durationInDays);
 }
 ----
-| DataFrame-EC
+| link:../code/dataframe-ec/src/test/java/ConferenceExplorerTest.java[DataFrame-EC]
 |
 [source,java,linenums,highlight=2..4]
 ----
