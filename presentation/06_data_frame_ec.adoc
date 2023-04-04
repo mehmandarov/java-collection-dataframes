@@ -9,7 +9,7 @@
 * Built-in support for CSV
 * Flexibility - no need to define a data structure/type and everything can be purely dynamic
 * Built-in DSL
-* Eclipse Collections is a dependency so it's collections are available to use
+* Eclipse Collections is a dependency so its collections are available to use
 * Open Source with helpful and active maintainer
 |*Cons*
 | * Multiple Third-party dependencies

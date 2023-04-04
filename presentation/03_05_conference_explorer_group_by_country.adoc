@@ -22,7 +22,7 @@ public ImmutableSetMultimap<Country, Conference> groupByCountry() {
     return this.conferences.groupBy(Conference::country);
 }
 ----
-| DataFrame-EC
+| link:../code/dataframe-ec/src/test/java/ConferenceExplorerTest.java[DataFrame-EC]
 |
 [source,java,linenums,highlight=2..4]
 ----
