@@ -59,6 +59,6 @@ private ObjectMapper getObjectMapper() {
 
 link:toc.adoc[⬆️ TOC] /
 link:./03_10_conference_explorer_get_unique_values.adoc[⬅️ Get Unique Countries and Country Flags] /
-link:./04_java_streams.adoc[➡️ Java Streams]
+link:./04_java_streams.adoc[➡️ Java Streams] 🥷🐢
 
 

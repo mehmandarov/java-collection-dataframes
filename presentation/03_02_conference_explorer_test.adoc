@@ -41,4 +41,4 @@
 
 link:toc.adoc[⬆️ TOC] /
 link:./03_01_conference_explorer_class.adoc[⬅️ Conference Explorer Class] /
-link:./03_03_conference_explorer_load_csv.adoc[➡️ Load data from CSV]
+link:./03_03_conference_explorer_load_csv.adoc[➡️ Load data from CSV] 🐢

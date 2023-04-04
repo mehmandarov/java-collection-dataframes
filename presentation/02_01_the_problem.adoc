@@ -17,4 +17,4 @@
 
 link:toc.adoc[⬆️ TOC] /
 link:./01_intro.adoc[⬅️ Intro] /
-link:./02_02_the_problem_csv_data_to_load.adoc[➡️ CSV Data to Load]
+link:./02_02_the_problem_csv_data_to_load.adoc[➡️ CSV Data to Load] 🥷

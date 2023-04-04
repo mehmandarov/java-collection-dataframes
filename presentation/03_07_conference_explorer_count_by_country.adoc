@@ -37,6 +37,6 @@ public DataFrame countByCountry() {
 
 link:toc.adoc[⬆️ TOC] /
 link:./03_06_conference_explorer_group_by_city.adoc[⬅️ ConferenceExplorer - Group by City] /
-link:./03_08_conference_explorer_count_by_month.adoc[➡️ ConferenceExplorer - Count by Month]
+link:./03_08_conference_explorer_count_by_month.adoc[➡️ ConferenceExplorer - Count by Month] 🐢
 
 
