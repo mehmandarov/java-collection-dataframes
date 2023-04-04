@@ -1,15 +1,15 @@
 === Summary
 
 ---
-* Data-oriented programming is feasible, flexible and enjoyable in Java
+* Data-oriented programming is feasible, flexible and fun in Java
 * Features and dependencies can determine your preferred approach
-* Some useful things we leveraged and learned preparing for this talk
+* Some useful things we leveraged and learned preparing for this talk:
 ** Java Records (Java 14+)
-** Java Pattern Matching for Switch (4th Preview Feature in Java 20)
-** Java Time (LocalDate)
+** Java Pattern Matching for `switch` (4th Preview Feature in Java 20)
+** Java Time (`LocalDate`)
 ** Jackson CSV library
 ** Jackson JSON library
-** Flag Emojis
+** Flag Emojis (surrogate pairs)
 ** AsciiDoc
 ** IntelliJ IDEA
 ** JUnit 5
