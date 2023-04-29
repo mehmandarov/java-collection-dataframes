@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.openjdk.jol.info.GraphLayout;
 
 public class ConferenceExplorerTest
 {
@@ -141,5 +142,11 @@ public class ConferenceExplorerTest
         System.out.println(s4);
         String s5 = explorer.outputToJson(explorer.countBySessionType());
         System.out.println(s5);
+    }
+
+    public static void main(String[] args)
+    {
+        ConferenceExplorer explorer = new ConferenceExplorer(2023);
+        System.out.println("Native Java size: " + GraphLayout.parseInstance(explorer).totalSize());
     }
 }

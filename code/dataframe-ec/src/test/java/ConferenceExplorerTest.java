@@ -5,6 +5,7 @@ import io.github.vmzakharov.ecdataframe.dataframe.util.DataFrameCompare;
 import org.eclipse.collections.api.factory.Lists;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.openjdk.jol.info.GraphLayout;
 
 public class ConferenceExplorerTest
 {
@@ -167,5 +168,11 @@ public class ConferenceExplorerTest
         System.out.println(s4);
         String s5 = explorer.outputToJson(explorer.countBySessionType());
         System.out.println(s5);
+    }
+
+    public static void main(String[] args)
+    {
+        ConferenceExplorer explorer = new ConferenceExplorer(2023);
+        System.out.println("DataFrame-EC size: " + GraphLayout.parseInstance(explorer).totalSize());
     }
 }
