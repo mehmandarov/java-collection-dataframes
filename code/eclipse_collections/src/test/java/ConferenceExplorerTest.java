@@ -150,5 +150,7 @@ public class ConferenceExplorerTest
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
         System.out.println("Eclipse Collections size: " + GraphLayout.parseInstance(explorer).totalSize());
+        System.out.println("Eclipse Collections: ");
+        System.out.println(GraphLayout.parseInstance(explorer).toFootprint());
     }
 }
