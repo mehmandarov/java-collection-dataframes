@@ -173,7 +173,7 @@ public class ConferenceExplorerTest
     public static void main(String[] args)
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
-        System.out.println("DataFrame-EC size: " + GraphLayout.parseInstance(explorer).totalSize());
+        System.out.println("DataFrame-EC size (bytes): " + GraphLayout.parseInstance(explorer).totalSize());
         System.out.println("DataFrame-EC: ");
         System.out.println(GraphLayout.parseInstance(explorer).toFootprint());
     }

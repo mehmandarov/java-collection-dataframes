@@ -147,7 +147,7 @@ public class ConferenceExplorerTest
     public static void main(String[] args)
     {
         ConferenceExplorer explorer = new ConferenceExplorer(2023);
-        System.out.println("Native Java size: " + GraphLayout.parseInstance(explorer).totalSize());
+        System.out.println("Native Java size (bytes): " + GraphLayout.parseInstance(explorer).totalSize());
         System.out.println("Native Java: ");
         System.out.println(GraphLayout.parseInstance(explorer).toFootprint());
     }
