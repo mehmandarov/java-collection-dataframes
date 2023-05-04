@@ -2,7 +2,7 @@
 
 image:assets/tobias-fischer-unsplash.jpg[Title Picture,800]
 
-=== _Devnexus 2023_
+=== 🇬🇷 _Devoxx Greece 2023_
 ===== 🥷 Rustam Mehmandarov -- link:https://twitter.com/rmehmandarov[@RMehmandarov]
 ===== 🐢 Donald Raab -- link:https://twitter.com/TheDonRaab[@TheDonRaab]
 ---
