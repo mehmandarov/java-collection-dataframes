@@ -13,6 +13,7 @@
 ** AsciiDoc
 ** IntelliJ IDEA
 ** Flag Emojis (surrogate pairs)
+* Code and slides are available here: https://github.com/mehmandarov/java-collection-dataframes
 
 link:toc.adoc[⬆️ TOC] /
 link:./06_data_frame_ec.adoc[⬅️ DataFrame-EC] /
